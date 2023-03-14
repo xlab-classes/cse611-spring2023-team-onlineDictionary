@@ -34,7 +34,8 @@ router.route('/:word').get((req, res) => {
             
         }
 
-        res.send(htmlstring+"<body><html>")
+        //res.send(htmlstring+"<body><html>")
+        res.send(response)
     });
 });
 

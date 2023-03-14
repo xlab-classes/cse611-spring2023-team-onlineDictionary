@@ -7,7 +7,7 @@ router.route('/:word').get((req, res) => {
         'method': 'GET',
         'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData?word='+req.params.word,
         'headers': {
-          'apiKey': ''
+          'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
         }
     };
     request(options, function (error, response) {

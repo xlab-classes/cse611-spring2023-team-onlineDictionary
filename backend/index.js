@@ -1,9 +1,10 @@
 const express = require("express")
 const request = require("request")
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express()
-
+app.use(cors());
 
 app.get("/api/:word", (req, response)=> {
     let word = req.params.word
@@ -52,11 +53,11 @@ app.get("/api/:word", (req, response)=> {
 })
 
 const fetchWordLocalRouter = require('./routes/fetchWordLocal');
-const audioRouter = require('./routes/googleAudio');
+// const audioRouter = require('./routes/googleAudio');
 
 
 app.use('/mongo', fetchWordLocalRouter);
-app.use('/audio', audioRouter);
+// app.use('/audio', audioRouter);
 app.listen(3001, ()=> {
     console.log("server run OK")
 })

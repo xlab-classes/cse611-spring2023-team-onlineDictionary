@@ -4,10 +4,10 @@ import classes from './Word.module.css';
 import AvailableUsage from './AvailableUsage';
 
 
-const Word = () => {
+const Word = (props) => {
   return (
     <Fragment>
-     <AvailableUsage />
+     <AvailableUsage wordData={props.wordData}/>
     </Fragment>
   );
 };

@@ -7,24 +7,28 @@ import Word from "./components/Words/Word";
 
 function App() {
   const [showWord, setShowWord] = useState(false);
-
-  async function  wordHandler() {
+  const [wordData,setWordData] = useState({});
+  
+  async function  wordHandler(word) {
     console.log("in app.js");
-    var wordData = {};
-    await fetch("http://localhost:3001/mongo/college")
+    
+    await fetch(`http://localhost:3001/mongo/${word}`)
       .then((response) => response.json())
-      .then((result) => wordData=result['body'])
+      .then((result) => setWordData(JSON.parse(result['body'])))
       .catch((error) => console.log("error", error));
-    console.log(wordData);
-    setShowWord((prevState) => {
-      return !prevState;
-    });
+    
+    setShowWord(true);
   }
+
+  function disableWord (){
+    setShowWord(false);
+  }
+  
 
   return (
     <Fragment>
-      <Header wordHandle={wordHandler} />
-      <main>{showWord && <Word />}</main>
+      <Header wordHandle={wordHandler} wordDisable={disableWord} />
+      <main>{showWord && <Word wordData={wordData}/>}</main>
     </Fragment>
   );
 }

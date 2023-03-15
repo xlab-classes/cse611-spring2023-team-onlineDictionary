@@ -1,6 +1,7 @@
  const FormatPos = (word) =>{
     var posDictionary = {};
     var defList = [];
+    var audioList = [];
 
     word['usage'].forEach(element => {
         element['pos'] in posDictionary ? posDictionary[element['pos']]=posDictionary[element['pos']] : posDictionary[element['pos']] = []
@@ -8,8 +9,11 @@
             posDictionary[element['pos']].push(item['definition']['gloss']);
             item['examples'].slice(0,1).forEach(example =>{ defList.push(example['text']);})
         });
+        element['audio'].forEach( item => {
+        audioList.push(item['audioLink']);
+        });
     });
-    return [posDictionary,defList];
+    return [posDictionary,defList,audioList];
 
 };
 

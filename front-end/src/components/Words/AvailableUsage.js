@@ -23,7 +23,7 @@ const AvailableUsage = () => {
       <Card>
         <WordSummary word={wordData["word"]} />
         <ul>{posList}</ul>
-        <Definitions item={defList} name="Definitions"/>
+        <Definitions item={defList} name="Example Usage"/>
 
       </Card>
     </section>

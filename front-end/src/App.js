@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
+import InfoCard from "./components/InfoCard/InfoCard";
 
 function App() {
   const [showWord, setShowWord] = useState(false);
@@ -24,7 +25,13 @@ function App() {
   return (
     <Fragment>
       <Header wordHandle={wordHandler} />
-      <main>{showWord && <Word />}</main>
+      <main >{showWord && <Word />}
+      <div style={{marginTop:"6rem"}}>
+      <InfoCard title={"Word of the day"} word={"piano"}/>
+      <InfoCard title={"Trending word"} word={"timer"}/>
+      </div>
+      </main>
+    
     </Fragment>
   );
 }

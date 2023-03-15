@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import classes from "./Header.module.css";
 
 const Header = (props) => {
+  const [isSearching, setIsSearching] = useState(false);
 
-  function onSubmitHandler (event) {
+  function onSubmitHandler(event) {
     event.preventDefault();
     props.wordHandle(event.target.elements.word.value);
     console.log(event.target.elements.word.value);
@@ -13,12 +14,23 @@ const Header = (props) => {
     //  props.wordDisable();
   }
   
+  function onInputChangeHandler(event) {
+    if (event.target.value) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }
+
   return (
     <Fragment>
-      <header className={classes.header} onClick={disableSearch}>
+      <header className={`${classes.header} ${isSearching && classes.headerSearching}`}>
+        <div className={classes.title}>
+          <h1>Online Dictionary</h1>
+        </div>
         <form onSubmit={onSubmitHandler}>
-          <input type="text" name='word' placeholder={"Search For a Word"} ></input>
-          <button>submit</button>
+          <input type="text" name="word" placeholder={"Search For a Word"} onChange={onInputChangeHandler} />
+          <button>Submit</button>
         </form>
       </header>
     </Fragment>

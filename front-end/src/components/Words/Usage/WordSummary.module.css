@@ -7,16 +7,26 @@
   }
   
   .meal h1 {
+    display: inline-block;
     margin: 0 0 0.25rem 0;
-  }
-  
-  .description {
-    font-style: italic;
-  }
-  
-  .price {
-    margin-top: 0.25rem;
     font-weight: bold;
-    color: #ad5502;
-    font-size: 1.25rem;
+    align-items: center;
+    font-size: 2.5rem;
+    font-family: "Helvetica Neue";
+    letter-spacing: .1rem;
+    margin-right: 10px;
+  }
+  
+  .speakerButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+    padding: 0;
+    width: 30px;
+  }
+  
+  .speakerButton img {
+    height: 100%;
+    width: 100%;
   }

@@ -1,6 +1,6 @@
 export const wordData = {
     "_id": "64063c053183425edb327ec1",
-    "word": "lead",
+    "word": "Lead",
     "usage": [
         {
             "pos": "noun",

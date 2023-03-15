@@ -24,7 +24,7 @@ const AvailableUsage = (props) => {
       <Card>
         <WordSummary word={props.wordData["word"]} audio={audioList} />
         <ul>{posList}</ul>
-        <Definitions item={defList} name="Example Sentences"/>
+        <Definitions item={defList} name="Example Usage"/>
 
       </Card>
     </section>

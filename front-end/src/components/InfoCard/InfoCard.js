@@ -21,10 +21,19 @@ export default class InfoCard extends Component {
                             </span>
                     </div>
                     <div>
+                      <h4>{this.props.pronounciation}</h4>
+                    </div>
+                    <div>
                       <h4>{this.props.meaning}</h4>
                     </div>
                     <div>
                       <h4>{this.props.Usage}</h4>
+                    </div>
+                    <div>
+                      <h4>{this.props.meaning2}</h4>
+                    </div>
+                    <div>
+                      <h4>{this.props.Usage2}</h4>
                     </div>
                 </div>
             </div>

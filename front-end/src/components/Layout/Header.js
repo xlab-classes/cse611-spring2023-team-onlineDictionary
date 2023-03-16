@@ -11,7 +11,7 @@ const Header = (props) => {
   };
   
   function disableSearch(){
-    //  props.wordDisable();
+    props.wordDisable();
   }
   
   function onInputChangeHandler(event) {
@@ -25,7 +25,7 @@ const Header = (props) => {
   return (
     <Fragment>
       <header className={`${classes.header} ${isSearching && classes.headerSearching}`}>
-        <div className={classes.title}>
+        <div className={classes.title} onClick={disableSearch}>
           <h1>Online Dictionary</h1>
         </div>
         <form onSubmit={onSubmitHandler}>

@@ -4,3 +4,26 @@
   border-radius: 14px;
   background-color: white;
 }
+
+#WordWala{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 auto;
+  
+  width: 100px;
+  height: 100px;
+
+}
+
+#TrendingWala{
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  justify-content:center
+}

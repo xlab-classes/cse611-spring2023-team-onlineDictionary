@@ -5,6 +5,7 @@ import "./App.css";
 import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
 import InfoCard from "./components/InfoCard/InfoCard";
+import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function App() {
   const [showWord, setShowWord] = useState(false);
@@ -26,10 +27,9 @@ function App() {
     <Fragment>
       <Header wordHandle={wordHandler} />
       <main >{showWord && <Word />}
-      <div style={{marginTop:"6rem"}}>
-      <InfoCard title={"Word of the day"} word={"piano"}/>
-      <InfoCard title={"Trending word"} word={"timer"}/>
-      </div>
+        <MainInfoCard>
+          
+        </MainInfoCard>
       </main>
     
     </Fragment>

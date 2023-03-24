@@ -6,6 +6,54 @@ const mongoose = require('mongoose');
 const app = express()
 app.use(cors());
 
+app.get('/:word', (req, response) => {
+    let word = req.params.word
+
+    var options = {
+        'method': 'GET',
+        'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData?word=' + req.params.word,
+        'headers': {
+            'apiKey': ''
+        }
+    };
+
+    request(options, (error, res) => {
+
+        if (error) throw new Error(error);
+
+        if (res.statusCode != 200) {
+            return response.send("word meaning not found")
+        }
+
+        body = JSON.parse(res.body)
+        responseToReact = { "word": word, "meanings": [] }
+
+        for (pos of body.usage) {
+            meaning = {}
+            meaning.pos = pos.pos
+            meaning.definitions = []
+            for (definition of pos.definitions.slice(0, 3)) {
+                def={}
+                def.meaning = definition.definition.gloss
+                if (definition.examples[0] && definition.examples[0].text) {
+                    def.usage = definition.examples[0].text
+                }
+                meaning.definitions.push(def)
+            }
+            audio = {}
+            if(pos.audio[0] && pos.audio[0].audioLink){
+                audio.audioLink = pos.audio[0].audioLink
+                audio.source = "Wiktionary"
+                meaning.audio = audio
+            }
+            
+            responseToReact.meanings.push(meaning)
+        }
+
+        response.send(responseToReact)
+    })
+})
+
 app.get("/api/:word", (req, response)=> {
     let word = req.params.word
     let url = "https://api.dictionaryapi.dev/api/v2/entries/en/"+word

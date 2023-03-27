@@ -28,7 +28,7 @@ const AvailableUsage = (props) => {
       <Card>
         <WordSummary word={props.wordData["word"]}  />
         <ul>{posList}</ul>
-        {/* <Definitions item={defList} name="Example Usage"/> */}
+        {"generalExamples" in props.wordData &&  <Definitions item={props.wordData.generalExamples} name="Example Usage"/>}
       </Card>
     </section>
   );

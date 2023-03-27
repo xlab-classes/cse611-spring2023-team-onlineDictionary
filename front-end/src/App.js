@@ -15,13 +15,16 @@ function App() {
     
     await fetch(`http://localhost:3001/${word}`)
       .then((response) => response.json())
-      .then((result) => setWordData(result))
-      .catch((error) => console.log("error", error));
+      .then((result) => {setWordData(result);setShowWord(1)})
+      .catch((error) => setShowWord(2));
+
+      // setShowWord(1);
+
 
       console.log(wordData);
   
     
-     setShowWord(1);
+     
   }
 
   function disableWord (){

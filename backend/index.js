@@ -24,7 +24,7 @@ function handleDictionaryData(word, response, body) {
             }
             meaning.definitions.push(def);
         }
-        
+
         // audio data added to response
         let audio = {};
         if (pos.audio[0] && pos.audio[0].audioLink) {
@@ -35,6 +35,37 @@ function handleDictionaryData(word, response, body) {
 
         responseToReact.meanings.push(meaning);
     }
+    // TODO: functionize solr req and response to remove redundancy
+    let config = {
+        method: 'get',
+        url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word
+    }
+    axios(config)
+        .then(solrResponse => {
+            if (solrResponse.data.response.numFound > 0) {
+                // To return first few examples fetched from solr:
+                // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
+
+                // Find few random docs fetched from solr
+                const documentSet = new Set(solrResponse.data.response.docs);
+                const docs = [...documentSet]
+                // const docs = solrResponse.data.response.docs;
+                const numDocs = docs.length;
+                const numRandomDocs = Math.min(numDocs, 5);
+                const randomIndices = new Set();
+
+                while (randomIndices.size < numRandomDocs) {
+                    randomIndices.add(Math.floor(Math.random() * numDocs));
+                    // console.log('in while')
+                }
+                const randomDocs = [...randomIndices].map(index => docs[index].text[0]);
+                responseToReact.generalExamples = randomDocs;
+            }
+        })
+        .finally(() => {
+            response.send(responseToReact)
+        })
+
     response.send(responseToReact);
 }
 
@@ -85,7 +116,7 @@ function handleDictionaryAPI(word, response) {
 
             let config = {
                 method: 'get',
-                url: 'http://localhost:8983/solr/my_core/query?q=text:' + word
+                url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word
             }
 
             axios(config)
@@ -95,14 +126,16 @@ function handleDictionaryAPI(word, response) {
                         // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
 
                         // Find few random docs fetched from solr
-                        const docs = solrResponse.data.response.docs;
+                        const documentSet = new Set(solrResponse.data.response.docs);
+                        const docs = [...documentSet]
+                        // const docs = solrResponse.data.response.docs;
                         const numDocs = docs.length;
                         const numRandomDocs = Math.min(numDocs, 5);
                         const randomIndices = new Set();
 
                         while (randomIndices.size < numRandomDocs) {
                             randomIndices.add(Math.floor(Math.random() * numDocs));
-                            console.log('in while')
+                            // console.log('in while')
                         }
                         const randomDocs = [...randomIndices].map(index => docs[index].text[0]);
                         responseToReact.generalExamples = randomDocs;
@@ -123,7 +156,7 @@ function handleDictionaryError(error, response) {
 }
 
 app.get('/:word', (request, response) => {
-    const word = request.params.word;
+    const word = request.params.word.split(' ')[0];
 
     const config = {
         method: 'get',

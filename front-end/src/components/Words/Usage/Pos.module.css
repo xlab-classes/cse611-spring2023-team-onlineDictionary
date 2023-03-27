@@ -43,3 +43,16 @@
   left: 0;
   top: 1.5px;
 }
+.speakerButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 30px;
+  padding: 0;
+  width: 30px;
+}
+
+.speakerButton img {
+  height: 100%;
+  width: 100%;
+}

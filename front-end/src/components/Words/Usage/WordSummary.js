@@ -2,11 +2,18 @@ import classes from "./WordSummary.module.css";
 import speakerLogo from "../../Icons/speaker.png";
 
 const WordSummary = (props) => {
-  console.log(props.audio[0]);
   
-  function playSound(){
-    var snd = new Audio(props.audio[0])
-    snd.play()
+  
+  
+  async function playSound(){
+
+    await fetch(`http://localhost:3001/mongo/audio/${props.word}`)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    // var snd = new Audio(props.audio[0])
+    // snd.play()
   }
 
   return (

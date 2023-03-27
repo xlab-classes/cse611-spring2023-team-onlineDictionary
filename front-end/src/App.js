@@ -4,31 +4,37 @@ import { Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
+import WordNotFound from "./components/Words/WordNotFound";
 
 function App() {
-  const [showWord, setShowWord] = useState(false);
+  const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
   
   async function  wordHandler(word) {
     console.log("in app.js");
     
-    await fetch(`http://localhost:3001/mongo/${word}`)
+    await fetch(`http://localhost:3001/${word}`)
       .then((response) => response.json())
-      .then((result) => setWordData(JSON.parse(result['body'])))
+      .then((result) => setWordData(result))
       .catch((error) => console.log("error", error));
+
+      console.log(wordData);
+  
     
-    setShowWord(true);
+     setShowWord(1);
   }
 
   function disableWord (){
-    setShowWord(false);
+    setShowWord(0);
   }
   
 
   return (
     <Fragment>
       <Header wordHandle={wordHandler} wordDisable={disableWord} />
-      <main>{showWord && <Word wordData={wordData}/>}</main>
+      <main>{showWord==1 && <Word wordData={wordData}/>}
+      {showWord==2 && <WordNotFound/>}
+      </main>
     </Fragment>
   );
 }

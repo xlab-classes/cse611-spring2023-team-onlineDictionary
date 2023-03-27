@@ -6,26 +6,29 @@ import WordSummary from "./Usage/WordSummary";
 import Definitions from "./Usage/Definitions";
 
 const AvailableUsage = (props) => {
-  
-  var [posDictionary,defList,audioList] = FormatPos(props.wordData);
+  // var [posDictionary,defList,audioList] = FormatPos(props.wordData);
   // console.log(audioList);
   // console.log(defList);
-  // const posList = wordData['usage'].map(word => <Pos key={wordData['usage'].indexOf(word)} item={word} />);
-  var posList = [];
+  const posList = props.wordData["meanings"].map((meaning) => (
+    <Pos
+      key={props.wordData["meanings"].indexOf(meaning)}
+      data={meaning}
+    />
+  ));
 
-  for (var key in posDictionary) {
-    posList.push(
-      <Pos key={posList.length} item={posDictionary[key]} name={key} />
-    );
-  }
+  // for (var key in props['meanings']) {
+  //   console.log(key)
+  //   posList.push(
+  //     <Pos key={props['meanings'].length} item={[]} name={key} />
+  //   );
+  // }
 
   return (
     <section className={classes.meals}>
       <Card>
-        <WordSummary word={props.wordData["word"]} audio={audioList} />
+        <WordSummary word={props.wordData["word"]}  />
         <ul>{posList}</ul>
-        <Definitions item={defList} name="Example Usage"/>
-
+        {/* <Definitions item={defList} name="Example Usage"/> */}
       </Card>
     </section>
   );

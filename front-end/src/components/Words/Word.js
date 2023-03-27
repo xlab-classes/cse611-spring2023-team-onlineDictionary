@@ -8,6 +8,7 @@ const Word = (props) => {
   return (
     <Fragment>
      <AvailableUsage wordData={props.wordData}/>
+     
     </Fragment>
   );
 };

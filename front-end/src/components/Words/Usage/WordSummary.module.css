@@ -1,32 +1,48 @@
 .meal {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #6b6a6a; 
-  }
-  
-  .meal h1 {
-    display: inline-block;
-    margin: 0 0 0.25rem 0;
-    font-weight: bold;
-    align-items: center;
-    font-size: 2.5rem;
-    font-family: "Helvetica Neue";
-    letter-spacing: .1rem;
-    margin-right: 10px;
-  }
-  
-  .speakerButton {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    height: 30px;
-    padding: 0;
-    width: 30px;
-  }
-  
-  .speakerButton img {
-    height: 100%;
-    width: 100%;
-  }
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #6b6a6a;
+}
+
+.mealHeader {
+  display: flex;
+  align-items: center;
+}
+
+.meal h1 {
+  display: inline-block;
+  margin: 0 0 0.25rem 0;
+  font-weight: bold;
+  font-size: 2.5rem;
+  font-family: "Helvetica Neue";
+  letter-spacing: 0.1rem;
+}
+
+.word {
+  margin-right: 10px;
+}
+
+.audioPlayer {
+  appearance: none;
+  width: 42px;
+  height: 42px;
+  background-color: #ccc;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px; 
+}
+
+.audioPlayer:hover {
+  background-color: #a19e95;
+}
+.audioPlayer img {
+  width: 260%;
+  height: auto;
+}

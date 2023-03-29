@@ -14,10 +14,19 @@
 }
 
 .meal h1 {
+  display: flex;
+  align-items: center;
   margin: 0 0 0.5rem 0;
   font-size: 1.85rem;
   color: var(--text-color);
   font-family: "Calibri";
+}
+
+.meal h1 .icon {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .meal ul {
@@ -43,16 +52,23 @@
   left: 0;
   top: 1.5px;
 }
+
 .speakerButton {
-  background-color: transparent;
+  background-color: #ccc;
   border: none;
   cursor: pointer;
-  height: 30px;
-  padding: 0;
-  width: 30px;
+  height: 31px;
+  padding: 5px;
+  width: 31px;
+  margin-left: 1px;
+  border-radius: 80%;
 }
 
 .speakerButton img {
   height: 100%;
   width: 100%;
+}
+
+.speakerButton:hover {
+  background-color: #a19e95;
 }

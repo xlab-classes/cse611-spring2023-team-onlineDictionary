@@ -3,6 +3,43 @@ const cors = require('cors');
 const axios = require('axios')
 const app = express()
 app.use(cors());
+const util = require('util')
+const fs = require('fs')
+
+const textToSpeech = require('@google-cloud/text-to-speech')
+require('dotenv').config()
+const client = new textToSpeech.TextToSpeechClient()
+
+function createGoogleAudio(responseToReact,word){
+    console.log("google audio found : ",responseToReact.hasOwnProperty('GoogleAudio'))
+    console.log("the original response is : " ,responseToReact)
+        var outerResponse = responseToReact
+        if(outerResponse.hasOwnProperty('GoogleAudio')){
+            
+        }
+        else{
+            var text = word
+            var languageCode = 'hi-in';
+            var ssmlVoice = 'FEMALE'; 
+            async function convertTextToMp3(word,languageCode,ssmlVoice){
+                const text = word 
+                const request = {
+                    input : {text : text},
+                    voice : {languageCode : languageCode, ssmlGender : ssmlVoice},
+                    audioConfig : {audioEncoding : 'MP3'}
+                }
+                const[response] = await client.synthesizeSpeech(request)
+                const writeFile = util.promisify(fs.writeFile)
+                await writeFile('google_Audios/'+ text +".mp3",response.audioContent,'binary')
+                console.log("Text to speech is done.")
+                var path = require('path')
+                outerResponse['GoogleAudio'] = path.resolve('google_Audios/'+text+'.mp3')
+                //make a post request of the response to the
+
+            }
+            convertTextToMp3(text,languageCode,ssmlVoice)
+        }
+}
 
 function handleDictionaryData(word, response, body) {
     // const word = request.params.word;
@@ -63,10 +100,9 @@ function handleDictionaryData(word, response, body) {
             }
         })
         .finally(() => {
+            createGoogleAudio(responseToReact,word)
             response.send(responseToReact)
         })
-
-    response.send(responseToReact);
 }
 
 function handleDictionaryAPI(word, response) {
@@ -142,6 +178,7 @@ function handleDictionaryAPI(word, response) {
                     }
                 })
                 .finally(() => {
+                    createGoogleAudio(responseToReact,word)
                     response.send(responseToReact)
                 })
         })
@@ -162,7 +199,7 @@ app.get('/:word', (request, response) => {
         method: 'get',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
         headers: {
-            'apiKey': ''
+            'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
         },
         params: {
             word: word

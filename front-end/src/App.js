@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import { useState, useRef } from "react";
-import { Fragment } from "react";
+import React,{ Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
@@ -14,9 +14,9 @@ function App() {
     console.log("in app.js");
     var wordData = {};
     await fetch("http://localhost:3001/mongo/college")
-      .then((response) => response.json())
-      .then((result) => wordData=result['body'])
-      .catch((error) => console.log("error", error));
+      //.then((response) => response.json())
+      //.then((result) => wordData=result['body'])
+      //.catch((error) => console.log("error", error));
     console.log(wordData);
     setShowWord((prevState) => {
       return !prevState;

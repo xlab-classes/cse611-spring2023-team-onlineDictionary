@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import React,{ Fragment } from 'react';
 import Card from '../UI/Card';
 import classes from './Word.module.css';
 import AvailableUsage from './AvailableUsage';

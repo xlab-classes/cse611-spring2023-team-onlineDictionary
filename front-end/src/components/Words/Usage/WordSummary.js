@@ -1,5 +1,5 @@
 import classes from "./WordSummary.module.css";
-
+import React from "react";
 const WordSummary = (props) => {
   return (
     <li className={classes.meal}>

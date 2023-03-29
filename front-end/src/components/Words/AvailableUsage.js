@@ -5,7 +5,7 @@ import Pos from "./Usage/Pos";
 import FormatPos from "./Formatting/FormatPos";
 import WordSummary from "./Usage/WordSummary";
 import Definitions from "./Usage/Definitions";
-
+import React from "react";
 const AvailableUsage = () => {
   var [posDictionary,defList] = FormatPos(wordData);
   console.log(defList);

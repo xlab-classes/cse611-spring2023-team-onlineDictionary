@@ -1,5 +1,5 @@
 import classes from "./Pos.module.css";
-
+import React from "react";
 const Pos = (props) => {
   const defList = props.item.map((item) => <li>{item}</li>);
   return (

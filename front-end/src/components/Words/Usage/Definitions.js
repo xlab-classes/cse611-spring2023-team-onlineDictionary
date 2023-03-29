@@ -1,5 +1,5 @@
 import classes from "./Definitions.module.css";
-
+import React from "react";
 const Definitions = (props) => {
   const defList = props.item.map((item) => <li>{item}</li>);
   return (

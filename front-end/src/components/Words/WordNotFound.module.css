@@ -1,10 +1,29 @@
-.card {
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(181, 33, 10);
+  animation-name: fade-in;
+  animation-duration: 1s;
+}
 
-    height: 200px;
+.card {
   width: 200px;
+  height: 200px;
   background-color: rgb(247, 243, 245);
-  color: #131313;
+  color: rgb(0, 0, 0);
   padding: 10px;
   border: solid 3px rgb(231, 225, 225);
-   text-align: center; 
+  text-align: center;
+}
+
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

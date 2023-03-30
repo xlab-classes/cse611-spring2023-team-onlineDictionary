@@ -16,12 +16,12 @@ export default class MainInfoCard extends React.Component {
     componentDidMount() {
         console.log("in MainInfoCard.js");
             
-        fetch(`https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWord`)
+        fetch(`http://localhost:3001/getword/wordoftheday`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result[0])
+                console.log(result)
                 this.setState({
-                    data: result[0]
+                    data: result
                 })
             })
             .catch((error) => console.log(error));
@@ -37,7 +37,7 @@ export default class MainInfoCard extends React.Component {
                 <div className={classes.MainInfocard}>
                     <InfoCard  
                         title={"Word of the day"} 
-                        word={data.word} 
+                        word={data.wordoftheDay} 
                         meaning={"Meaning(v): cause (a person or animal) to go with one by holding them by the hand, a halter, a rope, etc. while moving forward."} 
                         Usage={"USAGE: she emerged leading a bay horse."} 
                         meaning2={"Meaning(n): the initiative in an action."} 

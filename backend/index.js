@@ -5,6 +5,7 @@ const app = express()
 app.use(cors());
 const util = require('util')
 const fs = require('fs')
+const request = require('request')
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
@@ -33,8 +34,8 @@ function createGoogleAudio(responseToReact, word) {
     // console.log("google audio found : ", responseToReact.hasOwnProperty('GoogleAudio'))
     // console.log("the original response is : ", responseToReact)
     var outerResponse = responseToReact
-    if (outerResponse.hasOwnProperty('GoogleAudio')) {
-
+    if(outerResponse.hasOwnProperty('google_audio')){
+        console.log(word+"  has audio already ")
     }
     else {
         var text = word
@@ -42,18 +43,34 @@ function createGoogleAudio(responseToReact, word) {
         var ssmlVoice = 'FEMALE';
         async function convertTextToMp3(word, languageCode, ssmlVoice) {
             const text = word
-            const request = {
+            const googlerequest = {
                 input: { text: text },
                 voice: { languageCode: languageCode, ssmlGender: ssmlVoice },
                 audioConfig: { audioEncoding: 'MP3' }
             }
-            const [response] = await client.synthesizeSpeech(request)
+            const [response] = await client.synthesizeSpeech(googlerequest)
             const writeFile = util.promisify(fs.writeFile)
             await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
             console.log("Text to speech is done.")
             var path = require('path')
-            outerResponse['GoogleAudio'] = path.resolve('google_Audios/' + text + '.mp3')
+            // outerResponse['GoogleAudio'] = path.resolve('google_Audios/' + text + '.mp3')
             //make a post request of the response to the
+            var options = {
+                'method': 'POST',
+                'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addGoogleAudio',
+                'headers': {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  "word": word,
+                  "googleAudioLink": path.resolve('google_Audios/'+text+'.mp3')
+                })
+
+              };
+              request(options, function (error, response) {
+                if (error) throw new Error(error);
+                console.log(response.body);
+              });
 
         }
         convertTextToMp3(text, languageCode, ssmlVoice)
@@ -117,7 +134,7 @@ function handleDictionaryData(word, response, body) {
             }
         })
         .finally(() => {
-            createGoogleAudio(responseToReact, word)
+            createGoogleAudio(body, word)
             logWord(word, true)
             response.send(responseToReact)
         })

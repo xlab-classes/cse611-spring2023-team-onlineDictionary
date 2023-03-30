@@ -20,10 +20,15 @@ export default class MainInfoCard extends React.Component {
         fetch(`http://localhost:3001/getword/wordoftheday`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
-                this.setState({
-                    WOD: result
-                })
+                fetch(`http://localhost:3001/${result.wordoftheDay}`)
+                .then((response2) => response2.json())
+                .then((result2) => {
+                        console.log(result)
+                        this.setState({
+                            WOD: result2
+                        })
+                    })
+                    .catch((error2) => console.log(error2));
             })
             .catch((error) => console.log(error));
             console.log("completed");
@@ -31,10 +36,15 @@ export default class MainInfoCard extends React.Component {
         fetch(`http://localhost:3001/getword/trendingword`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
-                this.setState({
-                    TOD: result
-                })
+                fetch(`http://localhost:3001/${result.trendingWord}`)
+                .then((response2) => response2.json())
+                .then((result2) => {
+                        console.log(result)
+                        this.setState({
+                            TOD: result2
+                        })
+                    })
+                    .catch((error2) => console.log(error2));
             })
             .catch((error) => console.log(error));
     }
@@ -49,10 +59,9 @@ export default class MainInfoCard extends React.Component {
                     <InfoCard  
                         title={"Word of the day"} 
                         word={WOD.wordoftheDay} 
-                        meaning={"Meaning(v): cause (a person or animal) to go with one by holding them by the hand, a halter, a rope, etc. while moving forward."} 
-                        Usage={"USAGE: she emerged leading a bay horse."} 
-                        meaning2={"Meaning(n): the initiative in an action."} 
-                        Usage2={"USAGE: the US is now taking the environmental lead."}
+                        meaning={WOD.meaning} 
+                        Usage={WOD.Usage}
+                        
                         />
                 </div>}
                 {TOD &&
@@ -60,10 +69,8 @@ export default class MainInfoCard extends React.Component {
                     <InfoCard  
                         title={"Trending word"} 
                         word={TOD.trendingWord} 
-                        meaning={"Meaning(n): A disease prevalent throughout an entire country, continent, or the whole world"} 
-                        Usage={"USAGE: Since the Pandemic started, around 75% of the world's force is now working from home."} 
-                        meaning2={"Meaning(adj.): (of a disease) prevalent over a whole country or the world."} 
-                        Usage2={"USAGE: pandemic diseases have occurred throughout history."}
+                        meaning={TOD.meaning} 
+                        Usage={TOD.Usage}
                         />
                 </div>}
             </div>

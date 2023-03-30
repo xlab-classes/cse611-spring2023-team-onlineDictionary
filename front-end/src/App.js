@@ -33,8 +33,8 @@ function App() {
     <Fragment>
       <Header wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
-        {showWord==0 && <MainInfoCard/>}
         {showWord==1 && <Word wordData={wordData}/>}
+        {showWord==0 && <MainInfoCard/>}
         {showWord==2 && <WordNotFound/>}
       </main>
     </Fragment>

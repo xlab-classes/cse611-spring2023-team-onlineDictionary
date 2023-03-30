@@ -1,0 +1,12 @@
+.MainCard {
+    display: grid;
+    grid-template-columns: 50% 50%; 
+    grid-template-rows: 100%;
+}
+
+.MainInfocard {
+    border-radius: 14px;
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+}

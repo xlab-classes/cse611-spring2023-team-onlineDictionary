@@ -12,7 +12,7 @@ require('dotenv').config()
 const client = new textToSpeech.TextToSpeechClient()
 
 function createGoogleAudio(responseToReact,word){
-    // console.log("google audio found : ",responseToReact.hasOwnProperty('google_audio'))
+    console.log("google audio found : ",responseToReact.hasOwnProperty('google_audio'))
     // console.log("the original response is : " ,responseToReact)
         var outerResponse = responseToReact
         if(outerResponse.hasOwnProperty('google_audio')){

@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react";
 import classes from "./Header.module.css";
 
-
 const Header = (props) => {
   const [isSearching, setIsSearching] = useState(false);
 

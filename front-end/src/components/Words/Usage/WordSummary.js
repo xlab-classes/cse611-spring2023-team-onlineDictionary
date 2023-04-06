@@ -1,5 +1,5 @@
 import classes from "./WordSummary.module.css";
-import speakerLogo from "../../Icons/speaker.png";
+import speakerLogo from "../../../assets/Icons/speaker.png";
 
 const WordSummary = (props) => {
   

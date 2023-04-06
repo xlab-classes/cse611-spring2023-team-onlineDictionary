@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import { useState, useRef } from "react";
+import { useState} from "react";
 import { Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
@@ -26,7 +25,7 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ word: word , languageCode: languageCode })
+      body: JSON.stringify({ word: word , languageCode: 'en-US' })
   };
 
     await fetch(`http://localhost:3001/`,requestOptions)

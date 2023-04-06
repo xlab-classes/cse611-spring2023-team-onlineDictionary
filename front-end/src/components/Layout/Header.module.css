@@ -1,5 +1,5 @@
 .header {
-  background-color: #001e5f;
+  background-color: #031839;
   box-shadow: 0 2px 4px rgba(197, 1, 1, 0.258);
   height: 10rem;
   display: flex;
@@ -8,18 +8,17 @@
   padding: 220px;
   transition: all 0.3s ease-in-out;
   z-index: 1;
-  }
-  
-  .headerSearching {
-    background-color: #0a3e8e;
-    justify-content: flex-start;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
+}
 
+.headerSearching {
+  background-color: #001e5f;
+  justify-content: flex-start;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
 .title h1 {
   display: flex;
@@ -32,17 +31,17 @@
 form {
   display: flex;
   align-items: center;
-  width: 50%;
+  position: relative;
 }
 
-
-input[type="text"] {
-  flex-grow: 1;
+input{
+  flex-grow:  1;
   border: none;
   padding: 0.5rem;
   font-size: 1rem;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+  width: 550px;
 }
 
 button {
@@ -59,4 +58,48 @@ button {
 button:hover {
   background-color: #900303;
   color: #dad5d5
+}
+
+.searchResultsContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border-radius: 0.5rem;
+  z-index: 10;
+  width: 550px;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.searchResults {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.searchResults li {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.searchResults li:hover,
+.searchResults li.active {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.logo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  height: 80px;
+}
+
+.searchBoxActive {
+  border: none;
+  outline: none;
 }

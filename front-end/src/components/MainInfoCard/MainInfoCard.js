@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import InfoCard from '../InfoCard/InfoCard'
 import classes from './MainInfoCard.module.css';
-
-
+import ReactDOM from "react-dom";
+import { useState } from 'react';
 export default class MainInfoCard extends React.Component {
     constructor(props) {
       super(props)
@@ -12,7 +12,18 @@ export default class MainInfoCard extends React.Component {
         WOD: null,
         TOD: null
       }
+      this.state={
+        monthh: new Date().toLocaleDateString('en-us', { month: 'long' }),
+        date1: new Date().toLocaleDateString('en-us', { day: '2-digit' }),
+        yearr: new Date().getFullYear()
+      };
+this.state1={
+    textSM: "Show More.."
+}
+      
+      
     }
+   
 
     componentDidMount() {
         console.log("in MainInfoCard.js");
@@ -40,31 +51,30 @@ export default class MainInfoCard extends React.Component {
     }
 
     render() {
+        
         const { WOD, TOD } = this.state
         return (
         <>
             <div className={classes.MainCard}>
                 {WOD && 
                 <div className={classes.MainInfocard}>
-                    <InfoCard  
-                        title={"Word of the day"} 
+                    <InfoCard
+                        title ={"WORD OF THE DAY"} 
                         word={WOD.wordoftheDay} 
-                        meaning={"Meaning(v): cause (a person or animal) to go with one by holding them by the hand, a halter, a rope, etc. while moving forward."} 
-                        Usage={"USAGE: she emerged leading a bay horse."} 
-                        meaning2={"Meaning(n): the initiative in an action."} 
-                        Usage2={"USAGE: the US is now taking the environmental lead."}
+                        showWord={this.props.showWord}
+                        month = {this.state.monthh}
+                        datee = {this.state.date1}
+                        yearr = {this.state.yearr}
                         />
                 </div>}
                 {TOD &&
-                <div className={classes.MainInfocard}>
+                <div className={classes.MainInfocardTrend}>
                     <InfoCard  
-                        title={"Trending word"} 
-                        word={TOD.trendingWord} 
-                        meaning={"Meaning(n): A disease prevalent throughout an entire country, continent, or the whole world"} 
-                        Usage={"USAGE: Since the Pandemic started, around 75% of the world's force is now working from home."} 
-                        meaning2={"Meaning(adj.): (of a disease) prevalent over a whole country or the world."} 
-                        Usage2={"USAGE: pandemic diseases have occurred throughout history."}
-                        />
+                        title={"TRENDING WORD"}
+                        word={TOD.trendingWord}
+                        showWord={this.props.showWord}
+                       // textSM = {this.state1.textSM}
+                        ></InfoCard>
                 </div>}
             </div>
         </>

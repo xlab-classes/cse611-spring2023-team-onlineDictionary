@@ -3,21 +3,20 @@ import React, { Component } from 'react'
 
 import Card from "../UI/Card";
 import classes from './InfoCard.module.css';
+
 export default class InfoCard extends Component {
 
+  
   render() {
     return (
         <div>
             <div>{this.props.img}</div>
             <h2>{this.props.title}</h2>
             <span >
-                <a href="#" >{this.props.word}</a>
+                <a href="#" onClick={()=>this.props.showWord(this.props.word)} >{this.props.word}</a>
             </span>
-            <h4>{this.props.pronounciation}</h4>
-            <h4>{this.props.meaning}</h4>
-            <h4>{this.props.Usage}</h4>
-            <h4>{this.props.meaning2}</h4>
-            <h4>{this.props.Usage2}</h4>
+            <h3>{this.props.month} {this.props.datee && this.props.datee+","} {this.props.yearr}</h3>
+            {/* <h4><a href="#" onClick={()=>!this.props.textSM && this.props.textSM} ></a></h4> */}
         </div>
     )
   }

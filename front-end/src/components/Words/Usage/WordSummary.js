@@ -3,28 +3,18 @@ import speakerLogo from "../../Icons/speaker.png";
 
 const WordSummary = (props) => {
   
-  
-  
-  async function playSound(){
-
-    await fetch(`http://localhost:3001/mongo/audio/${props.word}`)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-
-    // var snd = new Audio(props.audio[0])
-    // snd.play()
+  const playAudio = () => {
+    const audio = new Audio(`http://localhost:3001/mongo/audio/${props.word}`);
+    audio.play();
   }
 
   return (
     <li className={classes.meal}>
-      <div>
-        <h1>{props.word}</h1>
-    
-        <button className={classes.speakerButton} onClick={playSound}>
+      <div className={classes.mealHeader}>
+        <h1 className={classes.word}>{props.word}</h1>
+        <button onClick={playAudio} className={classes.audioPlayer}>
           <img src={speakerLogo} alt="Speaker Logo" />
-        </button> 
-    
+        </button>
       </div>
     </li>
   );

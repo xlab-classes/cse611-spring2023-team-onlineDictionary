@@ -3,9 +3,81 @@ const cors = require('cors');
 const axios = require('axios')
 const app = express()
 app.use(cors());
+const util = require('util')
+const fs = require('fs')
+const request = require('request')
+
+const textToSpeech = require('@google-cloud/text-to-speech')
+require('dotenv').config()
+const client = new textToSpeech.TextToSpeechClient()
+
+function logWord(word, wordFound) {
+    var options = {
+        method: 'POST',
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addWordLog',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // TODO : populate response
+        data: { "word": word, "wordFound": wordFound, "response": "" }
+    }
+    axios(options)
+        .catch(error => {
+            console.log('error is', error)
+        })
+};
+
+// response.send(responseToReact)
+
+
+function createGoogleAudio(responseToReact, word) {
+    // console.log("google audio found : ", responseToReact.hasOwnProperty('GoogleAudio'))
+    // console.log("the original response is : ", responseToReact)
+    var outerResponse = responseToReact
+    if(outerResponse.hasOwnProperty('google_audio')){
+        console.log(word+"  has audio already ")
+    }
+    else {
+        var text = word
+        var languageCode = 'hi-in';
+        var ssmlVoice = 'FEMALE';
+        async function convertTextToMp3(word, languageCode, ssmlVoice) {
+            const text = word
+            const googlerequest = {
+                input: { text: text },
+                voice: { languageCode: languageCode, ssmlGender: ssmlVoice },
+                audioConfig: { audioEncoding: 'MP3' }
+            }
+            const [response] = await client.synthesizeSpeech(googlerequest)
+            const writeFile = util.promisify(fs.writeFile)
+            await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
+            console.log("Text to speech is done.")
+            var path = require('path')
+            // outerResponse['GoogleAudio'] = path.resolve('google_Audios/' + text + '.mp3')
+            //make a post request of the response to the
+            var options = {
+                'method': 'POST',
+                'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addGoogleAudio',
+                'headers': {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  "word": word,
+                  "googleAudioLink": path.resolve('google_Audios/'+text+'.mp3')
+                })
+
+              };
+              request(options, function (error, response) {
+                if (error) throw new Error(error);
+                console.log(response.body);
+              });
+
+        }
+        convertTextToMp3(text, languageCode, ssmlVoice)
+    }
+}
 
 function handleDictionaryData(word, response, body) {
-    // const word = request.params.word;
     const responseToReact = { "word": word, "meanings": [] };
 
     for (const pos of body.usage) {
@@ -56,17 +128,16 @@ function handleDictionaryData(word, response, body) {
 
                 while (randomIndices.size < numRandomDocs) {
                     randomIndices.add(Math.floor(Math.random() * numDocs));
-                    // console.log('in while')
                 }
                 const randomDocs = [...randomIndices].map(index => docs[index].text[0]);
                 responseToReact.generalExamples = randomDocs;
             }
         })
         .finally(() => {
+            createGoogleAudio(body, word)
+            logWord(word, true)
             response.send(responseToReact)
         })
-
-    response.send(responseToReact);
 }
 
 function handleDictionaryAPI(word, response) {
@@ -81,6 +152,7 @@ function handleDictionaryAPI(word, response) {
                 console.log('Erroneous status code' + APIResponse.status)
                 console.log('Entire API response:')
                 console.log(APIResponse)
+                logWord(word, false)
                 return handleDictionaryError("Word meaning not found", response)
             }
 
@@ -142,10 +214,13 @@ function handleDictionaryAPI(word, response) {
                     }
                 })
                 .finally(() => {
+                    createGoogleAudio(responseToReact, word)
+                    logWord(word, true)
                     response.send(responseToReact)
                 })
         })
         .catch(error => {
+            logWord(word, false)
             handleDictionaryError(error, response);
         });
 }
@@ -153,16 +228,16 @@ function handleDictionaryAPI(word, response) {
 function handleDictionaryError(error, response) {
     console.error(error);
     response.status(500).send('Word meaning not found');
+    logWord(word, false)
 }
 
 app.get('/:word', (request, response) => {
     const word = request.params.word.split(' ')[0];
-
     const config = {
         method: 'get',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
         headers: {
-            'apiKey': ''
+            'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
         },
         params: {
             word: word
@@ -218,9 +293,11 @@ app.get("/api/:word", (req, response) => {
 })
 
 const fetchWordLocalRouter = require('./routes/fetchWordLocal');
+const wordStatsRouter = require('./routes/wordStats');
 // const audioRouter = require('./routes/googleAudio');
 
 app.use('/mongo', fetchWordLocalRouter);
+app.use('/getword', wordStatsRouter)
 // app.use('/audio', audioRouter);
 app.listen(3001, () => {
     console.log("Node server running on port 3001")

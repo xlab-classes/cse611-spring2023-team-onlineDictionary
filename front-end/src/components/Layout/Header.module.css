@@ -7,6 +7,7 @@
   flex-direction: column;
   padding: 220px;
   transition: all 0.3s ease-in-out;
+  z-index: 1;
   }
   
   .headerSearching {
@@ -25,6 +26,7 @@
   font-size: 2.5rem;
   color: #ece8de;
   letter-spacing: .3px;
+  font-family:Calibri
 }
 
 form {

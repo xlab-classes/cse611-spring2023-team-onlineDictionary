@@ -17,7 +17,13 @@ function App() {
   async function  wordHandler(word) {
     console.log("in app.js");
     
-    await fetch(`http://localhost:3001/${word}`)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ word: word , languageCode: languageCode })
+  };
+
+    await fetch(`http://localhost:3001/`,requestOptions)
       .then((response) => response.json())
       .then((result) => {setWordData(result);setShowWord(1)})
       .catch((error) => setShowWord(2));

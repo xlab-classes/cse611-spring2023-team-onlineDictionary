@@ -6,6 +6,8 @@ app.use(cors());
 const util = require('util')
 const fs = require('fs')
 const request = require('request')
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
@@ -30,17 +32,16 @@ function logWord(word, wordFound) {
 // response.send(responseToReact)
 
 
-function createGoogleAudio(responseToReact, word) {
-    // console.log("google audio found : ", responseToReact.hasOwnProperty('GoogleAudio'))
-    // console.log("the original response is : ", responseToReact)
+function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     var outerResponse = responseToReact
-    if(outerResponse.hasOwnProperty('google_audio')){
-        console.log(word+"  has audio already ")
-    }
-    else {
+    // if(outerResponse.hasOwnProperty('google_audio')){
+    //     console.log(word+"  has audio already ")
+    // }
+    // else {
         var text = word
-        var languageCode = 'hi-in';
-        var ssmlVoice = 'FEMALE';
+        var languageCode = languageCode;
+        console.log("languageCode is : ",languageCode)
+        var ssmlVoice = 'MALE';
         async function convertTextToMp3(word, languageCode, ssmlVoice) {
             const text = word
             const googlerequest = {
@@ -53,8 +54,6 @@ function createGoogleAudio(responseToReact, word) {
             await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
             console.log("Text to speech is done.")
             var path = require('path')
-            // outerResponse['GoogleAudio'] = path.resolve('google_Audios/' + text + '.mp3')
-            //make a post request of the response to the
             var options = {
                 'method': 'POST',
                 'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addGoogleAudio',
@@ -74,10 +73,10 @@ function createGoogleAudio(responseToReact, word) {
 
         }
         convertTextToMp3(text, languageCode, ssmlVoice)
-    }
+    // }
 }
 
-function handleDictionaryData(word, response, body) {
+function handleDictionaryData(word, response, body,languageCode) {
     const responseToReact = { "word": word, "meanings": [] };
 
     for (const pos of body.usage) {
@@ -134,13 +133,13 @@ function handleDictionaryData(word, response, body) {
             }
         })
         .finally(() => {
-            createGoogleAudio(body, word)
+            createGoogleAudio(body, word,languageCode)
             logWord(word, true)
             response.send(responseToReact)
         })
 }
 
-function handleDictionaryAPI(word, response) {
+function handleDictionaryAPI(word, response,languageCode) {
     const config = {
         method: 'get',
         url: 'https://api.dictionaryapi.dev/api/v2/entries/en/' + word
@@ -231,8 +230,11 @@ function handleDictionaryError(error, response) {
     logWord(word, false)
 }
 
-app.get('/:word', (request, response) => {
-    const word = request.params.word.split(' ')[0];
+app.post('/', (request, response) => {
+    console.log("post method hit")
+    const word = request.body.word;
+    const languageCode = request.body.languageCode;
+    console.log(word,languageCode);
     const config = {
         method: 'get',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
@@ -240,7 +242,8 @@ app.get('/:word', (request, response) => {
             'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
         },
         params: {
-            word: word
+            word: word,
+            languageCode : languageCode
         }
     };
 
@@ -248,15 +251,15 @@ app.get('/:word', (request, response) => {
         .then(mongoResponse => {
             if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
                 console.log('not found in database. fallback to API')
-                handleDictionaryAPI(word, response)
+                handleDictionaryAPI(word, response,languageCode)
             }
             else {
                 console.log('found in mongoDB')
-                handleDictionaryData(word, response, mongoResponse.data);
+                handleDictionaryData(word, response, mongoResponse.data,languageCode);
             }
         })
         .catch(error => {
-            handleDictionaryAPI(word, response)
+            handleDictionaryAPI(word, response,languageCode)
         });
 });
 

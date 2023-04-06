@@ -13,7 +13,7 @@ export default class InfoCard extends Component {
             <div>{this.props.img}</div>
             <h2>{this.props.title}</h2>
             <span >
-                <a href="#" onClick={()=>this.props.showWord(this.props.word)} >{this.props.word}</a>
+                <a id ="wodd" href="#" style={{ fontSize: '2em' }} onClick={()=>this.props.showWord(this.props.word)}  >{this.props.word} </a>
             </span>
             <h3>{this.props.month} {this.props.datee && this.props.datee+","} {this.props.yearr}</h3>
             {/* <h4><a href="#" onClick={()=>!this.props.textSM && this.props.textSM} ></a></h4> */}

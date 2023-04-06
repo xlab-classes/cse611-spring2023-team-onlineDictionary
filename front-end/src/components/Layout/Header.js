@@ -9,7 +9,13 @@ const Header = (props) => {
   const wrapperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [arrowKeyPressed, setArrowKeyPressed] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
+
+  function handleSelectChange(event){
+    setSelectedValue(event.target.value);
+    }
+    console.log(selectedValue);
   useEffect(() => {
     if (searchResults.length > 0) {
       setActiveIndex(0);
@@ -115,16 +121,29 @@ const Header = (props) => {
   };
   
   
-  return (
+return (
     <div ref={wrapperRef}>
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
-                <div className={classes.logo}>
+              <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <select value={selectedValue} onChange={handleSelectChange}>
+            <option value="en-US">en-US</option>
+            <option value="hi-IN">hi-IN</option>
+            <option value="es-ES">es-ES</option>
+            <option value="ja-JP">ja-JP</option>
+            <option value="da-DK">da-DK</option>
+          </select>
+        </div>
+        <div className={classes.logo}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
           <h1>Online Dictionary</h1>
+        </div>
+        <div className={classes.buttonsContainer}>
+          <button className={classes.button1}>Add New Word</button>
+          <button className={classes.button2}>Statistics</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>
@@ -139,10 +158,14 @@ const Header = (props) => {
             {searchResults.length > 0 && (
               <div className={classes.searchResultsContainer}>
                 <ul className={classes.searchResults}>
-                {searchResults.map((result, index) => (
+                  {searchResults.map((result, index) => (
                     <li
                       key={result}
-                      className={index === activeIndex && arrowKeyPressed ? classes.active : ""}
+                      className={
+                        index === activeIndex && arrowKeyPressed
+                          ? classes.active
+                          : ""
+                      }
                       onClick={() => {
                         props.wordHandle(result);
                         setSearchResults([]);
@@ -162,6 +185,7 @@ const Header = (props) => {
       </header>
     </div>
   );
+  
 }
 
 export default Header

@@ -25,7 +25,7 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ word: word , languageCode: languageCode })
+      body: JSON.stringify({ word: word , languageCode: 'en-US' })
   };
 
     await fetch(`http://localhost:3001/`,requestOptions)

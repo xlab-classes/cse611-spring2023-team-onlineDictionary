@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import classes from "./Header.module.css";
-import ubLogo from "../Icons/ub-logo.png";
+import ubLogo from "../../assets/Icons/ub-logo.png";
 import words  from "../../assets/wordList";
 
 const Header = (props) => {

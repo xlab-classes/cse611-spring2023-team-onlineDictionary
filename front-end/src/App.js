@@ -6,6 +6,10 @@ import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";
 
+import InfoCard from "./components/InfoCard/InfoCard";
+import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
+
+
 function App() {
   const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
@@ -23,26 +27,28 @@ function App() {
       .then((response) => response.json())
       .then((result) => {setWordData(result);setShowWord(1)})
       .catch((error) => setShowWord(2));
-
-      // setShowWord(1);
-
-
       console.log(wordData);
-  
-    
-     
   }
 
   function disableWord (){
     setShowWord(0);
   }
+
+  function getDate()
+  {
+    const currentDate = new Date().toLocaleDateString();
+  }
+  
+  const [readMore,setReadMore] =useState(false);
   
 
   return (
     <Fragment>
       <Header wordHandle={wordHandler} wordDisable={disableWord} />
-      <main>{showWord==1 && <Word wordData={wordData}/>}
-      {showWord==2 && <WordNotFound/>}
+      <main>
+        {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
+        {showWord==1 && <Word wordData={wordData}/>}
+        {showWord==2 && <WordNotFound/>}
       </main>
     </Fragment>
   );

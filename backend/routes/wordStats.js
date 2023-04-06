@@ -12,8 +12,13 @@ router.get('/trendingword', (_, response) => {
     };
     request(options, function (error, res) {
         if (error) throw new Error(error);
+        console.log("_____________________")
         console.log(res.body);
-        response.send({"trendingWord":res.body[0].word})
+        console.log("_____________________")
+        if(res.body[0]){
+
+            response.send({"trendingWord":res.body[0].word})
+        }
     });
 });
 

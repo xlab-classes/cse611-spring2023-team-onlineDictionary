@@ -1,0 +1,27 @@
+.MainCard {
+    display: grid;
+    grid-template-columns: 50% 50%; 
+    grid-template-rows: 100%;
+    border-width: medium;
+    border-color: rgb(18, 18, 227);
+}
+
+.MainInfocard {
+    border-radius: 14px;
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+    margin-left: 250px;
+    color: #0c4ad0;
+    border: 5px solid #0436a2;
+}
+.MainInfocardTrend {
+    border-radius: 14px;
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+    color: #0c4ad0;
+    margin-right: 250px;
+    border: 5px solid #0436a2;
+
+}

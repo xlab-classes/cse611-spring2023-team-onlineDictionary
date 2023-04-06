@@ -109,7 +109,7 @@ function handleDictionaryData(word, response, body,languageCode) {
     // TODO: functionize solr req and response to remove redundancy
     let config = {
         method: 'get',
-        url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word
+        url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word +'&rows=1000'
     }
     axios(config)
         .then(solrResponse => {
@@ -122,7 +122,7 @@ function handleDictionaryData(word, response, body,languageCode) {
                 const docs = [...documentSet]
                 // const docs = solrResponse.data.response.docs;
                 const numDocs = docs.length;
-                const numRandomDocs = Math.min(numDocs, 5);
+                const numRandomDocs = Math.min(numDocs, 100);
                 const randomIndices = new Set();
 
                 while (randomIndices.size < numRandomDocs) {
@@ -152,7 +152,7 @@ function handleDictionaryAPI(word, response,languageCode) {
                 console.log('Entire API response:')
                 console.log(APIResponse)
                 logWord(word, false)
-                return handleDictionaryError("Word meaning not found", response)
+                return handleDictionaryError("Word meaning not found", response, word)
             }
 
             // TODO : sort meanings with most number of definitions to determine importance?
@@ -187,7 +187,7 @@ function handleDictionaryAPI(word, response,languageCode) {
 
             let config = {
                 method: 'get',
-                url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word
+                url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word +'&rows=1000'
             }
 
             axios(config)
@@ -201,7 +201,7 @@ function handleDictionaryAPI(word, response,languageCode) {
                         const docs = [...documentSet]
                         // const docs = solrResponse.data.response.docs;
                         const numDocs = docs.length;
-                        const numRandomDocs = Math.min(numDocs, 5);
+                        const numRandomDocs = Math.min(numDocs, 100);
                         const randomIndices = new Set();
 
                         while (randomIndices.size < numRandomDocs) {
@@ -220,11 +220,11 @@ function handleDictionaryAPI(word, response,languageCode) {
         })
         .catch(error => {
             logWord(word, false)
-            handleDictionaryError(error, response);
+            handleDictionaryError(error, response, word);
         });
 }
 
-function handleDictionaryError(error, response) {
+function handleDictionaryError(error, response, word) {
     console.error(error);
     response.status(500).send('Word meaning not found');
     logWord(word, false)

@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import { useState, useRef } from "react";
+import { useState} from "react";
 import { Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";

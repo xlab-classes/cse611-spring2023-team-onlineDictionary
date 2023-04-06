@@ -72,3 +72,13 @@
 .speakerButton:hover {
   background-color: #a19e95;
 }
+
+.source{
+  font-size: smaller;
+  font-style: italic;
+  color: grey;
+}
+
+.rightAlign {
+  text-align: right;
+}

@@ -1,15 +1,30 @@
 import classes from "./Pos.module.css";
-import speakerLogo from "../../Icons/speaker.png";
+import speakerLogo from "../../../assets/Icons/speaker.png";
+
 const Pos = (props) => {
   console.log(props.data["definitions"]);
-  const defList = props.data["definitions"].map((defintion) => (
+
+  const defList = props.data["definitions"].map((definition) => (
     <div>
       <li>
-        {defintion["meaning"]}
-        <ol>{defintion["usage"]}</ol>
+        {definition["meaning"]}
+        {definition["usage"] && (
+            <ol> {definition["usage"]} </ol>
+        )}
       </li>
     </div>
   ));
+
+  let source = null;
+
+  if (props.data["definitions"].length > 0) {
+    const firstDefinition = props.data["definitions"][0];
+    if (firstDefinition["source"]) {
+      source = (
+        <div className={classes.source + " " + classes.rightAlign}>Source: {firstDefinition["source"]}</div>
+      );
+    }
+  }
 
   var audioButton = null;
 
@@ -35,6 +50,7 @@ const Pos = (props) => {
           <span className={classes.icon}>{audioButton}</span>
         </h1>
         <ul>{defList}</ul>
+        {source}
       </div>
     </li>
   );

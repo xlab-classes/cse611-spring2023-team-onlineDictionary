@@ -3,26 +3,24 @@ import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import classes from "./AddWord.module.css";
 
-const AddWord = (props) => {
-  const [addWord, setAddWord] = useState(false);
+const Statistics = (props) => {
+    const [statistics, setStatistics] = useState(false);
+async function callStatistics(event) {
+await fetch(`http://localhost:3001/getWord/getStatistics`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+    setStatistics(result);
+    console.log(result);
+    })
 
-  async function addWordHandler(event) {
-    event.preventDefault();
+    statistics = {};
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        word: event.target.elements.word.value,
-        languageCode: "en-US",
-      }),
-    };
+}
 
-    fetch(`http://localhost:3001/getWord/addNewWord`,
-      requestOptions)
-     
-    setAddWord(!addWord);
-  }
+callStatistics;
+
+
+  
 
   const addWordForm = (
     <div>

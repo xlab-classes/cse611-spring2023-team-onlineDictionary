@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { Fragment } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
@@ -11,26 +11,29 @@ import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function App() {
   const [showWord, setShowWord] = useState(0);
-  const [wordData,setWordData] = useState({});
+  const [wordData, setWordData] = useState({});
 
   const [addWordHandler, setWordHandler] = useState(false);
-   
-  async function  wordHandler(word) {
+
+  async function wordHandler(word) {
     console.log("in app.js");
-    
+
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ word: word , languageCode: "en-US" })
-  };
-    await fetch(`http://localhost:3001/`,requestOptions)
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: word, languageCode: "en-US" }),
+    };
+    await fetch(`http://localhost:3001/`, requestOptions)
       .then((response) => response.json())
-      .then((result) => {setWordData(result);setShowWord(1)})
+      .then((result) => {
+        setWordData(result);
+        setShowWord(1);
+      })
       .catch((error) => setShowWord(2));
-      console.log(wordData);
+    console.log(wordData);
   }
 
-  function disableWord (){
+  function disableWord() {
     setShowWord(0);
   }
   const showWordHandler = () => {
@@ -41,22 +44,24 @@ function App() {
     setWordHandler(false);
   };
 
-  function getDate()
-  {
+  function getDate() {
     const currentDate = new Date().toLocaleDateString();
   }
-  
-  const [readMore,setReadMore] =useState(false);
-  
+
+  const [readMore, setReadMore] = useState(false);
 
   return (
     <Fragment>
       {addWordHandler && <AddWord onClose={hideWordHandler} />}
-      <Header wordHandle={wordHandler} wordDisable={disableWord} />
+      <Header
+        wordHandle={wordHandler}
+        wordDisable={disableWord}
+        onAddWord={showWordHandler}
+      />
       <main>
-        {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
-        {showWord==1 && <Word wordData={wordData} />}
-        {showWord==2 && <WordNotFound onAddWord={showWordHandler}/>}
+        {showWord == 0 && <MainInfoCard showWord={wordHandler} />}
+        {showWord == 1 && <Word wordData={wordData} />}
+        {showWord == 2 && <WordNotFound onAddWord={showWordHandler} />}
       </main>
     </Fragment>
   );

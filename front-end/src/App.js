@@ -14,7 +14,9 @@ import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 function App() {
   const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
-  const [addWordHandler, setWordHandler] = useState(true);
+
+  const [addWordHandler, setWordHandler] = useState(false);
+
 
 
   

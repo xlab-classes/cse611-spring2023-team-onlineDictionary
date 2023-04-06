@@ -38,51 +38,54 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     //     console.log(word+"  has audio already ")
     // }
     // else {
-        var text = word
-        var languageCode = languageCode;
-        console.log("languageCode is : ",languageCode)
-        var ssmlVoice = 'MALE';
-        async function convertTextToMp3(word, languageCode, ssmlVoice) {
-            const text = word
-            const googlerequest = {
-                input: { text: text },
-                voice: { languageCode: languageCode, ssmlGender: ssmlVoice },
-                audioConfig: { audioEncoding: 'MP3' }
-            }
-            const [response] = await client.synthesizeSpeech(googlerequest)
-            const writeFile = util.promisify(fs.writeFile)
-            await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
-            console.log("Text to speech is done.")
-            var path = require('path')
-            var options = {
-                'method': 'POST',
-                'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addGoogleAudio',
-                'headers': {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  "word": word,
-                  "googleAudioLink": path.resolve('google_Audios/'+text+'.mp3')
-                })
-
-              };
-              request(options, function (error, response) {
-                if (error) throw new Error(error);
-                console.log(response.body);
-              });
-
+    var text = word
+    var languageCode = languageCode;
+    console.log("languageCode is : ", languageCode)
+    var ssmlVoice = 'MALE';
+    async function convertTextToMp3(word, languageCode, ssmlVoice) {
+        const text = word
+        const googlerequest = {
+            input: { text: text },
+            voice: { languageCode: languageCode, ssmlGender: ssmlVoice },
+            audioConfig: { audioEncoding: 'MP3' }
         }
-        convertTextToMp3(text, languageCode, ssmlVoice)
+        const [response] = await client.synthesizeSpeech(googlerequest)
+        const writeFile = util.promisify(fs.writeFile)
+        await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
+        console.log("Text to speech is done.")
+        var path = require('path')
+        var options = {
+            'method': 'POST',
+            'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addGoogleAudio',
+            'headers': {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "word": word,
+                "googleAudioLink": path.resolve('google_Audios/' + text + '.mp3')
+            })
+
+        };
+        request(options, function (error, response) {
+            if (error) throw new Error(error);
+            console.log(response.body);
+        });
+
+    }
+    convertTextToMp3(text, languageCode, ssmlVoice)
     // }
 }
 
-function handleDictionaryData(word, response, body,languageCode) {
+function handleDictionaryData(word, response, body, languageCode) {
     const responseToReact = { "word": word, "meanings": [] };
-
+    map = {
+        "intj": "interjection", "adj": "adjective", "adv": "adverb", "prep": "preposition",
+        "pron": "pronoun", "conj": "conjunction", "det": "determiner"
+    }
     for (const pos of body.usage) {
         const meaning = {};
         // part of speech added to response
-        meaning.pos = pos.pos;
+        meaning.pos = map[pos.pos.toLowerCase()] || pos.pos;
         meaning.definitions = [];
 
         // meanings added to response
@@ -109,7 +112,7 @@ function handleDictionaryData(word, response, body,languageCode) {
     // TODO: functionize solr req and response to remove redundancy
     let config = {
         method: 'get',
-        url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word +'&rows=1000'
+        url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word + '&rows=1000'
     }
     axios(config)
         .then(solrResponse => {
@@ -118,9 +121,15 @@ function handleDictionaryData(word, response, body,languageCode) {
                 // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
 
                 // Find few random docs fetched from solr
-                const documentSet = new Set(solrResponse.data.response.docs);
-                const docs = [...documentSet]
-                // const docs = solrResponse.data.response.docs;
+                documentMap = new Map();
+                for (record of solrResponse.data.response.docs) {
+                    if (!documentMap.has(record.text[0])) {
+                        documentMap.set(record.text[0], record.source[0])
+                    }
+                }
+
+                let docs = Array.from(documentMap.keys());
+                
                 const numDocs = docs.length;
                 const numRandomDocs = Math.min(numDocs, 100);
                 const randomIndices = new Set();
@@ -128,18 +137,19 @@ function handleDictionaryData(word, response, body,languageCode) {
                 while (randomIndices.size < numRandomDocs) {
                     randomIndices.add(Math.floor(Math.random() * numDocs));
                 }
-                const randomDocs = [...randomIndices].map(index => docs[index].text[0]);
-                responseToReact.generalExamples = randomDocs;
+                const randomDocs = [...randomIndices].map(index => docs[index]);
+                responseToReact.generalExamples = randomDocs.filter(i => i.length>15);
             }
         })
         .finally(() => {
-            createGoogleAudio(body, word,languageCode)
+            createGoogleAudio(body, word, languageCode)
             logWord(word, true)
             response.send(responseToReact)
+            console.log('finally complete')
         })
 }
 
-function handleDictionaryAPI(word, response,languageCode) {
+function handleDictionaryAPI(word, response, languageCode) {
     const config = {
         method: 'get',
         url: 'https://api.dictionaryapi.dev/api/v2/entries/en/' + word
@@ -187,7 +197,7 @@ function handleDictionaryAPI(word, response,languageCode) {
 
             let config = {
                 method: 'get',
-                url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word +'&rows=1000'
+                url: 'http://35.223.110.79:8983/solr/mycol1/query?q=text:' + word + '&rows=1000'
             }
 
             axios(config)
@@ -195,27 +205,33 @@ function handleDictionaryAPI(word, response,languageCode) {
                     if (solrResponse.data.response.numFound > 0) {
                         // To return first few examples fetched from solr:
                         // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
-
+        
                         // Find few random docs fetched from solr
-                        const documentSet = new Set(solrResponse.data.response.docs);
-                        const docs = [...documentSet]
-                        // const docs = solrResponse.data.response.docs;
+                        documentMap = new Map();
+                        for (record of solrResponse.data.response.docs) {
+                            if (!documentMap.has(record.text[0])) {
+                                documentMap.set(record.text[0], record.source[0])
+                            }
+                        }
+        
+                        let docs = Array.from(documentMap.keys());
+                        
                         const numDocs = docs.length;
                         const numRandomDocs = Math.min(numDocs, 100);
                         const randomIndices = new Set();
-
+        
                         while (randomIndices.size < numRandomDocs) {
                             randomIndices.add(Math.floor(Math.random() * numDocs));
-                            // console.log('in while')
                         }
-                        const randomDocs = [...randomIndices].map(index => docs[index].text[0]);
-                        responseToReact.generalExamples = randomDocs;
+                        const randomDocs = [...randomIndices].map(index => docs[index]);
+                        responseToReact.generalExamples = randomDocs.filter(i => i.length>15);
                     }
                 })
                 .finally(() => {
                     createGoogleAudio(responseToReact, word)
                     logWord(word, true)
                     response.send(responseToReact)
+                    console.log('finally complete')
                 })
         })
         .catch(error => {
@@ -234,7 +250,7 @@ app.post('/', (request, response) => {
     console.log("post method hit")
     const word = request.body.word;
     const languageCode = request.body.languageCode;
-    console.log(word,languageCode);
+    console.log(word, languageCode);
     const config = {
         method: 'get',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
@@ -243,7 +259,7 @@ app.post('/', (request, response) => {
         },
         params: {
             word: word,
-            languageCode : languageCode
+            languageCode: languageCode
         }
     };
 
@@ -251,15 +267,15 @@ app.post('/', (request, response) => {
         .then(mongoResponse => {
             if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
                 console.log('not found in database. fallback to API')
-                handleDictionaryAPI(word, response,languageCode)
+                handleDictionaryAPI(word, response, languageCode)
             }
             else {
                 console.log('found in mongoDB')
-                handleDictionaryData(word, response, mongoResponse.data,languageCode);
+                handleDictionaryData(word, response, mongoResponse.data, languageCode);
             }
         })
         .catch(error => {
-            handleDictionaryAPI(word, response,languageCode)
+            handleDictionaryAPI(word, response, languageCode)
         });
 });
 

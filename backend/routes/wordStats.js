@@ -1,5 +1,6 @@
 const router = require('express').Router();
 var request = require('request');
+const axios = require('axios');
 
 router.get('/trendingword', (_, response) => {
 
@@ -57,5 +58,28 @@ router.post('/addNewWord', (request, response) => {
             console.log(error);
         });
 })
+
+
+router.get('/getstatistics', (_, response) => {
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getStatistics',
+        headers: { }
+      };
+      
+      axios.request(config)
+      .then((res) => {
+        console.log(JSON.stringify(res.data));
+        response.send(res.data[0])
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+
+})
+
+
 
 module.exports = router;

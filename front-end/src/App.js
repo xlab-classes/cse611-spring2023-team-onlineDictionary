@@ -53,8 +53,8 @@ function App() {
       <Header wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
-        {showWord==1 && <Word wordData={wordData}/>}
-        {showWord==2 && <WordNotFound/>}
+        {showWord==1 && <Word wordData={wordData} />}
+        {showWord==2 && <WordNotFound onAddWord={showWordHandler}/>}
       </main>
     </Fragment>
   );

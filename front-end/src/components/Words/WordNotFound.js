@@ -9,8 +9,8 @@ const WordNotFound = (props) => {
   return (
     <div className={classes.container}>
       <Card>
-        <h1>No results found</h1>
-        <button onClick={onClickHandler}>Add a Word</button>
+        <h1>The word you entered is not in our dictionary.</h1>
+        <button className={classes.button} onClick={onClickHandler}>Click here to add this word</button>
       </Card>
     </div>
   );

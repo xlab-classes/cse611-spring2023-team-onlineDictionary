@@ -1,5 +1,6 @@
 const router = require('express').Router();
 var request = require('request');
+const axios = require('axios');
 
 router.get('/trendingword', (_, response) => {
 
@@ -14,6 +15,9 @@ router.get('/trendingword', (_, response) => {
         if (error) throw new Error(error);
         if (res.body[0]) {
             response.send({ "trendingWords": res.body.map(a => a.word) })
+        }
+        else{
+            response.send({"trendingWords":["online","dictionary"]})
         }
     });
 });
@@ -30,7 +34,12 @@ router.get('/wordoftheday', (_, response) => {
     request(options, function (error, res) {
         if (error) throw new Error(error);
         // console.log(res.body);
-        response.send({ "wordoftheDay": res.body[Math.floor(Math.random() * res.body.length)].word })
+        if (res.body[0]) {
+            response.send({ "wordoftheDay": res.body[Math.floor(Math.random() * res.body.length)].word })
+        }
+        else {
+            response.send({ "wordoftheDay": "dictionary" })
+        }
     });
 })
 
@@ -56,6 +65,27 @@ router.post('/addNewWord', (request, response) => {
         .catch((error) => {
             console.log(error);
         });
+})
+
+
+router.get('/getstatistics', (_, response) => {
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getStatistics',
+        headers: {}
+    };
+
+    axios.request(config)
+        .then((res) => {
+            console.log(JSON.stringify(res.data));
+            response.send(res.data[0])
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+
 })
 
 module.exports = router;

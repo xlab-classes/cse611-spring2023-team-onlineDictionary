@@ -1,31 +1,20 @@
 .header {
   background-color: #031839;
-  box-shadow: 0 2px 4px rgba(197, 1, 1, 0.258);
-  height: 10rem;
+  box-shadow: 0 2px 4px rgb(52, 49, 49);
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 220px;
-  transition: all 0.3s ease-in-out;
+  padding: 70px;
   z-index: 1;
 }
 
-.headerSearching {
-  background-color: #001e5f;
-  justify-content: flex-start;
-  padding: 10px 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-}
 
 .title h1 {
   display: flex;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   color: #ece8de;
   letter-spacing: .3px;
-  font-family:Calibri
+  font-family:Calibri;
 }
 
 form {
@@ -99,9 +88,23 @@ button:hover {
   margin: 20px;
   height: 80px;
 }
-
-.searchBoxActive {
-  border: none;
-  outline: none;
+.buttonsContainer {
+  position: absolute;
+  top: 31%;
+  right: 0;
+  margin: 10px;
 }
 
+.button1{
+  border-bottom-left-radius: 1em;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+}
+
+.button2{
+  border-bottom-left-radius: 0rem;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}

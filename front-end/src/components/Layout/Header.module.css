@@ -46,18 +46,19 @@ input{
 
 button {
   border: none;
-  background-color: #c82500;
+  
   color: #fff;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   cursor: pointer;
+  background-color: white;
 }
 
 button:hover {
-  background-color: #900303;
-  color: #dad5d5
+  
+   color: #dad5d5
 }
 
 .searchResultsContainer {
@@ -103,3 +104,4 @@ button:hover {
   border: none;
   outline: none;
 }
+

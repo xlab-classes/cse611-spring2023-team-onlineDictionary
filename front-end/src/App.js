@@ -5,10 +5,7 @@ import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";
 import AddWord from "./components/Words/AddWord/AddWord";
-
-import InfoCard from "./components/InfoCard/InfoCard";
-import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
-
+import React from "react";
 
 import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
@@ -49,13 +46,40 @@ function App() {
   const hideWordHandler = () => {
     setWordHandler(false);
   };
-
-  function getDate()
-  {
-    const currentDate = new Date().toLocaleDateString();
-  }
   
-  const [readMore,setReadMore] =useState(false);
+//   var modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none"
+  //  fetch(`http://localhost:3001/getword/trendingword`)
+  // .then((response) => response.json())
+  // .then((result) => {
+  //     console.log("Check",result)
+  //     this.setState({
+  //         TOD: result.trendingWords[0]
+  //     })
+  // })
+  // .catch((error) => console.log(error));;
+// }
+
+// When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
   
 
   return (
@@ -66,6 +90,14 @@ function App() {
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
         {showWord==1 && <Word wordData={wordData} />}
         {showWord==2 && <WordNotFound onAddWord={showWordHandler}/>}
+
+        {/* <div id="myModal" class="modal">
+
+              <div class="modal-content">
+                <span class="close"></span>
+              </div>
+        </div> */}
+        
       </main>
     </Fragment>
   );

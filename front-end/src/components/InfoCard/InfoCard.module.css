@@ -9,3 +9,20 @@
 #wodd{
     font-size:larger;
 }
+
+#myBtn{
+
+    color: black;
+    background-color: white;
+}
+
+.buttonn
+{
+    color: black;
+    background-color: white;
+    padding-left: 0px;
+}
+button:hover {
+  
+    color: black
+ }

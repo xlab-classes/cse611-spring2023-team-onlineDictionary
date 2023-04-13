@@ -9,6 +9,26 @@
 .mealHeader {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+  top: 5%;
+  left: 5%;
+}
+
+.languageSelect {
+  padding-left: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 0.9rem;
+  background-color: #ccc;
+  border: 2px solid #a19e95;
+  border-radius: 2rem;
+  outline: none;
+  cursor: pointer;
+  width: 70px;
 }
 
 .meal h1 {
@@ -37,12 +57,14 @@
   justify-content: center;
   align-items: center;
   margin-left: 10px; 
+  position: relative;
+
 }
 
 .audioPlayer:hover {
   background-color: #a19e95;
 }
 .audioPlayer img {
-  width: 260%;
+  width: 27px;
   height: auto;
 }

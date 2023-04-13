@@ -8,12 +8,13 @@ const Header = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const wrapperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [arrowKeyPressed, setArrowKeyPressed] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [arrowKeyPressed, setArrowKeyPressed] = useState(false);  
+  const [selectedValue, setSelectedValue] = useState(props.languageCode);
 
 
   function handleSelectChange(event){
     setSelectedValue(event.target.value);
+    props.onLanguageChange(event.target.value);
     }
     console.log(selectedValue);
   useEffect(() => {
@@ -135,15 +136,6 @@ return (
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
-              <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <select value={selectedValue} onChange={handleSelectChange}>
-            <option value="en-US">en-US</option>
-            <option value="hi-IN">hi-IN</option>
-            <option value="es-ES">es-ES</option>
-            <option value="ja-JP">ja-JP</option>
-            <option value="da-DK">da-DK</option>
-          </select>
-        </div>
         <div className={classes.logo}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>

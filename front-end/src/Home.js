@@ -31,7 +31,7 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ word: word , languageCode: languageCode })
   };
-    await fetch(`http://localhost:3001/`,requestOptions)
+    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/`,requestOptions)
       .then((response) => response.json())
       .then((result) => {setWordData(result);setShowWord(1)})
       .catch((error) => setShowWord(2));

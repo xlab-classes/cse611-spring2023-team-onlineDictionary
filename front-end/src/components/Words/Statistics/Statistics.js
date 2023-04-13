@@ -4,6 +4,7 @@ import Modal from "../../UI/Modal";
 
 function Statistics(props) {
   const [statis, setStatistics] = useState(false);
+  
   useEffect(() => {
     test();
   }, []);

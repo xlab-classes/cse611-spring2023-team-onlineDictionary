@@ -8,7 +8,7 @@ const WordSummary = (props) => {
   const playAudio = () => {
     const timestamp = new Date().getTime();
     const audio = new Audio(
-      `http://localhost:3001/mongo/audio/${props.word}?t=${timestamp}&lang=${selectedLanguage}`
+      `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/mongo/audio/${props.word}?t=${timestamp}&lang=${selectedLanguage}`
     );
     audio.play();
   };

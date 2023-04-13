@@ -140,7 +140,6 @@ router.post('/adminWord', (request, response) => {
         },
         data: data
     };
-    console.log(JSON.stringify(data))
     axios.request(config)
         .then((response) => {
             console.log(JSON.stringify(response.data));

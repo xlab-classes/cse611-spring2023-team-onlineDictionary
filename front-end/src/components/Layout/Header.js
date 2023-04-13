@@ -127,15 +127,6 @@ return (
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
-              <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <select value={selectedValue} onChange={handleSelectChange}>
-            <option value="en-US">en-US</option>
-            <option value="hi-IN">hi-IN</option>
-            <option value="es-ES">es-ES</option>
-            <option value="ja-JP">ja-JP</option>
-            <option value="da-DK">da-DK</option>
-          </select>
-        </div>
         <div className={classes.logo}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>

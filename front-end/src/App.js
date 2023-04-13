@@ -14,14 +14,20 @@ function App() {
   const [wordData,setWordData] = useState({});
 
   const [addWordHandler, setWordHandler] = useState(false);
-   
+  const [languageCode, setLanguageCode] = useState('en-US');
+
+  var langcode;
+  function handleLanguageChange(code) {
+    setLanguageCode(code);
+  }
+
   async function  wordHandler(word) {
     console.log("in app.js");
-    
+    console.log("language code is : ",languageCode)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ word: word , languageCode: "en-US" })
+      body: JSON.stringify({ word: word , languageCode: languageCode })
   };
     await fetch(`http://localhost:3001/`,requestOptions)
       .then((response) => response.json())
@@ -52,7 +58,7 @@ function App() {
   return (
     <Fragment>
       {addWordHandler && <AddWord onClose={hideWordHandler} />}
-      <Header wordHandle={wordHandler} wordDisable={disableWord} />
+      <Header wordHandle={wordHandler} wordDisable={disableWord} languageCode={languageCode} onLanguageChange={handleLanguageChange} />
       <main>
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
         {showWord==1 && <Word wordData={wordData} />}

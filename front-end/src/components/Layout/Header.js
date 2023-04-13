@@ -8,12 +8,13 @@ const Header = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const wrapperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [arrowKeyPressed, setArrowKeyPressed] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [arrowKeyPressed, setArrowKeyPressed] = useState(false);  
+  const [selectedValue, setSelectedValue] = useState(props.languageCode);
 
 
   function handleSelectChange(event){
     setSelectedValue(event.target.value);
+    props.onLanguageChange(event.target.value);
     }
     console.log(selectedValue);
   useEffect(() => {

@@ -120,6 +120,15 @@ const Header = (props) => {
       setArrowKeyPressed(true);
     }
   };
+
+  function addWordHandler () {
+    props.onAddWord();
+  }
+
+  function showStatistics()
+  {
+    props.onStatistics();
+  }
   
   
 return (
@@ -127,15 +136,6 @@ return (
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
-              <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <select value={selectedValue} onChange={handleSelectChange}>
-            <option value="en-US">en-US</option>
-            <option value="hi-IN">hi-IN</option>
-            <option value="es-ES">es-ES</option>
-            <option value="ja-JP">ja-JP</option>
-            <option value="da-DK">da-DK</option>
-          </select>
-        </div>
         <div className={classes.logo}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>
@@ -143,8 +143,8 @@ return (
           <h1>Online Dictionary</h1>
         </div>
         <div className={classes.buttonsContainer}>
-          <button className={classes.button1}>Add New Word</button>
-          <button className={classes.button2}>Statistics</button>
+          <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>
+          <button className={classes.button2} onClick={showStatistics}>Statistics</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>

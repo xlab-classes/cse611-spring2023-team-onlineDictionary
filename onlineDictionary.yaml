@@ -1,0 +1,286 @@
+---
+openapi: 3.0.0
+info:
+  title: Dictionary API
+  description: Online Dictionary Application API for MS 611
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/HAMZAHAFIZ87_1/OnlineDictionary/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint
+paths:
+  /getNewWord:
+    description: Get word of the day
+    get:
+      description: Operation to Fetch word of the day
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200'
+  /getTrendingWords:
+    description: Get 100 Trending Words
+    get:
+      description: Fetch the list of  trending words
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trendingWords'
+  /getData:
+    description: Get Data Correspondinng to the word searched
+    get:
+      description: Word is present in the database
+      parameters:
+      - name: word
+        in: query
+        description: Word whose meaning you want to get from database
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getData'
+  /getStatistics:
+    description: Summary of the data in our database
+    get:
+      description: Successfully Fetches the summary
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_1'
+  /addNewWord:
+    description: Add this word as new word in new words collection for admin to review
+    post:
+      description: Use this api to add a word
+      requestBody:
+        description: Body that will have word
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewWord_body'
+        required: true
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+  /addWordLog:
+    description: After every search on the website a word log will be added
+    post:
+      description: Use this api to add word log
+      requestBody:
+        description: Data to be added in word log table
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addWordLog_body'
+        required: true
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+  /addGoogleAudio:
+    description: Used to add google audio link to thw word
+    post:
+      description: Use this api to add audio link
+      requestBody:
+        description: Data to be added in word log table
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addGoogleAudio_body'
+        required: true
+      responses:
+        "200":
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+components:
+  schemas:
+    trendingWords:
+      type: array
+      items:
+        $ref: '#/components/schemas/trendingWords_inner'
+    getData:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64063bfa3183425edb32794f
+        word:
+          type: string
+          example: bird
+        usage:
+          type: array
+          items:
+            $ref: '#/components/schemas/getData_usage'
+    inline_response_200:
+      properties:
+        word:
+          type: string
+          example: berry
+    inline_response_200_1:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 64063bfa3183425edb32794f
+        words:
+          type: integer
+          example: 1
+        wordsWithDefinitions:
+          type: integer
+          example: 2
+        wordsWithAudios:
+          type: integer
+          example: 1
+        wordsWithExamples:
+          type: integer
+          example: 1
+        totalAudios:
+          type: integer
+          example: 1
+        totalExamples:
+          type: integer
+        totalDefinitions:
+          type: integer
+        date:
+          type: string
+          example: 2023/4/11
+    addNewWord_body:
+      type: object
+      properties:
+        word:
+          type: string
+          example: chillax
+    inline_response_200_2:
+      type: object
+      properties:
+        insertId:
+          type: string
+          example: 64345cabgh862ba192
+    addWordLog_body:
+      type: object
+      properties:
+        word:
+          type: string
+          example: chillax
+        wordFound:
+          type: boolean
+          example: true
+        response:
+          type: object
+    addGoogleAudio_body:
+      type: object
+      properties:
+        word:
+          type: string
+          example: chillax
+        googleAudioLink:
+          type: string
+          example: chillax.mp3
+    inline_response_200_3:
+      type: object
+      properties:
+        matchedCount:
+          type: integer
+          example: 1
+        modifiedCount:
+          type: integer
+          example: 1
+    trendingWords_inner:
+      type: object
+      properties:
+        word:
+          type: string
+          example: bird
+    getData_definition:
+      type: object
+      properties:
+        gloss:
+          type: string
+          example: "member of animals characterized by being warm-blooded, having features and wings usually"
+        source:
+          type: string
+          example: Wiktionary
+    getData_examples:
+      type: object
+      properties:
+        text:
+          type: string
+          example: noun
+        type:
+          type: string
+          example: example
+        source:
+          type: string
+          example: Wiktionary
+    getData_definitions:
+      type: object
+      properties:
+        definition:
+          $ref: '#/components/schemas/getData_definition'
+        examples:
+          type: array
+          items:
+            $ref: '#/components/schemas/getData_examples'
+    getData_audio:
+      type: object
+      properties:
+        audioLink:
+          type: string
+          example: https://bird.mp3
+        tags:
+          type: string
+          example: US
+        source:
+          type: string
+          example: Wiktionary
+    getData_usage:
+      type: object
+      properties:
+        pos:
+          type: string
+          example: noun
+        etymology_text:
+          type: string
+          example: "From Middle English brid, fromOld English bridd (\"chick, baby bird\")"
+        etymology_number:
+          type: integer
+          example: 1
+        definitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/getData_definitions'
+        audio:
+          type: array
+          items:
+            $ref: '#/components/schemas/getData_audio'
+        source:
+          type: string
+          example: Wiktionary

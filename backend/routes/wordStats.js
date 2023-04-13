@@ -16,8 +16,8 @@ router.get('/trendingword', (_, response) => {
         if (res.body[0]) {
             response.send({ "trendingWords": res.body.map(a => a.word) })
         }
-        else{
-            response.send({"trendingWords":["online","dictionary"]})
+        else {
+            response.send({ "trendingWords": ["online", "dictionary"] })
         }
     });
 });
@@ -87,5 +87,69 @@ router.get('/getstatistics', (_, response) => {
 
 
 })
+
+router.get('/getNewWords', (_, response) => {
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords',
+        headers: {}
+    };
+
+    axios.request(config)
+        .then((res) => {
+            response.send(res.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+})
+
+router.post('/adminWord', (request, response) => {
+    word = request.body.word
+    let data = {
+        word: word,
+        state: request.body.state
+    }
+
+    if (request.body.state == "accept") {
+        wordData = {
+            word: word,
+            usage: [{
+                pos: "general",
+                definitions: [{
+                    definition: {
+                        gloss: request.body.meaning,
+                        source: "Online Dictionary"
+                    },
+                    examples: []
+                }],
+                etymology_text: "",
+                etymology_number: 0,
+                audio:[]
+            }]
+
+        }
+        data.wordData = wordData
+    }
+    let config = {
+        method: 'post',
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/acceptRejectWord',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+    axios.request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+})
+
+
+
 
 module.exports = router;

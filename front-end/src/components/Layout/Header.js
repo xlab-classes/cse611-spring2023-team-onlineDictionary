@@ -136,11 +136,20 @@ return (
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
+          <div style={{ position: 'absolute', top: '10px', right: '10px' }} className={classes.dropdown}>
+        <select value={selectedValue} onChange={handleSelectChange} className={classes.languageSelect}>
+            <option value="en-US">en-US</option>
+            <option value="hi-IN">hi-IN</option>
+            <option value="es-ES">es-ES</option>
+            <option value="ja-JP">ja-JP</option>
+            <option value="da-DK">da-DK</option>
+          </select>
+        </div>
         <div className={classes.logo}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
-          <h1>Online Dictionary</h1>
+          <h1 href="#" id="online-dictionary">Online Dictionary</h1>
         </div>
         <div className={classes.buttonsContainer}>
           <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>

@@ -4,12 +4,13 @@ import Modal from "../../UI/Modal";
 
 function Statistics(props) {
   const [statis, setStatistics] = useState(false);
+  
   useEffect(() => {
     test();
   }, []);
 
   async function test() {
-    await fetch(`http://localhost:3001/getWord/getStatistics`)
+    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getWord/getStatistics`)
       .then((response) => response.json())
       .then((result) => {
         setStatistics(result);

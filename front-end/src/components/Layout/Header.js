@@ -120,6 +120,15 @@ const Header = (props) => {
       setArrowKeyPressed(true);
     }
   };
+
+  function addWordHandler () {
+    props.onAddWord();
+  }
+
+  function showStatistics()
+  {
+    props.onStatistics();
+  }
   
   
 return (
@@ -134,8 +143,8 @@ return (
           <h1>Online Dictionary</h1>
         </div>
         <div className={classes.buttonsContainer}>
-          <button className={classes.button1}>Add New Word</button>
-          <button className={classes.button2}>Statistics</button>
+          <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>
+          <button className={classes.button2} onClick={showStatistics}>Statistics</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>

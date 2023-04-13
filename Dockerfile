@@ -23,6 +23,6 @@ RUN npm install --silent
 EXPOSE 3000
 
 WORKDIR /app
-COPY ./start_scripts.sh ./start_scripts.sh
-CMD ./start_scripts.sh
+COPY ./startscript.sh ./startscript.sh
+CMD ["bash", "./startscript.sh"]
 

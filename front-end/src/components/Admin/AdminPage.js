@@ -2,18 +2,23 @@ import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
 
 const AdminPage = () => {
-  const [data, setData] = useState(false);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     getNewWordList();
   }, []);
 
   async function getNewWordList() {
-    await fetch(`http://localhost:3001/getWord/getStatistics`)
+    await fetch(`http://localhost:3001/getword/getnewwords`)
       .then((response) => response.json())
       .then((result) => {
+        result = result.map((item, index) => {
+          return { ...item, id: index + 1 };
+        });
         setData(result);
       });
+
+      
   }
 
   function acceptRejectWords(postBody) {
@@ -23,7 +28,7 @@ const AdminPage = () => {
       body: JSON.stringify(postBody),
     };
 
-    fetch(`http://localhost:3001/getWord/addNewWord`,
+    fetch(`http://localhost:3001/getword/adminWord`,
       requestOptions)
 
   }
@@ -68,9 +73,9 @@ const AdminPage = () => {
         <thead>
           <tr>
             <th>Word</th>
+            <th>Add Meaning</th>
             <th>Accept</th>
             <th>Reject</th>
-            <th>Add Meaning</th>
             <th>Show Meaning</th>
           </tr>
         </thead>
@@ -82,10 +87,10 @@ const AdminPage = () => {
                 <input type="text" value={meanings[item.id] || ''} onChange={(e) => handleMeaningChange(item.id, e.target.value)} />
               </td>
               <td>
-                <button className="accept" onClick={() => handleAccept(item.id)}>Accept</button>
+                <button className="accept" onClick={() => acceptRejectWords({word : item.word, state:"accept",meaning:meanings[item.id]})}>Accept</button>
               </td>
               <td>
-                <button className="reject" onClick={() => handleReject(item.id)}>Reject</button>
+                <button className="reject" onClick={() => acceptRejectWords({word : item.word, state:"reject",meaning:""})}>Reject</button>
               </td>
               <td>
                 <button className="show-meaning-button" onClick={() => handleShowMeaning(item.word)}>Show meaning</button>

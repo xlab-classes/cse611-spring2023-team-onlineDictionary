@@ -5,6 +5,7 @@ import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";
 import AddWord from "./components/Words/AddWord/AddWord";
+import Statistics from "./components/Words/Statistics/Statistics";
 
 import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
@@ -14,6 +15,7 @@ function App() {
   const [wordData,setWordData] = useState({});
 
   const [addWordHandler, setWordHandler] = useState(false);
+  const [statistics, setStatistics] = useState(false);
   const [languageCode, setLanguageCode] = useState('en-US');
 
   var langcode;
@@ -47,6 +49,14 @@ function App() {
     setWordHandler(false);
   };
 
+  const showStatistics = () => {
+    setStatistics(true);
+  };
+
+  const hideStatistics = () => {
+    setStatistics(false);
+  };
+
   function getDate()
   {
     const currentDate = new Date().toLocaleDateString();
@@ -58,7 +68,8 @@ function App() {
   return (
     <Fragment>
       {addWordHandler && <AddWord onClose={hideWordHandler} />}
-      <Header wordHandle={wordHandler} wordDisable={disableWord} languageCode={languageCode} onLanguageChange={handleLanguageChange} />
+      {statistics && <Statistics onClose={hideStatistics} />}
+      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} languageCode={languageCode} onLanguageChange={handleLanguageChange} />
       <main>
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
         {showWord==1 && <Word wordData={wordData} />}

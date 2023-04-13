@@ -6,6 +6,10 @@ import WordSummary from "./Usage/WordSummary";
 import Definitions from "./Usage/Definitions";
 
 const AvailableUsage = (props) => {
+
+  function handleLanguageChange(data){
+    props.onLanguageChange(data);
+  }
   // var [posDictionary,defList,audioList] = FormatPos(props.wordData);
   // console.log(audioList);
   // console.log(defList);
@@ -26,7 +30,7 @@ const AvailableUsage = (props) => {
   return (
     <section className={classes.meals}>
       <Card>
-        <WordSummary word={props.wordData["word"]}  />
+        <WordSummary word={props.wordData["word"]} onLanguageChange = {handleLanguageChange} />
         <ul>{posList}</ul>
         {"generalExamples" in props.wordData &&  <Definitions item={props.wordData.generalExamples} name="Example Usage"/>}
       </Card>

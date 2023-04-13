@@ -12,24 +12,6 @@
   position: relative;
 }
 
-.dropdown {
-  position: relative;
-  top: 5%;
-  left: 5%;
-}
-
-.languageSelect {
-  padding-left: 5%;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  font-size: 0.9rem;
-  background-color: #ccc;
-  border: 2px solid #a19e95;
-  border-radius: 2rem;
-  outline: none;
-  cursor: pointer;
-  width: 70px;
-}
 
 .meal h1 {
   display: inline-block;

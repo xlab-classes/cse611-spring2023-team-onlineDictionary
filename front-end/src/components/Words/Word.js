@@ -5,9 +5,12 @@ import AvailableUsage from './AvailableUsage';
 
 
 const Word = (props) => {
+  function handleLanguageChange(data){
+    props.onLanguageChange(data);
+  }
   return (
     <Fragment>
-     <AvailableUsage wordData={props.wordData}/>
+     <AvailableUsage wordData={props.wordData} onLanguageChange = {handleLanguageChange}/>
      
     </Fragment>
   );

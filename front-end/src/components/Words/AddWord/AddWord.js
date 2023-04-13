@@ -18,7 +18,7 @@ const AddWord = (props) => {
       }),
     };
 
-    fetch(`http://localhost:3001/getWord/addNewWord`,
+    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getWord/addNewWord`,
       requestOptions)
      
     setAddWord(!addWord);

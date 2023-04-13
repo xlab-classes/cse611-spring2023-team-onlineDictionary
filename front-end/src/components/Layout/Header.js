@@ -123,6 +123,11 @@ const Header = (props) => {
   function addWordHandler () {
     props.onAddWord();
   }
+
+  function showStatistics()
+  {
+    props.onStatistics();
+  }
   
   
 return (
@@ -147,7 +152,7 @@ return (
         </div>
         <div className={classes.buttonsContainer}>
           <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>
-          <button className={classes.button2}>Statistics</button>
+          <button className={classes.button2} onClick={showStatistics}>Statistics</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>

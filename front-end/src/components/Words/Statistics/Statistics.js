@@ -1,45 +1,40 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import classes from "./Statistics.module.css"
 import Modal from "../../UI/Modal";
-import classes from "./AddWord.module.css";
 
-const Statistics = (props) => {
-    const [statistics, setStatistics] = useState(false);
-async function callStatistics(event) {
-await fetch(`http://localhost:3001/getWord/getStatistics`, requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-    setStatistics(result);
-    console.log(result);
-    })
+function Statistics(props) {
+  const [statis, setStatistics] = useState(false);
+  useEffect(() => {
+    test();
+  }, []);
 
-    statistics = {};
+  async function test() {
+    await fetch(`http://localhost:3001/getWord/getStatistics`)
+      .then((response) => response.json())
+      .then((result) => {
+        setStatistics(result);
+      });
+  }
 
+  var statList = [];
+
+  for (var key in statis) {
+    if (key == "_id") {
+      continue;
+    }
+    statList.push(
+      <li className={classes.li}>
+       <h5>{key}</h5> <h5>{statis[key]}{" "}
+        </h5>
+      </li>
+    );
+  }
+
+  return (
+    <Modal onClose={props.onClose}>
+      <ul className={classes.ul}>{statList}</ul>
+    </Modal>
+  );
 }
 
-callStatistics;
-
-
-  
-
-  const addWordForm = (
-    <div>
-      <h1 className={classes.h1}>Help us in increasing our Vocabulary</h1>
-      <form className={classes.form} onSubmit={addWordHandler}>
-        <input
-          className={classes.input}
-          type="text"
-          name="word"
-          placeholder={"Add a New Word"}
-        />
-        <button className={classes.button}>Submit</button>
-      </form>
-    </div>
-  );
-
-  return <Modal onClose={props.onClose}>{!addWord && addWordForm}
-  {addWord && <h1>Your word has been sucessfully added to Queue</h1>}
-  </Modal>;
-};
-
-export default AddWord;
+export default Statistics;

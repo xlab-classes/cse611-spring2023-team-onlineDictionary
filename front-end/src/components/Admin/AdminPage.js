@@ -9,7 +9,7 @@ const AdminPage = () => {
   }, []);
 
   async function getNewWordList() {
-    await fetch(`http://localhost:3001/getword/getnewwords`)
+    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords`)
       .then((response) => response.json())
       .then((result) => {
         result = result.map((item, index) => {
@@ -28,7 +28,7 @@ const AdminPage = () => {
       body: JSON.stringify(postBody),
     };
 
-    fetch(`http://localhost:3001/getword/adminWord`,
+    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/adminWord`,
       requestOptions)
 
   }

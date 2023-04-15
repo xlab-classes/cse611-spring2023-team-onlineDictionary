@@ -44,7 +44,7 @@ this.state1={
             .then((result) => {
                 console.log("Check",result)
                 this.setState({
-                    TOD: result.trendingWords[0]
+                    TOD: result.trendingWords
                 })
             })
             .catch((error) => console.log(error));
@@ -71,9 +71,9 @@ this.state1={
                 <div className={classes.MainInfocardTrend}>
                     <InfoCard  
                         title={"TRENDING WORD"}
-                        word={TOD}
+                        word={TOD[0]}
                         showWord={this.props.showWord}
-                        
+                        listData = {TOD}
                         listFlag = {true}
                         ></InfoCard>
                 </div>}

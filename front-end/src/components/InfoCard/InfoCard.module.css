@@ -3,7 +3,7 @@
     padding: 10px;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); */
     border-radius: 14px;
-    background-color: white;
+    background-color: #f6f6f6;
 }
 
 #wodd{
@@ -13,13 +13,13 @@
 #myBtn{
 
     color: black;
-    background-color:#ECEBEB;
+    background-color:#F6F6F6;
 }
 
 .buttonn
 {
     color: black;
-    background-color: #ECEBEB;
+    background-color: #F6F6F6;
     padding-left: 0px;
 }
 button:hover {
@@ -81,7 +81,7 @@ button:hover {
 .buttonnon{
 
     color: black;
-    background-color: #ECEBEB;
+    background-color: #F6F6F6;
     padding-left: 0px;
 }
 

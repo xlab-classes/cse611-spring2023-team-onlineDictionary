@@ -34,6 +34,7 @@ const WordSummary = (props) => {
         <div style={{ position: 'absolute', top: '15px', right: '10px' }} className={classes.dropdown}>
         <select value={selectedValue} onChange={handleSelectChange} className={classes.languageSelect}>
             <option value="en-US">en-US</option>
+            <option value="en-GB">en-GB</option>
             <option value="hi-IN">hi-IN</option>
             <option value="es-ES">es-ES</option>
             <option value="ja-JP">ja-JP</option>

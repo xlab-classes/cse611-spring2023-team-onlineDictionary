@@ -70,3 +70,14 @@
   cursor: pointer;
   width: 70px;
 }
+
+.source {
+  position: absolute;
+  font-size: smaller;
+  font-style: italic;
+  color: grey;
+  text-align: right;
+  width: 80%;
+  margin-top: 2.6rem;
+  left: 12rem;
+}

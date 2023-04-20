@@ -175,7 +175,7 @@ return (
               </div>
             )}
           </div>
-          <button className={classes.buttn } variant="contained"><img src={magnifying}  width={"14px"} />{}</button>
+          <button className={classes.button }> Submit </button>
         </form>
       </header>
     </div>

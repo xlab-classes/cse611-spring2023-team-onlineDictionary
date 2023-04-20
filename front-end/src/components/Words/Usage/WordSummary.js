@@ -41,6 +41,7 @@ const WordSummary = (props) => {
           </select>
         </div>
         </div>
+        <div className={classes.source}>Source: Google Audio</div>
     </li>
   );
 };

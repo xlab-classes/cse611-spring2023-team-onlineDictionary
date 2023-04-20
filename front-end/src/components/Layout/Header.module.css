@@ -35,20 +35,18 @@ input{
 
 button {
   border: none;
-  
-  color: black;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   cursor: pointer;
-  background-color: white;
-
+  background-color: #c82500;
+  color: #fff;
 }
 
-button:hover {
-  
-   color: #dad5d5
+.button:hover {
+  background-color: #900303;
+  color: #dad5d5;
 }
 
 .searchResultsContainer {
@@ -101,6 +99,7 @@ button:hover {
   border-top-left-radius: 1rem;
   border-top-right-radius: 0rem;
   border-bottom-right-radius: 0rem;
+  background-color: #c82500;
 }
 
 .button2{
@@ -108,9 +107,20 @@ button:hover {
   border-top-left-radius: 0rem;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  background-color: #c82500;
+}
+
+.button1:hover {
+  background-color: #900303;
+  color: #dad5d5;
+}
+
+.button2:hover {
+  background-color: #900303;
+  color: #dad5d5;
 }
 
 
-#online-dictionary:hover {
+header .title h1:hover {
   cursor: pointer;
 }

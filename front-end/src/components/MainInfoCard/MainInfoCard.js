@@ -28,7 +28,7 @@ this.state1={
     componentDidMount() {
         console.log("in MainInfoCard.js");
             
-        fetch(`http://localhost:3001/getword/wordoftheday`)
+        fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/wordoftheday`)
             .then((response) => response.json())
             .then((result) => {
                 console.log(result)
@@ -39,7 +39,7 @@ this.state1={
             .catch((error) => console.log(error));
             console.log("completed");
 
-        fetch(`http://localhost:3001/getword/trendingword`)
+        fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/trendingword`)
             .then((response) => response.json())
             .then((result) => {
                 console.log("Check",result)

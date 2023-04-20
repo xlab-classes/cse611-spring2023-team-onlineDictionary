@@ -9,7 +9,9 @@
 .mealHeader {
   display: flex;
   align-items: center;
+  position: relative;
 }
+
 
 .meal h1 {
   display: inline-block;
@@ -37,12 +39,14 @@
   justify-content: center;
   align-items: center;
   margin-left: 10px; 
+  position: relative;
+
 }
 
 .audioPlayer:hover {
   background-color: #a19e95;
 }
 .audioPlayer img {
-  width: 260%;
+  width: 27px;
   height: auto;
 }

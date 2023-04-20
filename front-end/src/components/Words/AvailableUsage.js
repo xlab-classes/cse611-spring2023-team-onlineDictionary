@@ -30,7 +30,7 @@ const AvailableUsage = (props) => {
   return (
     <section className={classes.meals}>
       <Card>
-        <WordSummary word={props.wordData["word"]} onLanguageChange = {handleLanguageChange} />
+        <WordSummary word={props.wordData["word"]} languageCode={props.languageCode} onLanguageChange = {handleLanguageChange} />
         <ul>{posList}</ul>
         {"generalExamples" in props.wordData &&  <Definitions item={props.wordData.generalExamples} name="Example Usage"/>}
       </Card>

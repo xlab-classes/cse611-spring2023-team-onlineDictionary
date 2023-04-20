@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import classes from "./Header.module.css";
 import ubLogo from "../../assets/Icons/ub-logo.png";
 import words  from "../../assets/wordList";
+import Button from '@mui/material/Button';
+import magnifying from "../../assets/Icons/magnimg2.png"
 
 const Header = (props) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -190,7 +192,7 @@ return (
               </div>
             )}
           </div>
-          <button>Submit</button>
+          <button className={classes.buttn } variant="contained"><img src={magnifying}  width={"14px"} />{}</button>
         </form>
       </header>
     </div>

@@ -42,9 +42,9 @@ this.state1={
         fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/trendingword`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
+                console.log("Check",result)
                 this.setState({
-                    TOD: result
+                    TOD: result.trendingWords
                 })
             })
             .catch((error) => console.log(error));
@@ -71,9 +71,10 @@ this.state1={
                 <div className={classes.MainInfocardTrend}>
                     <InfoCard  
                         title={"TRENDING WORD"}
-                        word={TOD.trendingWord}
+                        word={TOD[0]}
                         showWord={this.props.showWord}
-                       // textSM = {this.state1.textSM}
+                        listData = {TOD}
+                        listFlag = {true}
                         ></InfoCard>
                 </div>}
             </div>

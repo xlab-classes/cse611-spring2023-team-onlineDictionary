@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import classes from "./Header.module.css";
 import ubLogo from "../../assets/Icons/ub-logo.png";
 import words  from "../../assets/wordList";
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 import magnifying from "../../assets/Icons/magnimg2.png"
 
 const Header = (props) => {

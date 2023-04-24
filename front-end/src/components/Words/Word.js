@@ -10,7 +10,7 @@ const Word = (props) => {
   }
   return (
     <Fragment>
-     <AvailableUsage wordData={props.wordData} onLanguageChange = {handleLanguageChange}/>
+     <AvailableUsage wordData={props.wordData} languageCode={props.languageCode} onLanguageChange = {handleLanguageChange}/>
      
     </Fragment>
   );

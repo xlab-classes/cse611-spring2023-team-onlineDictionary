@@ -11,6 +11,7 @@ import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function Home() {
+function Home() {
   const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
   const [searchedWord,setSearchedWord] = useState("");
@@ -82,4 +83,4 @@ function Home() {
   );
 }
 // changes added
-export default Home;
+export default App;

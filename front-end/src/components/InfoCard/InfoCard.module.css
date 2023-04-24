@@ -5,15 +5,21 @@
     border-radius: 14px;
     background-color: #f6f6f6;
 }
-
-#wodd{
-    font-size:larger;
+.wodd{
+  color: #0C4AD0;
+  cursor: pointer;
+  font-size: 2.5rem;
+  padding: 1rem;
 }
 
-#myBtn{
+.woddbutton{
+  background-color: #d9d9d9b7;
+  border-radius: 15rem;
+  border: 2.5px solid #7b7b7b;
+}
 
-    color: black;
-    background-color:#F6F6F6;
+.woddbutton:hover{
+  background-color: #c0c0c0;
 }
 
 .buttonn
@@ -22,10 +28,7 @@
     background-color: #F6F6F6;
     padding-left: 0px;
 }
-button:hover {
-  
-    color: black
- }
+
  
  .modal {
    
@@ -54,7 +57,7 @@ button:hover {
   
   /* Modal Content/Box */
   .modal-content {
-    background-color: #fefefe;
+    background-color: #973030;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
@@ -79,23 +82,36 @@ button:hover {
   }
 
 .buttonnon{
+  background-color: #ccc;
+  color: #333;
+  border-radius: 50px;
+  padding: 5px 12px 5px 12px;
+  font-size: 15px;
+  margin-left: 0.5rem;
+  margin-top: 0.7rem;
+}
 
-    color: black;
-    background-color: #F6F6F6;
-    padding-left: 0px;
+.buttonnon:hover{
+  background-color: #a2a2a2;
+  color: #333;
 }
 
 .Modall1{
-  height: 40px;
+  height: 60px;
   width: 600px;
   border-style: solid;
-  border-width: 3px;
-  border-color: black;
-  border-radius: 10px;
-  margin: 2px;
-  padding: 10px;
+  border-width: 3 px;
+  border-color: rgb(32, 68, 168);
+  border-radius: 30px;
+  padding-top: 10px;
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 0px 0px 7px 0px; 
+}
 
-  
+.Modall1:hover{
+  background-color: rgb(194, 194, 194);
+  cursor: pointer;
 }
 
 

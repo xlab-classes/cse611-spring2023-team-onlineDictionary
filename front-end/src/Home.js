@@ -69,10 +69,10 @@ function App() {
     <Fragment>
       {addWordHandler && <AddWord onClose={hideWordHandler} />}
       {statistics && <Statistics onClose={hideStatistics} />}
-      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} languageCode={languageCode} onLanguageChange={handleLanguageChange} />
+      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord}/>
       <main>
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
-        {showWord==1 && <Word wordData={wordData} />}
+        {showWord==1 && <Word wordData={wordData}  languageCode={languageCode} onLanguageChange={handleLanguageChange} />}
         {showWord==2 && <WordNotFound onAddWord={showWordHandler}/>}
       </main>
     </Fragment>

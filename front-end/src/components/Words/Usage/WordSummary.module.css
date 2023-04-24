@@ -50,3 +50,34 @@
   width: 27px;
   height: auto;
 }
+
+.dropdown {
+  position: relative;
+  top: 5%;
+  right: 5%;
+  margin-right: -90px;
+}
+
+.languageSelect {
+  padding-left: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 0.9rem;
+  background-color: #ccc;
+  border: 2px solid #a19e95;
+  border-radius: 2rem;
+  outline: none;
+  cursor: pointer;
+  width: 70px;
+}
+
+.source {
+  position: absolute;
+  font-size: smaller;
+  font-style: italic;
+  color: grey;
+  text-align: right;
+  width: 80%;
+  margin-top: 2.6rem;
+  left: 12rem;
+}

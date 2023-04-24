@@ -43,7 +43,7 @@
 
 }
 
-.audioPlayer:hover {
+.audioPlayer:active{
   background-color: #a19e95;
 }
 .audioPlayer img {
@@ -79,5 +79,5 @@
   text-align: right;
   width: 80%;
   margin-top: 2.6rem;
-  left: 12rem;
+  left: 12.5rem;
 }

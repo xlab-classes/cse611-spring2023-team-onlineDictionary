@@ -10,9 +10,10 @@ import Statistics from "./components/Words/Statistics/Statistics";
 import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
-function App() {
+function Home() {
   const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
+  const [searchedWord,setSearchedWord] = useState("");
 
   const [addWordHandler, setWordHandler] = useState(false);
   const [statistics, setStatistics] = useState(false);
@@ -24,7 +25,7 @@ function App() {
   }
 
   async function  wordHandler(word) {
-    console.log("in app.js");
+    console.log("in Home.js");
     console.log("language code is : ",languageCode)
     const requestOptions = {
       method: 'POST',
@@ -33,8 +34,8 @@ function App() {
   };
     await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/`,requestOptions)
       .then((response) => response.json())
-      .then((result) => {setWordData(result);setShowWord(1)})
-      .catch((error) => setShowWord(2));
+      .then((result) => {setWordData(result);setShowWord(1);setSearchedWord(word)})
+      .catch((error) => {setShowWord(2);setSearchedWord(word)});
       console.log(wordData);
   }
 
@@ -42,7 +43,7 @@ function App() {
     setShowWord(0);
   }
   const showWordHandler = () => {
-    setWordHandler(true);
+    setShowWord(3);
   };
 
   const hideWordHandler = () => {
@@ -50,7 +51,7 @@ function App() {
   };
 
   const showStatistics = () => {
-    setStatistics(true);
+    setShowWord(4);
   };
 
   const hideStatistics = () => {
@@ -67,16 +68,18 @@ function App() {
 
   return (
     <Fragment>
-      {addWordHandler && <AddWord onClose={hideWordHandler} />}
-      {statistics && <Statistics onClose={hideStatistics} />}
+      
+      
       <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} languageCode={languageCode} onLanguageChange={handleLanguageChange} />
       <main>
         {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
         {showWord==1 && <Word wordData={wordData} />}
-        {showWord==2 && <WordNotFound onAddWord={showWordHandler}/>}
+        {showWord==2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
+        {showWord==3  && <AddWord onClose={hideWordHandler} />}
+        {showWord==4 && <Statistics onClose={hideStatistics} />}
       </main>
     </Fragment>
   );
 }
 // changes added
-export default App;
+export default Home;

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 
 import Modal from "../../UI/Modal";
 import classes from "./AddWord.module.css";
 
 const AddWord = (props) => {
-  const [addWord, setAddWord] = useState(false);
+  const [addWord, setAddWord] = useState(true);
 
   async function addWordHandler(event) {
     event.preventDefault();
@@ -23,6 +23,9 @@ const AddWord = (props) => {
      
     setAddWord(!addWord);
   }
+ const clickHandler = () =>{
+  setAddWord(!addWord);
+ } 
 
   const addWordForm = (
     <div>
@@ -39,9 +42,17 @@ const AddWord = (props) => {
     </div>
   );
 
-  return <Modal onClose={props.onClose}>{!addWord && addWordForm}
-  {addWord && <h1>Your word has been sucessfully added to Queue</h1>}
-  </Modal>;
+  const wordAddedForm = (<div><h1>Word has been added to Queue. Please click here if you want to add any other Word.</h1>
+  <button onClick={clickHandler}>ADD WORD</button>
+  </div>);
+
+  // return <Modal onClose={props.onClose}>{!addWord && addWordForm}
+  // {addWord && <h1>Your word has been sucessfully added to Queue</h1>}
+  // </Modal>;
+   return (<Fragment>
+       {addWord && addWordForm}
+       {!addWord && wordAddedForm}
+   </Fragment>)
 };
 
 export default AddWord;

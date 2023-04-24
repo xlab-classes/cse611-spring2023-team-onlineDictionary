@@ -56,24 +56,24 @@ this.state1={
         return (
         <>
             <div className={classes.MainCard}>
-                {WOD && 
+                {1 && 
                 <div className={classes.MainInfocard}>
                     <InfoCard
                         title ={"WORD OF THE DAY"} 
-                        word={WOD.wordoftheDay} 
+                        // word={WOD.wordoftheDay} 
                         showWord={this.props.showWord}
                         month = {this.state.monthh}
                         datee = {this.state.date1}
                         yearr = {this.state.yearr}
                         />
                 </div>}
-                {TOD &&
+                {2 &&
                 <div className={classes.MainInfocardTrend}>
                     <InfoCard  
                         title={"TRENDING WORD"}
-                        word={TOD[0]}
+                        // word={TOD[0]}
                         showWord={this.props.showWord}
-                        listData = {TOD}
+                        // listData = {TOD}
                         listFlag = {true}
                         ></InfoCard>
                 </div>}

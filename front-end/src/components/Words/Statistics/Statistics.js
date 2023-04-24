@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import classes from "./Statistics.module.css"
 import Modal from "../../UI/Modal";
+
 
 function Statistics(props) {
   const [statis, setStatistics] = useState(false);
@@ -32,9 +33,9 @@ function Statistics(props) {
   }
 
   return (
-    <Modal onClose={props.onClose}>
-      <ul className={classes.ul}>{statList}</ul>
-    </Modal>
+   <Fragment>
+    {statList}
+    </Fragment>
   );
 }
 

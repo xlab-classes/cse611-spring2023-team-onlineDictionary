@@ -44,11 +44,6 @@ button {
   color: #fff;
 }
 
-.button:hover {
-  background-color: #900303;
-  color: #dad5d5;
-}
-
 .searchResultsContainer {
   position: absolute;
   top: 100%;
@@ -110,12 +105,8 @@ button {
   background-color: #c82500;
 }
 
-.button1:hover {
-  background-color: #900303;
-  color: #dad5d5;
-}
-
-.button2:hover {
+.button1:active,
+.button2:active, .button:active {
   background-color: #900303;
   color: #dad5d5;
 }

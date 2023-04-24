@@ -69,7 +69,7 @@
   width: 100%;
 }
 
-.speakerButton:hover {
+.speakerButton:active {
   background-color: #a19e95;
 }
 

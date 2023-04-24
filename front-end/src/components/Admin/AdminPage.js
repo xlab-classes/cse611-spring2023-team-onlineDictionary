@@ -31,6 +31,10 @@ const AdminPage = () => {
     fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/adminWord`,
       requestOptions)
 
+       setData((prevState)=>{
+        return prevState.filter((item) => item.word !== postBody.word)
+       })
+
   }
 
   const [acceptedWords, setAcceptedWords] = useState([]);

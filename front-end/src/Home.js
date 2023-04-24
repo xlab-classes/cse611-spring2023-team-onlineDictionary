@@ -10,7 +10,7 @@ import Statistics from "./components/Words/Statistics/Statistics";
 import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
-function Home() {
+
 function Home() {
   const [showWord, setShowWord] = useState(0);
   const [wordData,setWordData] = useState({});
@@ -83,4 +83,4 @@ function Home() {
   );
 }
 // changes added
-export default App;
+export default Home;

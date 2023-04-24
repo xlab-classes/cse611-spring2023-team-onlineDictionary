@@ -26,7 +26,7 @@ router.get('/wordoftheday', (_, response) => {
     // var request = require('request');
     var options = {
         'method': 'GET',
-        'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getTrendingWords',
+        'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getWordOfDay',
         'headers': {
         },
         'json': true

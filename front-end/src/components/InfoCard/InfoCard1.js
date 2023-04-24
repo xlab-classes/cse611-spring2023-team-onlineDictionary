@@ -26,16 +26,17 @@ export default class InfoCard1 extends Component {
 
 
   render() {
-    const green = 40 + (this.props.index + 1) * 8;
-    const blue = 10 + (this.props.index + 1) * 10;
-    const buttonColor = `rgba(200, ${green}, ${blue}, 1)`;
+    const green = 40 + (this.props.index + 1) * 13;
+    const blue = (this.props.index + 1) * 7;
+    const opacity = 1 - (this.props.index +1) * 0.05;
+    const buttonColor = `rgba(215, ${green}, ${blue}, ${opacity})`;
     
     return (
       <div>
         <button
           className={classes.woddbutton}
           style={{
-            width: `${600 - this.props.index * 50}px`,
+            width: `${100 - this.props.index * 8}%`,
             minWidth: '200px',
             backgroundColor: buttonColor
           }}

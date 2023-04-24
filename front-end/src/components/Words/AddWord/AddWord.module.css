@@ -1,3 +1,14 @@
+.card {
+  background-color: #f4f1ed;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 60px auto;
+  width: 700px;
+  border: #9d1f02;
+  border-width: 4px #ccc;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -8,7 +19,8 @@
   }
   
   .h1 {
-    font-size: 24px;
+    color: #595959;
+    font-size: 2rem;
     margin-bottom: 20px;
     text-align: center;
   }
@@ -28,8 +40,8 @@
     background-color: #c82500;
     color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 16px 32px;
+    border-radius: 30px;
+    padding: 12px 32px;
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -39,3 +51,14 @@
     background-color: #9d1f02;
   }
   
+  .addWordButton{
+    border-radius: 15px;
+    margin: auto;
+    display: flex;
+  }
+
+  .addedWord{
+    color: #555;
+    margin: 15px;
+    text-align: center;
+  }

@@ -29,7 +29,7 @@ const AddWord = (props) => {
 
   const addWordForm = (
     <div>
-      <h1 className={classes.h1}>Help us in increasing our Vocabulary</h1>
+      <h1 className={classes.h1}>Help Us In Increasing Our Vocabulary</h1>
       <form className={classes.form} onSubmit={addWordHandler}>
         <input
           className={classes.input}
@@ -42,17 +42,20 @@ const AddWord = (props) => {
     </div>
   );
 
-  const wordAddedForm = (<div><h1>Word has been added to Queue. Please click here if you want to add any other Word.</h1>
-  <button onClick={clickHandler}>ADD WORD</button>
-  </div>);
+  const wordAddedForm = (
+    <div className = {classes.addedWord}>
+      <h1>Word has been sent for review.</h1> 
+      <h1>Please click here if you want to add any other word.</h1>
+      <button className = {classes.addWordButton} onClick={clickHandler}>ADD WORD</button>
+    </div>
+  );
 
-  // return <Modal onClose={props.onClose}>{!addWord && addWordForm}
-  // {addWord && <h1>Your word has been sucessfully added to Queue</h1>}
-  // </Modal>;
-   return (<Fragment>
-       {addWord && addWordForm}
-       {!addWord && wordAddedForm}
-   </Fragment>)
+  return (
+    <div className={classes.card}>
+      {addWord && addWordForm}
+      {!addWord && wordAddedForm}
+    </div>
+  );
 };
 
 export default AddWord;

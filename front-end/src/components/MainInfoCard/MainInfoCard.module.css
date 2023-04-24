@@ -15,7 +15,7 @@
     margin-left: 125px;
     margin-right: 75px;
     background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
-    background-color: #989898;
+    background-color: #afaeae;
     border-radius: 25px;
 }
 
@@ -41,7 +41,7 @@
     margin-left: 75px;
     margin-right: 125px;
     background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
-    background-color: #989898;
+    background-color: #afaeae;
     border-radius: 25px;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .showmorebutton:active{
-    background-color: #a2a2a2;
+    background-color: #828282;
     color: #333;
 }
 

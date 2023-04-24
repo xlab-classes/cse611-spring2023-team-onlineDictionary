@@ -33,9 +33,9 @@ router.get('/wordoftheday', (_, response) => {
     };
     request(options, function (error, res) {
         if (error) throw new Error(error);
-        // console.log(res.body);
-        if (res.body[0]) {
-            response.send({ "wordoftheDay": res.body[Math.floor(Math.random() * res.body.length)].word })
+        console.log(res.body);
+        if (res.body) {
+            response.send({ "wordoftheDay": res.body })
         }
         else {
             response.send({ "wordoftheDay": "dictionary" })

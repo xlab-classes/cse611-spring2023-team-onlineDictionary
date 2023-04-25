@@ -9,23 +9,27 @@
   color: #ffffffc6;
   cursor: pointer;
   font-size: 3rem;
-  padding: 1rem;
+  padding: 5rem;
 }
 
 .woddbutton{
   display: block;
   margin: auto;
   margin-top: 10rem;
-  background-color: #c82500ee;
+  background-color: #df411dee;
   border-radius: 1.5rem;
-  border: 2.5px solid #8b8b8b;
+  box-shadow: 0 0 10px #7e7e7e;
+  transform: scale(1);
+  transition: transform 0.5s ease;
 }
 
 .woddbutton:hover{
-  background-color: #ba0707e4;
   color: #dad5d5;
+  transform: scale(1.07);
+  transition: transform 0.3s ease;
 }
 
 .woddbutton:active{
   background-color: #7e0202e7;
-  color: #dad5d5;}
+  color: #dad5d5;
+}

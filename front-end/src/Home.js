@@ -1,6 +1,7 @@
 import { useState} from "react";
 import { Fragment } from "react";
 import "./App.css";
+import "./index.css"
 import Header from "./components/Layout/Header";
 import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";

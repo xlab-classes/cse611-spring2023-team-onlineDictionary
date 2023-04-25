@@ -1,7 +1,7 @@
 .card {
-  background-color: #f4f1ed;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  background-color: rgba(213, 193, 177, 0.131);
   padding: 20px;
   margin: 60px auto;
   width: 700px;
@@ -21,19 +21,19 @@
   .h1 {
     color: #595959;
     font-size: 2rem;
-    margin-bottom: 20px;
     text-align: center;
   }
   
   .input[type="text"] {
     padding: 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     margin-bottom: 30px;
     width: 100%;
     font-size: 20px;
     color: #555;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background-color: #e7e4e4;
   }
   
   .button {
@@ -47,7 +47,7 @@
     transition: all 0.3s ease;
   }
   
-  .button:hover {
+  .button:active {
     background-color: #9d1f02;
   }
   
@@ -55,10 +55,16 @@
     border-radius: 15px;
     margin: auto;
     display: flex;
+    font-size: 1.5rem;
+  }
+
+  .addWordButton:active{
+    background-color: #9d1f02;
   }
 
   .addedWord{
     color: #555;
     margin: 15px;
+    margin-bottom: 20px;
     text-align: center;
   }

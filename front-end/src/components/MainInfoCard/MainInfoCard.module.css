@@ -1,30 +1,78 @@
 .MainCard {
     display: grid;
-    grid-template-columns: 50% 50%; 
-    grid-template-rows: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
     border-width: medium;
     border-color: rgb(18, 18, 227);
+    background: #d7d7d7;
 }
 
 .MainInfocard {
-    border-radius: 14px;
-    background-color: rgba(250, 250, 250, 0.479);
-    padding: 15px;
+    grid-column: 1 / span 1;
+    padding: 0px 15px 15px 15px;
     margin: 15px;
-    margin-left: 250px;
-    color: #0c4ad0;
-    border: 5px solid #0436a2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-
+    margin-top: 3rem;
+    margin-left: 125px;
+    margin-right: 75px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
+    background-color: #b7b6b6;
+    border-radius: 25px;
 }
-.MainInfocardTrend {
-    border-radius: 14px;
-    background-color: rgba(250, 250, 250, 0.479);
-    padding: 15px;
-    margin: 15px;
-    color: #0c4ad0;
-    margin-right: 250px;
-    border: 5px solid #0436a2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 
+.MainInfocard h2{
+    color: #ece8de;
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+.MainInfocard h3 {
+    margin-left: 0.8rem;
+    margin-top: auto; /* Change margin-top to auto */
+    margin-bottom: 0; /* Change margin-bottom to 0 */
+    color: grey;
+    position: absolute; /* Add position and bottom properties */
+    bottom: 2.5rem;
+  }
+  
+
+.MainInfocardTrend {
+    grid-column: 2 / span 1;
+    padding: 0px 15px 15px 15px;
+    margin: 15px;
+    color: #ece8de;
+    margin-top: 3rem;
+    margin-left: 75px;
+    margin-right: 125px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
+    background-color: #afaeae;
+    border-radius: 25px;
+}
+
+.MainInfocardTrend h1{
+    color: #ece8de;
+    margin-top: 25px;
+    margin-left: 10px;
+    font-size: 1.7rem;
+    margin-bottom: 19px;
+}
+
+.showmorebutton{
+    margin-top: 1rem;
+    background-color: #9e9d9d;
+    color: #333;
+    border-radius: 12px;
+    padding: 7px 12px 5px 12px;
+    font-size: 15px;
+    margin-left: 0.5rem;
+}
+
+.showmorebutton:active{
+    background-color: #828282;
+    color: #333;
+}
+
+.showmorebutton:hover{
+    text-decoration-line: underline;
 }

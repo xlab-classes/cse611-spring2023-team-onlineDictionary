@@ -27,7 +27,7 @@ export default class InfoCard extends Component {
   listContent = () => {
     const { listData } = this.props
     return (
-      <div style={{overflowY:'auto',overflowX:'hidden',height:'550px'}}>
+      <div style={{overflowY:'auto',overflowX:'hidden',height:'530px'}}>
       {
         listData.map((value,ind) => {
           // if(ind < 10)
@@ -50,11 +50,11 @@ export default class InfoCard extends Component {
             {modalFlag && <Modal onClose={() => this.hideWordHandler()}>{this.listContent()}</Modal>}
             <div>{this.props.img}</div>
             <h2>{this.props.title}</h2>
-            <span >
-                <a id ="wodd" href="#" style={{ fontSize: '2em', color: '#0C4AD0', textDecoration: 'none'}} onClick={()=>this.props.showWord(this.props.word)}  >{this.props.word} </a>
-            </span>
+            <button className= {classes.woddbutton}>
+                <a className={classes.wodd} onClick={()=>this.props.showWord(this.props.word)}> {this.props.word} </a>
+            </button>
             <h3>{this.props.month} {this.props.datee && this.props.datee+","} {this.props.yearr}</h3>
-             {listFlag && <button className={classes.buttonnon} id="myBtn" onClick={() => this.hideWordHandler()}>Show More..</button>}
+             {listFlag && <button className={classes.buttonnon} id="myBtn" onClick={() => this.hideWordHandler()}>Show More</button>}
         </div>
     )
    

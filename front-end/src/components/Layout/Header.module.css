@@ -11,7 +11,7 @@
 
 .title h1 {
   display: flex;
-  font-size: 3.5rem;
+  font-size: 3.6rem;
   color: #ece8de;
   letter-spacing: .3px;
   font-family:Calibri;
@@ -81,6 +81,7 @@ button {
   left: 0;
   margin: 20px;
   height: 80px;
+  cursor: pointer;
 }
 .buttonsContainer {
   position: absolute;

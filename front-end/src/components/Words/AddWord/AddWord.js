@@ -44,9 +44,8 @@ const AddWord = (props) => {
 
   const wordAddedForm = (
     <div className = {classes.addedWord}>
-      <h1>Word has been sent for review.</h1> 
-      <h1>Please click here if you want to add any other word.</h1>
-      <button className = {classes.addWordButton} onClick={clickHandler}>ADD WORD</button>
+      <h1>Your word has been sent for review.</h1> 
+      <button className = {classes.addWordButton} onClick={clickHandler}>Add another word</button>
     </div>
   );
 

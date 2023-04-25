@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import classes from "./Statistics.module.css"
 import Modal from "../../UI/Modal";
-
+import Card from "../../UI/Card";
 
 function Statistics(props) {
   const [statis, setStatistics] = useState(false);
@@ -33,9 +33,9 @@ function Statistics(props) {
   }
 
   return (
-   <Fragment>
+   <div className={classes.card}>
     {statList}
-    </Fragment>
+    </div>
   );
 }
 

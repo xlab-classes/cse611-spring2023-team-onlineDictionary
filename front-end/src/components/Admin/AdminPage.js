@@ -37,29 +37,10 @@ const AdminPage = () => {
 
   }
 
-  const [acceptedWords, setAcceptedWords] = useState([]);
-  const [rejectedWords, setRejectedWords] = useState([]);
-
   const [meanings, setMeanings] = useState({});
 
   const [showMeaning, setShowMeaning] = useState(false);
   const [wordToShow, setWordToShow] = useState('');
-
-  const handleAccept = (id) => {
-    const wordToAccept = data.find((item) => item.id === id);
-    setAcceptedWords([...acceptedWords, wordToAccept]);
-  };
-
-  const handleReject = (id) => {
-    const wordToReject = data.find((item) => item.id === id);
-    setRejectedWords([...rejectedWords, wordToReject]);
-  };
-
-
-  const handleMeaningChange = (id, value) => {
-    setMeanings({ ...meanings, [id]: value });
-  };
-
 
   const handleShowMeaning = (word) => {
     setShowMeaning(true);
@@ -77,7 +58,6 @@ const AdminPage = () => {
         <thead>
           <tr>
             <th>Word</th>
-            <th>Add Meaning</th>
             <th>Accept</th>
             <th>Reject</th>
             <th>Show Meaning</th>
@@ -87,9 +67,6 @@ const AdminPage = () => {
           {data.map((item) => (
             <tr key={item.id}>
               <td>{item.word}</td>
-              <td>
-                <input type="text" value={meanings[item.id] || ''} onChange={(e) => handleMeaningChange(item.id, e.target.value)} />
-              </td>
               <td>
                 <button className="accept" onClick={() => acceptRejectWords({word : item.word, state:"accept",meaning:meanings[item.id]})}>Accept</button>
               </td>

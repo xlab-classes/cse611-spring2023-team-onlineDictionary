@@ -1,26 +1,11 @@
 .container {
   position: relative;
   top: 200px;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: rgb(201, 36, 11);
+  color: #555;
   animation-name: fade-in;
-  animation-duration: 1s;
-}
-
-.card {
-  width: 50%;
-  height: 20%;
-  background-color: rgb(247, 243, 245);
-  color: rgb(0, 0, 0);
-  padding: 10px;
-  border: solid 3px rgb(231, 225, 225);
-  text-align: center;
-  z-index: 10;
+  animation-duration: 0.5s;
 }
 
 @keyframes fade-in {
@@ -28,8 +13,19 @@
   to { opacity: 1; }
 }
 
-.button{
-margin-left: 32.7%;
-border-radius: 0.7rem;
-margin-bottom: 8px;
+.notfoundtitle{
+  margin: 20px
+}
+
+
+.button {
+  border-radius: 0.7rem;
+  display: block;
+  margin:  auto;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.button:active{
+  background-color: rgb(142, 0, 0);
 }

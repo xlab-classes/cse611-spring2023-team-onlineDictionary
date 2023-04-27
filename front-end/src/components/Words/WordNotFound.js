@@ -34,15 +34,20 @@ const WordNotFound = (props) => {
   const wordNfound = (
     <div className={classes.container}>
       <Card>
-        <h1>We cannot find the word {props.wordSearched}.</h1>
-        <button className={classes.button} onClick={onClickHandler }>Click here to add this word</button>
+        <h1 className={classes.notfoundtitle}>We're sorry, we cannot find the word '{props.wordSearched}'</h1>
+        <button className={classes.button} onClick={onClickHandler }>Send '{props.wordSearched}' for review</button>
       </Card>
     </div>
   );
 
-  const wordAddedForm = (<div><h1>Word has been added to Queue. Please click here if you want to add any other Word.</h1>
-  <button onClick={clickHandler}>ADD WORD</button>
-  </div>);
+  const wordAddedForm = (
+  <div className={classes.container}>
+    <Card>
+    <h1 className={classes.notfoundtitle}>The word '{props.wordSearched}' has been added to the queue for review.</h1>
+    <button className={classes.button} onClick={clickHandler}>Add another word</button>
+  </Card>
+  </div>
+  );
   
 
   return (<Fragment>

@@ -88,14 +88,14 @@ router.get('/getstatistics', (_, response) => {
 
 })
 
-router.get('/getNewWords', (_, response) => {
+router.get('/getNewWords', (req, response) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords',
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.query.requestedState,
         headers: {}
     };
-
+    console.log(config)
     axios.request(config)
         .then((res) => {
             response.send(res.data)
@@ -104,7 +104,7 @@ router.get('/getNewWords', (_, response) => {
             console.log(error);
         });
 })
-
+// https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState=New
 router.post('/adminWord', (request, response) => {
     word = request.body.word
     let data = {

@@ -46,15 +46,14 @@ export default class InfoCard extends Component {
     const { listFlag, listFlagg, TOD } = this.props
     const { modalFlag } = this.state
     return (
-        <div>
-            {modalFlag && <Modal onClose={() => this.hideWordHandler()}>{this.listContent()}</Modal>}
-            <div>{this.props.img}</div>
-            <h2>{this.props.title}</h2>
+      <div>
+      <div className={classes.woddheader}>{this.props.title}</div>
+        <div className={classes.infocardborder}>
             <button className= {classes.woddbutton}>
                 <a className={classes.wodd} onClick={()=>this.props.showWord(this.props.word)}> {this.props.word} </a>
             </button>
             <h3>{this.props.month} {this.props.datee && this.props.datee+","} {this.props.yearr}</h3>
-             {listFlag && <button className={classes.buttonnon} id="myBtn" onClick={() => this.hideWordHandler()}>Show More</button>}
+        </div>
         </div>
     )
    

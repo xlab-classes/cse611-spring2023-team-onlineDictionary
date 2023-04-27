@@ -1,17 +1,17 @@
 .header {
-  background-color: #031839;
+  background-color: #0c2754;
   box-shadow: 0 2px 4px rgb(52, 49, 49);
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 70px;
+  padding: 30px;
   z-index: 1;
 }
 
 
 .title h1 {
   display: flex;
-  font-size: 3.5rem;
+  font-size: 3.6rem;
   color: #ece8de;
   letter-spacing: .3px;
   font-family:Calibri;
@@ -40,7 +40,7 @@ button {
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   cursor: pointer;
-  background-color: #c82500;
+  background-color: #474741;
   color: #fff;
 }
 
@@ -81,10 +81,11 @@ button {
   left: 0;
   margin: 20px;
   height: 80px;
+  cursor: pointer;
 }
 .buttonsContainer {
   position: absolute;
-  top: 268px;
+  top: 190px;
   right: 0;
   margin-right: 15px;
 }
@@ -94,7 +95,8 @@ button {
   border-top-left-radius: 1rem;
   border-top-right-radius: 0rem;
   border-bottom-right-radius: 0rem;
-  background-color: #c82500;
+  background-color: #474741;
+  ;
 }
 
 .button2{
@@ -102,12 +104,12 @@ button {
   border-top-left-radius: 0rem;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  background-color: #c82500;
+  background-color: #474741;
 }
 
 .button1:active,
 .button2:active, .button:active {
-  background-color: #900303;
+  background-color: #353530;
   color: #dad5d5;
 }
 

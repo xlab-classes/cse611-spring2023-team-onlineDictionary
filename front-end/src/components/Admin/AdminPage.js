@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
+import AdminHeader from './AdminHeader';
+import AdminVerification from './AdminVerification';
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
+  const [adminPage,setAdminPage] = useState(0);
+
+
+  function onInitial() {
+    setAdminPage(0);
+  }
+
+  function onFinal() {
+    setAdminPage(1);
+  }
 
   useEffect(() => {
     getNewWordList();
   }, []);
 
   async function getNewWordList() {
-    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords`)
+    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords?requestedState=New`)
       .then((response) => response.json())
       .then((result) => {
         result = result.map((item, index) => {
           return { ...item, id: index + 1 };
         });
         setData(result);
+        console.log(data);
       });
 
       
+
   }
 
   function acceptRejectWords(postBody) {
@@ -54,6 +68,8 @@ const AdminPage = () => {
 
   return (
     <div>
+      <AdminHeader onInit={onInitial} onFin={onFinal}/>
+     {!adminPage && <div>
       <table>
         <thead>
           <tr>
@@ -88,6 +104,8 @@ const AdminPage = () => {
         </div>
       </div>
     )}
+  </div>}
+  {adminPage && <AdminVerification />}
   </div>
 );
 };

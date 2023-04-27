@@ -5,9 +5,8 @@ const AdminHeader = (props) => {
     <div>
     <div className = {classes.title}>Online Dictionary - Admin</div>
     <div className = {classes.headerbuttons}>
-
-      <button onClick={()=>props.onInit()}>Initial Review</button>
-      <button onClick={()=>props.onFin()}>Final Review</button>
+      <button className={classes.button1} onClick={()=>props.onInit()}>Initial Review</button>
+      <button className={classes.button2} onClick={()=>props.onFin()}>Final Review</button>
     </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
+import classes from './LoginPage.css';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -75,7 +75,7 @@ function LoginPage() {
           />
         </div>
         <div className='input-container'>
-          <button onClick={handleLogin}>Login</button>
+          <button className={classes.buttonx} onClick={handleLogin}>Login</button>
         </div>
         {errorMessage && <p>{errorMessage}</p>}
       </div>

@@ -12,7 +12,7 @@
 .title h1 {
   display: flex;
   font-size: 3.6rem;
-  color: #ece8de;
+  color: #eeeeee;
   letter-spacing: .3px;
   font-family:Calibri;
 }
@@ -79,10 +79,11 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px;
+  margin: 10px;
   height: 80px;
   cursor: pointer;
 }
+
 .buttonsContainer {
   position: absolute;
   top: 190px;
@@ -110,6 +111,12 @@ button {
 .button1:active,
 .button2:active, .button:active {
   background-color: #353530;
+  color: #dad5d5;
+}
+
+.button1:hover,
+.button2:hover {
+  background-color: #343430;
   color: #dad5d5;
 }
 

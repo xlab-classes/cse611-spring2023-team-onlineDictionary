@@ -136,12 +136,12 @@ const AdminVerification = () => {
         </div>
       )}
       {showModal && (
-        <div className="modal">
+        <div className="modall">
           <div className="modal-content1">
             <span className="close" onClick={handleCloseModal}>
               &times;
             </span>
-            <form className={classes.form} onSubmit={handleAddMeaningSubmit}>
+            <div className={classes.forms} onSubmit={handleAddMeaningSubmit}>
               <label htmlFor="word">Word:</label>
               <input type="text" id="word" name="word" value={modalWord} />
               <label htmlFor="POS">Part of Speech:</label>
@@ -151,7 +151,7 @@ const AdminVerification = () => {
               <label htmlFor="example">Example Usage:</label>
               <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
-            </form>
+            </div>
           </div>
         </div>
       )}

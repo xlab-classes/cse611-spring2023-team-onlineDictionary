@@ -37,7 +37,7 @@
   }
   
   .button {
-    background-color: #c82500;
+    background-color: #474741;
     color: #fff;
     border: none;
     border-radius: 30px;
@@ -48,7 +48,7 @@
   }
   
   .button:active {
-    background-color: #9d1f02;
+    background-color: #3a3a35;
   }
   
   .addWordButton{
@@ -59,7 +59,7 @@
   }
 
   .addWordButton:active{
-    background-color: #9d1f02;
+    background-color: #393934;
   }
 
   .addedWord{

@@ -15,15 +15,12 @@
     margin-top: 3rem;
     margin-left: 125px;
     margin-right: 75px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
-    background-color: #c6c5c5;
     border-radius: 15px;
     position: relative; /* Add position relative */
   }
   
   .MainInfocard h2 {
-    color: #ece8de;
+    color: #000000;
     margin-top: 25px;
     margin-left: 10px;
     font-size: 1.5rem;
@@ -32,7 +29,7 @@
   
   .MainInfocard h3 {
     margin-left: 0.8rem;
-    color: grey;
+    color: #2d2b24;
     position: absolute;
     bottom: 0rem; /* Add bottom property */
   }
@@ -47,14 +44,11 @@
     margin-top: 3rem;
     margin-left: 75px;
     margin-right: 125px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(to bottom, #041f4b 75px, rgba(237, 237, 237, 0.413) 75px);
-    background-color: #c6c5c5;
     border-radius: 15px;
 }
 
 .MainInfocardTrend h1{
-    color: #ece8de;
+    color:#2d2b24;
     margin-top: 28px;
     margin-left: 10px;
     font-size: 1.5rem;
@@ -63,9 +57,9 @@
 }
 
 .showmorebutton{
-    margin-top: 1rem;
-    background-color: #b6b6b6;
-    color: #333;
+    margin-top: 1.5rem;
+    background-color: #5b5b54;
+    color: #ffffff;
     border-radius: 12px;
     padding: 7px 12px 5px 12px;
     font-size: 15px;

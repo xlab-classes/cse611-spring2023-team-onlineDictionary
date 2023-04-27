@@ -11,7 +11,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3001/logindetails')
+    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/logindetails`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
@@ -32,7 +32,7 @@ function LoginPage() {
       return;
     }
     try {
-        const response = await fetch('http://localhost:3001/logindetails');
+        const response = await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/logindetails`);
         const data = await response.json();
         const { username: usernameFromMongo, password: passwordFromMongo } = data;
         if (username === usernameFromMongo && password === passwordFromMongo) {

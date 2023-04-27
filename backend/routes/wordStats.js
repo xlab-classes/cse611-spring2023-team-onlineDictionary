@@ -92,10 +92,10 @@ router.get('/getNewWords', (req, response) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.params.requestedState,
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.query.requestedState,
         headers: {}
     };
-
+    console.log(config)
     axios.request(config)
         .then((res) => {
             response.send(res.data)

@@ -26,10 +26,10 @@ export default class InfoCard1 extends Component {
 
 
   render() {
-    const green = 40 + (this.props.index + 1) * 13;
-    const blue = (this.props.index + 1) * 7;
+    const green = 100 + (this.props.index + 1) * 13;
+    const blue = 200 + (this.props.index + 1) * 7;
     const opacity = 1 - (this.props.index +1) * 0.03;
-    const buttonColor = `rgba(215, ${green}, ${blue}, ${opacity})`;
+    const buttonColor = `rgba(80, ${green}, ${blue}, ${opacity})`;
     
     return (
       <div>

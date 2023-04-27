@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import classes from "./Header.module.css";
-import ubLogo from "../../assets/Icons/ub-logo.png";
+import cseLogo from "../../assets/Icons/cse-logo.png";
 import words  from "../../assets/wordList";
 //import Button from '@mui/material/Button';
-// import Button from '@mui/material/Button';
 import magnifying from "../../assets/Icons/magnimg2.png"
 
 const Header = (props) => {
@@ -132,7 +131,7 @@ return (
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
         <div className={classes.logo} onClick={() => window.location.reload()}>
-          <img src={ubLogo} alt="University at Buffalo" />
+          <img src={cseLogo} alt="CSE Logo Image" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
           <h1 href="#" id="online-dictionary" onClick={() => window.location.reload()}>Online Dictionary</h1>

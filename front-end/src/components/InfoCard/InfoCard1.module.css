@@ -7,7 +7,7 @@
 .wodd{
   color: #ffffffc6;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .woddbutton{
@@ -18,6 +18,8 @@
     text-align: left;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    transform: scale(1);
+    transition: transform 0.3s ease;
 }
 
 .woddbutton:hover{

@@ -131,11 +131,11 @@ return (
       <header
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
-        <div className={classes.logo}>
+        <div className={classes.logo} onClick={() => window.location.reload()}>
           <img src={ubLogo} alt="University at Buffalo" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
-          <h1 href="#" id="online-dictionary">Online Dictionary</h1>
+          <h1 href="#" id="online-dictionary" onClick={() => window.location.reload()}>Online Dictionary</h1>
         </div>
         <div className={classes.buttonsContainer}>
           <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>

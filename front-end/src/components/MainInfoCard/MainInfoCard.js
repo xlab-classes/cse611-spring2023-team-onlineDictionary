@@ -23,13 +23,14 @@ export default class MainInfoCard extends React.Component {
     }
 
     setLimit() {
-        this.setState((prevState) => {
-          return { wordLimit: prevState.wordLimit + 5 };
-        }, () => {
-          const list = document.getElementById("trendList");
-          list.scrollTo({ top: list.scrollHeight, behavior: "smooth" });
-        });
-      }
+      const { TOD } = this.state;
+      const maxLimit = TOD ? TOD.length : 0;
+      this.setState((prevState) => {
+          const newLimit = prevState.wordLimit === maxLimit ? 5 : prevState.wordLimit + 5;
+          return { wordLimit: newLimit };
+      });
+  }
+  
       
     componentDidMount() {
         console.log("in MainInfoCard.js");
@@ -58,57 +59,65 @@ export default class MainInfoCard extends React.Component {
 
     
 
-    render() {
-        const { WOD, TOD } = this.state;
-        const trendList =
-          TOD &&
-          TOD.slice(0, this.state.wordLimit).map((meaning, index) => (
+render() {
+    const { WOD, TOD } = this.state;
+    const trendList =
+        TOD &&
+        TOD.slice(0, this.state.wordLimit).map((meaning, index) => (
             <InfoCard1
-              word={meaning}
-              index={index}
-              showWord={this.props.showWord}
-              listData={TOD}
-              key={index}
-              className={
-                index >= this.state.wordLimit - 5
-                  ? classes.trendListItemFadeIn
-                  : ""
-              }
+                word={meaning}
+                index={index}
+                showWord={this.props.showWord}
+                listData={TOD}
+                key={index}
+                className={
+                    index >= this.state.wordLimit - 5
+                }
             />
-          ));
-      
-        return (
-          <>
+        ));
+
+    return (
+        <>
             <div className={classes.MainCard}>
-              {WOD && (
-                <div className={classes.MainInfocard}>
-                  <InfoCard
-                    title={"WORD OF THE DAY"}
-                    word={WOD.wordoftheDay}
-                    showWord={this.props.showWord}
-                    month={this.state.monthh}
-                    datee={this.state.date1}
-                    yearr={this.state.yearr}
-                  />
-                </div>
-              )}
-              {TOD && (
-                <div className={classes.MainInfocardTrend}>
-                  <h1>TRENDING WORDS</h1>
-                  <div id="trendList" className={classes.trendList}>
-                    {trendList}
-                  </div>
-                  <button
-                    className={classes.showmorebutton}
-                    onClick={() => this.setLimit()}
-                  >
-                    Show More
-                  </button>
-                </div>
-              )}
+                {WOD && (
+                    <div className={classes.MainInfocard}>
+                        <InfoCard
+                            title={"WORD OF THE DAY"}
+                            word={WOD.wordoftheDay}
+                            showWord={this.props.showWord}
+                            month={this.state.monthh}
+                            datee={this.state.date1}
+                            yearr={this.state.yearr}
+                        />
+                    </div>
+                )}
+                {TOD && (
+                    <div className={classes.MainInfocardTrend}>
+                        <h1>TRENDING WORDS</h1>
+                        <div id="trendList" className={classes.trendList}>
+                            {trendList}
+                        </div>
+                        {this.state.wordLimit >= TOD.length ? (
+                            <button
+                                className={classes.showmorebutton}
+                                onClick={() => this.setState({ wordLimit: 5 })}
+                            >
+                                Show Less
+                            </button>
+                        ) : (
+                            <button
+                                className={classes.showmorebutton}
+                                onClick={() => this.setLimit()}
+                            >
+                                Show More
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
-          </>
-        );
-      }
+        </>
+    );
+}
+
       
 }

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import classes from './AdminVerification.css';
+import React, { useState, useEffect } from "react";
+import classes from "./AdminVerification.css";
 
-const App = () => {
-  const [data, setData] = useState([
-    { id: 1, word: "dummy1" },
-    { id: 2, word: "dummy2" },
-    { id: 3, word: "dummy3" },
-  ]);
+const AdminVerification = () => {
+  const [data, setData] = useState([]);
+  const [modalWord, setWord] = useState("");
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -14,14 +12,19 @@ const App = () => {
   const [rejectedWords, setRejectedWords] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [meanings, setMeanings] = useState({});
-  const [newWord, setNewWord] = useState({ word: '', meaning: '' });
+  const [newWord, setNewWord] = useState({ word: "", meaning: "" });
   const [showMeaning, setShowMeaning] = useState(false);
-  const [wordToShow, setWordToShow] = useState('');
+  const [wordToShow, setWordToShow] = useState("");
 
   const [showAddMeaning, setShowAddMeaning] = useState(false); // added state variable
+  useEffect(() => {
+    getNewWordList();
+  }, []);
 
   async function getNewWordList() {
-    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords`)
+    await fetch(
+      `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords?requestedState=Accepted`
+    )
       .then((response) => response.json())
       .then((result) => {
         result = result.map((item, index) => {
@@ -31,30 +34,40 @@ const App = () => {
       });
   }
 
-  function acceptRejectWords(postBody) {
+  function handleAddMeaningSubmit(event) {
+    event.preventDefault();
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(postBody),
+      body: JSON.stringify({
+        word: event.target.elements.word.value,
+        pos: event.target.elements.pos.value,
+        meaning: event.target.elements.meaning.value,
+        example: event.target.elements.example.value,
+        state: "add",
+        
+      }),
     };
 
-    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/adminWord`,
-      requestOptions)
+    fetch(
+      `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/adminWord`,
+      requestOptions
+    );
 
-       setData((prevState)=>{
-        return prevState.filter((item) => item.word !== postBody.word)
-       })
+    setData((prevState) => {
+      return prevState.filter((item) => item.word !== event.target.elements.word.value);
+    });
 
     // added code to show modal for adding new meaning
-    if (postBody.state === "accept") {
-      setShowAddMeaning(true);
-    }
+    
+    setShowModal(false);
+    
   }
 
-  const handleAccept = (id) => {
-    const wordToAccept = data.find((item) => item.id === id);
-    setAcceptedWords([...acceptedWords, wordToAccept]);
-    setNewWord({ word: wordToAccept.word, meaning: '' });
+  const handleAccept = (id, wordGiven) => {
+    console.log(wordGiven);
+    setWord(wordGiven);
     setShowModal(true);
   };
 
@@ -70,13 +83,10 @@ const App = () => {
 
   const handleCloseMeaning = () => {
     setShowMeaning(false);
-    setWordToShow('');
+    setWordToShow("");
   };
 
-  const handleAddMeaningSubmit = (event) => {
-    event.preventDefault();
-    setShowAddMeaning(false);
-  };
+
 
   return (
     <div>
@@ -93,10 +103,20 @@ const App = () => {
             <tr key={item.id}>
               <td>{item.word}</td>
               <td>
-              <button className="accept" onClick={() => handleAccept(item.id)}>Final Accept</button>
+                <button
+                  className="accept"
+                  onClick={() => handleAccept(item.id, item.word)}
+                >
+                  Final Accept
+                </button>
               </td>
               <td>
-                <button className="show-meaning-button" onClick={() => handleShowMeaning(item.word)}>Show meaning</button>
+                <button
+                  className="show-meaning-button"
+                  onClick={() => handleShowMeaning(item.word)}
+                >
+                  Show meaning
+                </button>
               </td>
             </tr>
           ))}
@@ -105,31 +125,38 @@ const App = () => {
       {showMeaning && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={handleCloseMeaning}>&times;</span>
-            <iframe title={wordToShow} src={`https://www.dictionary.com/browse/${wordToShow}`} />
+            <span className="close" onClick={handleCloseMeaning}>
+              &times;
+            </span>
+            <iframe
+              title={wordToShow}
+              src={`https://www.dictionary.com/browse/${wordToShow}`}
+            />
           </div>
         </div>
       )}
       {showModal && (
-        <div className="modal">
+        <div className="modall">
           <div className="modal-content1">
-            <span className="close" onClick={handleCloseModal}>&times;</span>
-            <form className={classes.form} onSubmit={handleAddMeaningSubmit}>
+            <span className="close" onClick={handleCloseModal}>
+              &times;
+            </span>
+            <div className={classes.forms} onSubmit={handleAddMeaningSubmit}>
               <label htmlFor="word">Word:</label>
-              <input type="text" id="word" name="word"/>
+              <input type="text" id="word" name="word" value={modalWord} />
               <label htmlFor="POS">Part of Speech:</label>
-              <input type="text" id="POS" name="POS"/>
+              <input type="text" id="pos" name="POS" />
               <label htmlFor="meaning">Meaning:</label>
-              <input type="text" id="meaning" name="meaning"/>
+              <input type="text" id="meaning" name="meaning" />
               <label htmlFor="example">Example Usage:</label>
-              <input type="text" id="example" name="example"/>
+              <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
-            </form>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
-  }
+};
 
-    export default App;  
+export default AdminVerification;

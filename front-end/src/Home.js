@@ -21,7 +21,6 @@ function Home() {
   const [statistics, setStatistics] = useState(false);
   const [languageCode, setLanguageCode] = useState('en-US');
 
-  var langcode;
   function handleLanguageChange(code) {
     setLanguageCode(code);
   }

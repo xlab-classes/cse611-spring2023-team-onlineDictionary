@@ -3,6 +3,7 @@ var request = require('request');
 const axios = require('axios');
 const fs = require('fs')
 
+
 router.get('/trendingword', (_, response) => {
 
     var options = {
@@ -36,10 +37,10 @@ router.get('/wordoftheday', (_, response) => {
         if (error) throw new Error(error);
         console.log(res.body);
         if (res.body) {
-            response.send({ "wordoftheDay": res.body })
+            response.send(res.body)
         }
         else {
-            response.send({ "wordoftheDay": "dictionary" })
+            response.send({ "word": "dictionary", "meaning":"a book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage", "pos":{} })
         }
     });
 })
@@ -123,7 +124,7 @@ router.post('/adminWord', (request, response) => {
         state: request.body.state
     }
 
-    if (request.body.state == "accept") {
+    if (request.body.state == "add") {
         wordData = {
             word: word,
             usage: [{
@@ -142,6 +143,7 @@ router.post('/adminWord', (request, response) => {
 
         }
         data.wordData = wordData
+        data.manualAccept = request.body.manualAccept
     }
     let config = {
         method: 'post',

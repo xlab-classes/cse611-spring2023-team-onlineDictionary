@@ -61,6 +61,7 @@ export default class MainInfoCard extends React.Component {
 
 render() {
     const { WOD, TOD } = this.state;
+    console.log("hi",WOD);
     const trendList =
         TOD &&
         TOD.slice(0, this.state.wordLimit).map((meaning, index) => (

@@ -25,7 +25,6 @@ router.get('/trendingword', (_, response) => {
 });
 
 router.get('/wordoftheday', (_, response) => {
-    // var request = require('request');
     var options = {
         'method': 'GET',
         'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getWordOfDay',
@@ -35,7 +34,6 @@ router.get('/wordoftheday', (_, response) => {
     };
     request(options, function (error, res) {
         if (error) throw new Error(error);
-        console.log(res.body);
         if (res.body) {
             response.send(res.body)
         }
@@ -107,7 +105,6 @@ router.get('/getNewWords', (req, response) => {
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.query.requestedState,
         headers: {}
     };
-    console.log(config)
     axios.request(config)
         .then((res) => {
             response.send(res.data)

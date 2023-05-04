@@ -14,6 +14,8 @@ const InfoCard = (props) => {
             <button className= {classes.woddbutton}>
                 <a className={classes.wodd} onClick={()=>props.showWord(props.word)}> {props.word} </a>
             </button>
+            <div className={classes.pos}>{props.pos}</div>
+            <div className={classes.meaning}>{props.meaning}</div>
             <h3>{props.month} {props.datee && props.datee+","} {props.yearr}</h3>
         </div>
         </div>

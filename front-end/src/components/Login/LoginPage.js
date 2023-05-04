@@ -32,9 +32,7 @@ function LoginPage({ onLogin }) {
       return;
     }
     try {
-      const response = await fetch(
-        `https:localhost:3000/logindetails`
-      );
+      const response = await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/logindetails`);
       const data = await response.json();
       const { username: usernameFromMongo, password: passwordFromMongo } = data;
       if (username === usernameFromMongo && password === passwordFromMongo) {

@@ -5,15 +5,15 @@ import AdminVerification from './AdminVerification';
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
-  const [adminPage,setAdminPage] = useState(0);
+  const [adminPage,setAdminPage] = useState(false);
 
 
   function onInitial() {
-    setAdminPage(0);
+    setAdminPage(false);
   }
 
   function onFinal() {
-    setAdminPage(1);
+    setAdminPage(true);
   }
 
   useEffect(() => {

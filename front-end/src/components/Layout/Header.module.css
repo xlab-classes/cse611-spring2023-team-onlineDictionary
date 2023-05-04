@@ -97,7 +97,6 @@ button {
   border-top-right-radius: 0rem;
   border-bottom-right-radius: 0rem;
   background-color: #474741;
-  ;
 }
 
 .button2{
@@ -116,7 +115,7 @@ button {
 
 .button1:hover,
 .button2:hover {
-  background-color: #343430;
+  background-color: #42423c;
   color: #dad5d5;
 }
 

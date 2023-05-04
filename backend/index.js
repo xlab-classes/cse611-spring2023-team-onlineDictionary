@@ -9,13 +9,14 @@ const request = require('request')
 const path = require('path')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+const IP = require('ip')
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
 const client = new textToSpeech.TextToSpeechClient()
 let count = 0;
 
-function logWord(word, wordFound) {
+function logWord(word, wordFound, meaning=[null, null]) {
     var options = {
         method: 'POST',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addWordLog',
@@ -23,7 +24,7 @@ function logWord(word, wordFound) {
             'Content-Type': 'application/json'
         },
         // TODO : populate response
-        data: { "word": word, "wordFound": wordFound, "response": "" }
+        data: { "word": word, "wordFound": wordFound, "response": "", "pos":meaning[0], "meaning":meaning[1] }
     }
     axios(options)
         .catch(error => {
@@ -103,7 +104,7 @@ function handleDictionaryData(word, response, body, languageCode) {
 
         // audio data added to response
         let audio = {};
-        if (pos.audio[0] && pos.audio[0].audioLink) {
+        if (pos.audio && pos.audio[0] && pos.audio[0].audioLink) {
             audio.audioLink = pos.audio[0].audioLink;
             audio.source = "Wiktionary";
             meaning.audio = audio;
@@ -111,6 +112,7 @@ function handleDictionaryData(word, response, body, languageCode) {
 
         responseToReact.meanings.push(meaning);
     }
+    console.log(responseToReact)
     // TODO: functionize solr req and response to remove redundancy
     let config = {
         method: 'get',
@@ -145,7 +147,8 @@ function handleDictionaryData(word, response, body, languageCode) {
         })
         .finally(() => {
             createGoogleAudio(body, word, languageCode)
-            logWord(word, true)
+            posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
+            logWord(word, true, posMeaning)
             response.send(responseToReact)
             console.log('finally complete')
         })
@@ -231,7 +234,8 @@ function handleDictionaryAPI(word, response, languageCode) {
                 })
                 .finally(() => {
                     createGoogleAudio(responseToReact, word)
-                    logWord(word, true)
+                    posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
+                    logWord(word, true, posMeaning)
                     response.send(responseToReact)
                     console.log('finally complete')
                 })
@@ -250,6 +254,8 @@ function handleDictionaryError(error, response, word) {
 
 app.post('/', (request, response) => {
     console.log("post method hit")
+    const ipAddress = IP.address();
+    console.log("ip address is ", ipAddress)
     const word = request.body.word;
     const languageCode = request.body.languageCode;
     console.log(word, languageCode);
@@ -277,6 +283,7 @@ app.post('/', (request, response) => {
             }
         })
         .catch(error => {
+            console.log(error)
             handleDictionaryAPI(word, response, languageCode)
         });
 

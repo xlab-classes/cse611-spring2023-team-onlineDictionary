@@ -55,7 +55,8 @@
   position: relative;
   top: 5%;
   right: 5%;
-  margin-right: -90px;
+  margin-right: -750px;
+  padding-bottom: 10px;
 }
 
 .languageSelect {
@@ -80,4 +81,10 @@
   width: 80%;
   margin-top: 2.6rem;
   left: 12.5rem;
+}
+
+.ipa{
+  font-size:1.5rem;
+  padding: 0 1.5rem 0 1.5rem;
+  color: rgb(114, 114, 114);
 }

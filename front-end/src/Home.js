@@ -28,9 +28,6 @@ function Home() {
     console.log("in Home.js");
     console.log("language code is : ", languageCode);
     let userDetails;
-    await fetch("https://api.ipify.org?format=json")
-      .then((res) =>   res.json())
-      .then((data) => userDetails = data.ip);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

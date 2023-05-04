@@ -31,7 +31,9 @@ const AdminVerification = () => {
           return { ...item, id: index + 1 };
         });
         setData(result);
+        console.log(result);
       });
+      
   }
 
   function handleAddMeaningSubmit(event) {
@@ -46,6 +48,7 @@ const AdminVerification = () => {
         meaning: event.target.elements.meaning.value,
         example: event.target.elements.example.value,
         state: "add",
+        manualAccept: "true",
         
       }),
     };
@@ -62,29 +65,31 @@ const AdminVerification = () => {
     // added code to show modal for adding new meaning
     
     setShowModal(false);
-    
+    console.log("hi");
   }
 
-  const handleAccept = (id, wordGiven) => {
+  const manualAccept = (id, wordGiven) => {
     console.log(wordGiven);
     setWord(wordGiven);
     setShowModal(true);
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewWord({ ...newWord, [name]: value });
-  };
+  function acceptRejectWords(postBody) {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(postBody),
+    };
 
-  const handleShowMeaning = (word) => {
-    setShowMeaning(true);
-    setWordToShow(word);
-  };
+    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/adminWord`,
+      requestOptions)
 
-  const handleCloseMeaning = () => {
-    setShowMeaning(false);
-    setWordToShow("");
-  };
+       setData((prevState)=>{
+        return prevState.filter((item) => item.word !== postBody.word)
+       })
+
+  }
+
 
 
 
@@ -94,8 +99,11 @@ const AdminVerification = () => {
         <thead>
           <tr>
             <th>Word</th>
-            <th>Final Accept</th>
+           
             <th>Show Meaning</th>
+            <th>Final Accept</th>
+            <th>Reject</th>
+            <th>Add</th>
           </tr>
         </thead>
         <tbody>
@@ -103,45 +111,45 @@ const AdminVerification = () => {
             <tr key={item.id}>
               <td>{item.word}</td>
               <td>
+                  {item.meaning}
+              </td>
+              <td>
                 <button
                   className="accept"
-                  onClick={() => handleAccept(item.id, item.word)}
+                  onClick={() => acceptRejectWords({word : item.word, state:"add"})}
                 >
-                  Final Accept
+                  Accept
                 </button>
               </td>
               <td>
                 <button
-                  className="show-meaning-button"
-                  onClick={() => handleShowMeaning(item.word)}
+                  className="reject"
+                  onClick={() => acceptRejectWords({word : item.word, state:"reject"})}
                 >
-                  Show meaning
+                  Reject
                 </button>
               </td>
+              <td>
+                <button
+                  className="accept"
+                  onClick={() => manualAccept(item.id, item.word)}
+                >
+                  Add Manually
+                </button>
+              </td>
+              
             </tr>
           ))}
         </tbody>
       </table>
-      {showMeaning && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseMeaning}>
-              &times;
-            </span>
-            <iframe
-              title={wordToShow}
-              src={`https://www.dictionary.com/browse/${wordToShow}`}
-            />
-          </div>
-        </div>
-      )}
+    
       {showModal && (
-        <div className="modall">
+        <div className="modal">
           <div className="modal-content1">
             <span className="close" onClick={handleCloseModal}>
               &times;
             </span>
-            <div className={classes.forms} onSubmit={handleAddMeaningSubmit}>
+            <form className={classes.form} onSubmit={handleAddMeaningSubmit}>
               <label htmlFor="word">Word:</label>
               <input type="text" id="word" name="word" value={modalWord} />
               <label htmlFor="POS">Part of Speech:</label>
@@ -151,7 +159,7 @@ const AdminVerification = () => {
               <label htmlFor="example">Example Usage:</label>
               <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
-            </div>
+            </form>
           </div>
         </div>
       )}

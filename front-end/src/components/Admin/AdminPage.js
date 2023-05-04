@@ -28,7 +28,6 @@ const AdminPage = () => {
           return { ...item, id: index + 1 };
         });
         setData(result);
-        console.log(data);
       });
 
       

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classes from './LoginPage.css';
 
-function LoginPage() {
+function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,18 +32,21 @@ function LoginPage() {
       return;
     }
     try {
-        const response = await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/logindetails`);
-        const data = await response.json();
-        const { username: usernameFromMongo, password: passwordFromMongo } = data;
-        if (username === usernameFromMongo && password === passwordFromMongo) {
-          navigate('/admin');
-        } else {
-          setErrorMessage('Either username or password is incorrect.');
-        }
-      } catch (error) {
-        console.log(error)
-        setErrorMessage('Failed to fetch username and password from MongoDB.');
+      const response = await fetch(
+        `https:localhost:3000/logindetails`
+      );
+      const data = await response.json();
+      const { username: usernameFromMongo, password: passwordFromMongo } = data;
+      if (username === usernameFromMongo && password === passwordFromMongo) {
+        onLogin();
+        navigate('/admin');
+      } else {
+        setErrorMessage('Either username or password is incorrect.');
       }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage('Failed to fetch username and password from MongoDB.');
+    }
   };
 
   if (loading) {

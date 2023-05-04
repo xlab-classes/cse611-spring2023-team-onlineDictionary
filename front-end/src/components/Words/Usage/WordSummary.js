@@ -25,14 +25,13 @@ const WordSummary = (props) => {
   };
 
   return (
-    <li className={classes.meal}>
-      <div className={classes.mealHeader}>
+    <div className={classes.meal}>
         <h1 className={classes.word}>{props.word}</h1>
         <button onClick={playAudio} className={classes.audioPlayer}>
           <img src={speakerLogo} alt="Speaker Logo" />
         </button>
-        <div className={classes.ipa}>{props.ipa}</div>
-        <div style={{ position: 'absolute', top: '15px', right: '10px' }} className={classes.dropdown}>
+        {props.ipa && <div className={classes.ipa}>[ {props.ipa} ]</div>}
+        <div className={classes.dropdown}>
         <select value={selectedValue} onChange={handleSelectChange} className={classes.languageSelect}>
             <option value="en-US">en-US</option>
             <option value="en-GB">en-GB</option>
@@ -41,10 +40,9 @@ const WordSummary = (props) => {
             <option value="ja-JP">ja-JP</option>
             <option value="da-DK">da-DK</option>
           </select>
-        </div>
-        </div>
+          </div>
         <div className={classes.source}>Source: Google Audio</div>
-    </li>
+        </div>
   );
 };
 

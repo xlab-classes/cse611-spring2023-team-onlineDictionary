@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import classes from "./Header.module.css";
 import cseLogo from "../../assets/Icons/cse-logo.png";
 import words  from "../../assets/wordList";
-//import Button from '@mui/material/Button';
-import magnifying from "../../assets/Icons/magnimg2.png"
 
 const Header = (props) => {
   const [isSearching, setIsSearching] = useState(false);

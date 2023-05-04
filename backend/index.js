@@ -6,6 +6,7 @@ app.use(cors());
 const util = require('util')
 const fs = require('fs')
 const request = require('request')
+const path = require('path')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const IP = require('ip')
@@ -13,6 +14,7 @@ const IP = require('ip')
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
 const client = new textToSpeech.TextToSpeechClient()
+let count = 0;
 
 function logWord(word, wordFound, meaning=[null, null]) {
     var options = {
@@ -284,6 +286,17 @@ app.post('/', (request, response) => {
             console.log(error)
             handleDictionaryAPI(word, response, languageCode)
         });
+
+        const date = new Date();
+        const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const filename = `${dateString}.txt`;
+        try {
+            const fileData = fs.readFileSync(filename, 'utf8');
+            count = parseInt(fileData);
+        } catch (err) {}
+        count++; 
+
+        fs.writeFileSync(filename, count.toString());
 });
 
 app.get("/api/:word", (req, response) => {

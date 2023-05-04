@@ -32,6 +32,7 @@ const WordSummary = (props) => {
           <img src={speakerLogo} alt="Speaker Logo" />
         </button>
         <div className={classes.ipa}>{props.ipa}</div>
+
         <div style={{ position: 'absolute', top: '15px', right: '10px' }} className={classes.dropdown}>
         <select value={selectedValue} onChange={handleSelectChange} className={classes.languageSelect}>
             <option value="en-US">en-US</option>

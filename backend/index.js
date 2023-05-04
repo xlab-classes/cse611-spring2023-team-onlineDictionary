@@ -9,7 +9,6 @@ const request = require('request')
 const path = require('path')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-const IP = require('ip')
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
@@ -254,8 +253,8 @@ function handleDictionaryError(error, response, word) {
 
 app.post('/', (request, response) => {
     console.log("post method hit")
-    const ipAddress = IP.address();
-    console.log("ip address is ", ipAddress)
+    const ipAddress = request.body.userIp
+    console.log('ip addres is '+ipAddress)
     const word = request.body.word;
     const languageCode = request.body.languageCode;
     console.log(word, languageCode);

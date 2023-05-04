@@ -1,0 +1,28 @@
+FROM ubuntu:20.04
+
+# Update the package list and install the required packages
+# RUN sudo apt install -y software-properties-common gnupg apt-transport-https ca-certificates
+# RUN sudo apt install -y mongodb
+# RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+# RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+# RUN sudo apt update
+# RUN sudo apt install -y mongodb-org
+# RUN mongod --version
+# RUN sudo systemctl status mongod
+# RUN sudo systemctl start mongod
+
+RUN apt-get update && \
+    apt-get install -y gnupg wget && \
+    wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add - && \
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list && \
+    apt-get update && \
+    apt-get install -y mongodb-org
+
+# Create the MongoDB data directory
+RUN mkdir -p /data/db
+
+# Expose the default MongoDB port (27017)
+EXPOSE 27017
+
+# Start the MongoDB service when the container starts
+CMD ["mongod","--bind_ip_all"]

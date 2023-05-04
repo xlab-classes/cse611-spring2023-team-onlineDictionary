@@ -61,3 +61,8 @@
 .showMoreButton:hover{
   text-decoration-line: underline;
 }
+
+.examplesource{
+  color: grey;
+  font-style: italic;
+}

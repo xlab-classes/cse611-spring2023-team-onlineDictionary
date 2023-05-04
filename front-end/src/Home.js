@@ -81,25 +81,15 @@ function Home() {
 
   return (
     <Fragment>
-      <Header
-        onStatistics={showStatistics}
-        onAddWord={showWordHandler}
-        wordHandle={wordHandler}
-        wordDisable={disableWord}
-        languageCode={languageCode}
-        onLanguageChange={handleLanguageChange}
-      />
+      
+      
+      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
-        {showWord == 0 && <MainInfoCard showWord={wordHandler} />}
-        {showWord == 1 && <Word wordData={wordData} />}
-        {showWord == 2 && (
-          <WordNotFound
-            onAddWord={showWordHandler}
-            wordSearched={searchedWord}
-          />
-        )}
-        {showWord == 3 && <AddWord onClose={hideWordHandler} />}
-        {showWord == 4 && <Statistics onClose={hideStatistics} />}
+        {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
+        {showWord==1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}
+        {showWord==2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
+        {showWord==3  && <AddWord onClose={hideWordHandler} />}
+        {showWord==4 && <Statistics onClose={hideStatistics} />}
       </main>
     </Fragment>
   );

@@ -1,6 +1,0 @@
-POST https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/ HTTP/1.1
-content-type: application/json
-
-{
-    "word": "sample"
-}

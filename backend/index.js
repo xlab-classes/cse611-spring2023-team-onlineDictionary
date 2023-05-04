@@ -7,8 +7,11 @@ const util = require('util')
 const fs = require('fs')
 const request = require('request')
 const path = require('path')
+const TextToIPA = require('text-to-ipa');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
@@ -78,7 +81,7 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     // }
 }
 
-function handleDictionaryData(word, response, body, languageCode) {
+function handleDictionaryData(word, response, body, languageCode, ipa) {
     const responseToReact = { "word": word, "meanings": [] };
     map = {
         "intj": "interjection", "adj": "adjective", "adv": "adverb", "prep": "preposition",
@@ -141,19 +144,28 @@ function handleDictionaryData(word, response, body, languageCode) {
                     randomIndices.add(Math.floor(Math.random() * numDocs));
                 }
                 const randomDocs = [...randomIndices].map(index => docs[index]);
-                responseToReact.generalExamples = randomDocs.filter(i => i.length>15);
+                generalExamples = randomDocs.filter(i => i.length>15);
+                x = []
+                for(i of generalExamples){
+                    x.push({
+                        "text":i,
+                        "source":documentMap.get(i)
+                    })
+                }
+                responseToReact.generalExamples = x
             }
         })
         .finally(() => {
             createGoogleAudio(body, word, languageCode)
             posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
             logWord(word, true, posMeaning)
+            responseToReact.ipa = ipa
             response.send(responseToReact)
             console.log('finally complete')
         })
 }
 
-function handleDictionaryAPI(word, response, languageCode) {
+function handleDictionaryAPI(word, response, languageCode, ipa) {
     const config = {
         method: 'get',
         url: 'https://api.dictionaryapi.dev/api/v2/entries/en/' + word
@@ -253,7 +265,7 @@ function handleDictionaryError(error, response, word) {
 
 app.post('/', (request, response) => {
     console.log("post method hit")
-    const ipAddress = request.body.userIp
+    const ipAddress = request.body.userIP
     console.log('ip addres is '+ipAddress)
     const word = request.body.word;
     const languageCode = request.body.languageCode;
@@ -269,21 +281,25 @@ app.post('/', (request, response) => {
             languageCode: languageCode
         }
     };
-
+    ipaObject = TextToIPA.lookup(word)
+    ipa=""
+    if (ipaObject.error!='undefined'){
+        ipa = ipaObject.text.split(' ')[0]
+    }
     axios(config)
         .then(mongoResponse => {
             if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
                 console.log('not found in database. fallback to API')
-                handleDictionaryAPI(word, response, languageCode)
+                handleDictionaryAPI(word, response, languageCode, ipa)
             }
             else {
                 console.log('found in mongoDB')
-                handleDictionaryData(word, response, mongoResponse.data, languageCode);
+                handleDictionaryData(word, response, mongoResponse.data, languageCode, ipa);
             }
         })
         .catch(error => {
             console.log(error)
-            handleDictionaryAPI(word, response, languageCode)
+            handleDictionaryAPI(word, response, languageCode, ipa)
         });
 
         const date = new Date();

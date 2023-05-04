@@ -29,13 +29,13 @@ const AddWord = (props) => {
 
   const addWordForm = (
     <div>
-      <h1 className={classes.h1}>Help Us In Increasing Our Vocabulary</h1>
+      <h1 className={classes.h1}>Help us to increase our vocabulary</h1>
       <form className={classes.form} onSubmit={addWordHandler}>
         <input
           className={classes.input}
           type="text"
           name="word"
-          placeholder={"Add a New Word"}
+          placeholder={"Add a new word"}
         />
         <button className={classes.button}>Submit</button>
       </form>

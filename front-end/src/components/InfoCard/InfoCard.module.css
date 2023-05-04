@@ -8,19 +8,18 @@
 .wodd{
   color: #4a4a4ac6;
   cursor: pointer;
-  font-size: 3rem;
-  padding: 3.5rem;
+  font-size: 3.5rem;
+  text-align: center;
 }
 
 .woddbutton{
   display: block;
   margin: auto;
-  margin-top: 7.6rem;
+  margin-top: 3rem;
   border-radius: 5px;
-  background-color: #4c98ea19;
+  background-color: #4695ea00;
   transform: scale(1);
   transition: transform 0.5s ease;
-  box-shadow: 0 0 8px #d3d3d3;
 }
 
 .woddbutton:hover{
@@ -30,8 +29,9 @@
 }
 
 .woddbutton:active{
-  background-color: #4695ea3e;
+  background-color: rgba(107, 167, 231, 0.186);
   color: #dad5d5;
+  border-radius: 50px;
 }
 
 .infocardborder{
@@ -41,6 +41,7 @@
   background-color: #4695ea14;
   box-shadow: 0 0 8px #d3d3d3;
   border-radius: 0px;
+  height: 325px;
 }
 
 .woddheader{
@@ -50,4 +51,23 @@
   letter-spacing: 3px;
   font-weight: bold;
   color:#2d2b24;
+}
+
+.meaning{
+  margin-top: 2.5rem;
+  color: #545454;
+  font-size:1.1rem;
+  text-align: center;
+  padding: 0 2rem 0 2rem;
+}
+
+.pos{
+  margin-top: 0.8rem;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #545454;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

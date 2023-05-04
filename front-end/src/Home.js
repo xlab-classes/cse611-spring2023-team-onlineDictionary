@@ -20,7 +20,6 @@ function Home() {
   const [statistics, setStatistics] = useState(false);
   const [languageCode, setLanguageCode] = useState("en-US");
 
-  var langcode;
   function handleLanguageChange(code) {
     setLanguageCode(code);
   }
@@ -28,14 +27,10 @@ function Home() {
   async function wordHandler(word) {
     console.log("in Home.js");
     console.log("language code is : ", languageCode);
-    let userDetails;
-    await fetch("https://api.ipify.org?format=json")
-      .then((res) =>   res.json())
-      .then((data) => userDetails = data.ip);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word: word, languageCode: languageCode ,userIP : userDetails}),
+      body: JSON.stringify({ word: word, languageCode: languageCode}),
     };
     await fetch(
       `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/`,

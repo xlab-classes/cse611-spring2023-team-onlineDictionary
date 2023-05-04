@@ -34,18 +34,13 @@ function logWord(word, wordFound, meaning=[null, null]) {
         })
 };
 
-// response.send(responseToReact)
+
 
 
 function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     var outerResponse = responseToReact
-    // if(outerResponse.hasOwnProperty('google_audio')){
-    //     console.log(word+"  has audio already ")
-    // }
-    // else {
     var text = word
     var languageCode = languageCode;
-    console.log("languageCode is : ", languageCode)
     var ssmlVoice = 'MALE';
     async function convertTextToMp3(word, languageCode, ssmlVoice) {
         const text = word
@@ -57,7 +52,6 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
         const [response] = await client.synthesizeSpeech(googlerequest)
         const writeFile = util.promisify(fs.writeFile)
         await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
-        console.log("Text to speech is done.")
         var path = require('path')
         var options = {
             'method': 'POST',
@@ -114,7 +108,6 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
 
         responseToReact.meanings.push(meaning);
     }
-    console.log(responseToReact)
     // TODO: functionize solr req and response to remove redundancy
     let config = {
         method: 'get',
@@ -161,7 +154,6 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
             logWord(word, true, posMeaning)
             responseToReact.ipa = ipa
             response.send(responseToReact)
-            console.log('finally complete')
         })
 }
 
@@ -248,7 +240,6 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                     posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
                     logWord(word, true, posMeaning)
                     response.send(responseToReact)
-                    console.log('finally complete')
                 })
         })
         .catch(error => {

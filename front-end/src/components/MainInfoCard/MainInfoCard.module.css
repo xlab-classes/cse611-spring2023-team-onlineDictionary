@@ -16,7 +16,8 @@
     margin-left: 125px;
     margin-right: 75px;
     border-radius: 15px;
-    position: relative; /* Add position relative */
+    width: 40%;
+    position: absolute; /* Add position relative */
   }
   
   .MainInfocard h2 {

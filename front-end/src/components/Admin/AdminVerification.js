@@ -116,7 +116,7 @@ const AdminVerification = () => {
               <td>
                 <button
                   className="accept"
-                  onClick={() => acceptRejectWords({word : item.word, state:"add"})}
+                  onClick={() => acceptRejectWords({word : item.word, state:"add",manualAccept:"false"})}
                 >
                   Accept
                 </button>
@@ -152,8 +152,6 @@ const AdminVerification = () => {
             <form className={classes.form} onSubmit={handleAddMeaningSubmit}>
               <label htmlFor="word">Word:</label>
               <input type="text" id="word" name="word" value={modalWord} />
-              <label htmlFor="POS">Part of Speech:</label>
-              <input type="text" id="pos" name="POS" />
               <label htmlFor="meaning">Meaning:</label>
               <input type="text" id="meaning" name="meaning" />
               <label htmlFor="example">Example Usage:</label>

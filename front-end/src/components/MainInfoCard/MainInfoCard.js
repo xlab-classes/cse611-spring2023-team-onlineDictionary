@@ -83,7 +83,9 @@ render() {
                     <div className={classes.MainInfocard}>
                         <InfoCard
                             title={"WORD OF THE DAY"}
-                            word={WOD.wordoftheDay}
+                            word={WOD.word}
+                            meaning={WOD.meaning}
+                            pos ={WOD.pos}
                             showWord={this.props.showWord}
                             month={this.state.monthh}
                             datee={this.state.date1}

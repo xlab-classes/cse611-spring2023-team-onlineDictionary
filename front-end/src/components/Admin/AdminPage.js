@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
+import AdminHeader from './AdminHeader';
+import AdminVerification from './AdminVerification';
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
+  const [adminPage,setAdminPage] = useState(0);
+
+
+  function onInitial() {
+    setAdminPage(0);
+  }
+
+  function onFinal() {
+    setAdminPage(1);
+  }
 
   useEffect(() => {
     getNewWordList();
   }, []);
 
   async function getNewWordList() {
-    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords`)
+    await fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/getnewwords?requestedState=New`)
       .then((response) => response.json())
       .then((result) => {
         result = result.map((item, index) => {
           return { ...item, id: index + 1 };
         });
         setData(result);
+        console.log(data);
       });
 
       
+
   }
 
   function acceptRejectWords(postBody) {
@@ -37,29 +51,10 @@ const AdminPage = () => {
 
   }
 
-  const [acceptedWords, setAcceptedWords] = useState([]);
-  const [rejectedWords, setRejectedWords] = useState([]);
-
   const [meanings, setMeanings] = useState({});
 
   const [showMeaning, setShowMeaning] = useState(false);
   const [wordToShow, setWordToShow] = useState('');
-
-  const handleAccept = (id) => {
-    const wordToAccept = data.find((item) => item.id === id);
-    setAcceptedWords([...acceptedWords, wordToAccept]);
-  };
-
-  const handleReject = (id) => {
-    const wordToReject = data.find((item) => item.id === id);
-    setRejectedWords([...rejectedWords, wordToReject]);
-  };
-
-
-  const handleMeaningChange = (id, value) => {
-    setMeanings({ ...meanings, [id]: value });
-  };
-
 
   const handleShowMeaning = (word) => {
     setShowMeaning(true);
@@ -73,11 +68,12 @@ const AdminPage = () => {
 
   return (
     <div>
+      <AdminHeader onInit={onInitial} onFin={onFinal}/>
+     {!adminPage && <div>
       <table>
         <thead>
           <tr>
             <th>Word</th>
-            <th>Add Meaning</th>
             <th>Accept</th>
             <th>Reject</th>
             <th>Show Meaning</th>
@@ -87,9 +83,6 @@ const AdminPage = () => {
           {data.map((item) => (
             <tr key={item.id}>
               <td>{item.word}</td>
-              <td>
-                <input type="text" value={meanings[item.id] || ''} onChange={(e) => handleMeaningChange(item.id, e.target.value)} />
-              </td>
               <td>
                 <button className="accept" onClick={() => acceptRejectWords({word : item.word, state:"accept",meaning:meanings[item.id]})}>Accept</button>
               </td>
@@ -111,6 +104,8 @@ const AdminPage = () => {
         </div>
       </div>
     )}
+  </div>}
+  {adminPage && <AdminVerification />}
   </div>
 );
 };

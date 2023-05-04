@@ -6,12 +6,14 @@ app.use(cors());
 const util = require('util')
 const fs = require('fs')
 const request = require('request')
+const path = require('path')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const textToSpeech = require('@google-cloud/text-to-speech')
 require('dotenv').config()
 const client = new textToSpeech.TextToSpeechClient()
+let count = 0;
 
 function logWord(word, wordFound) {
     var options = {
@@ -277,6 +279,17 @@ app.post('/', (request, response) => {
         .catch(error => {
             handleDictionaryAPI(word, response, languageCode)
         });
+
+        const date = new Date();
+        const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const filename = `${dateString}.txt`;
+        try {
+            const fileData = fs.readFileSync(filename, 'utf8');
+            count = parseInt(fileData);
+        } catch (err) {}
+        count++; 
+
+        fs.writeFileSync(filename, count.toString());
 });
 
 app.get("/api/:word", (req, response) => {
@@ -311,13 +324,31 @@ app.get("/api/:word", (req, response) => {
     })
 })
 
+app.get("/logindetails",(req,response) => {
+    // var options = {
+    //     'method': 'GET',
+    //     'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getLoginDetails',
+    //     'headers': {
+    //     },
+    //     'json': true
+    // };
+    // request(options, function (error, res) {
+    //     if (error) throw new Error(error);
+    //     console.log(res.body);
+    //     response.send({"username" : res.username , "password" : res.password})
+    // });
+    const userlogin = {
+        username : 'admin',
+        password : 'adminpass'
+    };
+    response.json(userlogin)
+})
+
 const fetchWordLocalRouter = require('./routes/fetchWordLocal');
 const wordStatsRouter = require('./routes/wordStats');
-// const audioRouter = require('./routes/googleAudio');
 
 app.use('/mongo', fetchWordLocalRouter);
 app.use('/getword', wordStatsRouter)
-// app.use('/audio', audioRouter);
 app.listen(3001, () => {
     console.log("Node server running on port 3001")
 })

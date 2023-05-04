@@ -1,6 +1,7 @@
 const router = require('express').Router();
 var request = require('request');
 const axios = require('axios');
+const fs = require('fs')
 
 router.get('/trendingword', (_, response) => {
 
@@ -78,7 +79,17 @@ router.get('/getstatistics', (_, response) => {
 
     axios.request(config)
         .then((res) => {
+            const date = new Date();
+            const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            const filename = `${dateString}.txt`;
+            try {
+            const requestsToday = fs.readFileSync(filename, "utf-8").trim();
+            if(!requestsToday){
+                requestsToday = 0
+            } 
+            res.data[0]["meanings searched today"] = requestsToday
             console.log(JSON.stringify(res.data));
+            }catch (err) {}
             response.send(res.data[0])
         })
         .catch((error) => {
@@ -88,14 +99,14 @@ router.get('/getstatistics', (_, response) => {
 
 })
 
-router.get('/getNewWords', (_, response) => {
+router.get('/getNewWords', (req, response) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords',
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.query.requestedState,
         headers: {}
     };
-
+    console.log(config)
     axios.request(config)
         .then((res) => {
             response.send(res.data)
@@ -104,7 +115,7 @@ router.get('/getNewWords', (_, response) => {
             console.log(error);
         });
 })
-
+// https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState=New
 router.post('/adminWord', (request, response) => {
     word = request.body.word
     let data = {

@@ -16,7 +16,7 @@
   display: block;
   margin: auto;
   margin-top: 10rem;
-  background-color: #df411dee;
+  background-color: #5C80BC;
   border-radius: 1.5rem;
   box-shadow: 0 0 10px #7e7e7e;
   transform: scale(1);
@@ -30,6 +30,22 @@
 }
 
 .woddbutton:active{
-  background-color: #7e0202e7;
+  background-color: #48628f;
   color: #dad5d5;
+}
+
+.infocardborder{
+  border: 4px solid #5C80BC;
+  margin-top: 19px;
+  padding-bottom: 150px; 
+  border-radius: 1rem;
+}
+
+.woddheader{
+  margin-left: 30px;
+  margin-top: 28px;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  font-weight: bold;
+  color:#2d2b24;
 }

@@ -173,7 +173,7 @@ return (
               </div>
             )}
           </div>
-          <button className={classes.button } disabled={searchResults.length === 0}> Submit </button>
+          <button className={classes.button }> Submit </button>
         </form>
       </header>
     </div>

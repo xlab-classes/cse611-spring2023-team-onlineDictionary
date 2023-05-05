@@ -86,7 +86,7 @@ render() {
                             title={"WORD OF THE DAY"}
                             word={WOD.word}
                             meaning={WOD.meaning}
-                            pos ={WOD.pos}
+                            pos ={WOD.pos && WOD.pos.pos}
                             showWord={this.props.showWord}
                             month={this.state.monthh}
                             datee={this.state.date1}
@@ -100,7 +100,8 @@ render() {
                         <div id="trendList" className={classes.trendList}>
                             {trendList}
                         </div>
-                        {this.state.wordLimit >= TOD.length ? (
+                        { TOD && TOD.length > 5 &&
+                        (this.state.wordLimit >= TOD.length ? (
                             <button
                                 className={classes.showmorebutton}
                                 onClick={() => this.setState({ wordLimit: 5 })}
@@ -114,7 +115,8 @@ render() {
                             >
                                 Show More
                             </button>
-                        )}
+                        ))
+                    }
                     </div>
                 )}
             </div>

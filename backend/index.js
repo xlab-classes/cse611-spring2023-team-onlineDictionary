@@ -18,7 +18,7 @@ require('dotenv').config()
 const client = new textToSpeech.TextToSpeechClient()
 let count = 0;
 
-function logWord(word, wordFound, meaning=[null, null]) {
+function logWord(word, wordFound, meaning = [null, null]) {
     var options = {
         method: 'POST',
         url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addWordLog',
@@ -26,7 +26,7 @@ function logWord(word, wordFound, meaning=[null, null]) {
             'Content-Type': 'application/json'
         },
         // TODO : populate response
-        data: { "word": word, "wordFound": wordFound, "response": "", "pos":meaning[0], "meaning":meaning[1] }
+        data: { "word": word, "wordFound": wordFound, "response": "", "pos": meaning[0], "meaning": meaning[1] }
     }
     axios(options)
         .catch(error => {
@@ -128,7 +128,7 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                 }
 
                 let docs = Array.from(documentMap.keys());
-                
+
                 const numDocs = docs.length;
                 const numRandomDocs = Math.min(numDocs, 100);
                 const randomIndices = new Set();
@@ -137,12 +137,12 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                     randomIndices.add(Math.floor(Math.random() * numDocs));
                 }
                 const randomDocs = [...randomIndices].map(index => docs[index]);
-                generalExamples = randomDocs.filter(i => i.length>15);
+                generalExamples = randomDocs.filter(i => i.length > 15);
                 x = []
-                for(i of generalExamples){
+                for (i of generalExamples) {
                     x.push({
-                        "text":i,
-                        "source":documentMap.get(i)
+                        "text": i,
+                        "source": documentMap.get(i)
                     })
                 }
                 responseToReact.generalExamples = x
@@ -213,7 +213,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                     if (solrResponse.data.response.numFound > 0) {
                         // To return first few examples fetched from solr:
                         // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
-        
+
                         // Find few random docs fetched from solr
                         documentMap = new Map();
                         for (record of solrResponse.data.response.docs) {
@@ -221,18 +221,26 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                                 documentMap.set(record.text[0], record.source[0])
                             }
                         }
-        
+
                         let docs = Array.from(documentMap.keys());
-                        
+
                         const numDocs = docs.length;
                         const numRandomDocs = Math.min(numDocs, 100);
                         const randomIndices = new Set();
-        
+
                         while (randomIndices.size < numRandomDocs) {
                             randomIndices.add(Math.floor(Math.random() * numDocs));
                         }
                         const randomDocs = [...randomIndices].map(index => docs[index]);
-                        responseToReact.generalExamples = randomDocs.filter(i => i.length>15);
+                        generalExamples = randomDocs.filter(i => i.length > 15);
+                        x = []
+                        for (i of generalExamples) {
+                            x.push({
+                                "text": i,
+                                "source": documentMap.get(i)
+                            })
+                        }
+                        responseToReact.generalExamples = x
                     }
                 })
                 .finally(() => {
@@ -257,7 +265,7 @@ function handleDictionaryError(error, response, word) {
 app.post('/', (request, response) => {
     console.log("post method hit")
     const ipAddress = request.body.userIP
-    console.log('ip addres is '+ipAddress)
+    console.log('ip addres is ' + ipAddress)
     const word = request.body.word;
     const languageCode = request.body.languageCode;
     console.log(word, languageCode);
@@ -273,8 +281,8 @@ app.post('/', (request, response) => {
         }
     };
     ipaObject = TextToIPA.lookup(word)
-    ipa=""
-    if (ipaObject.error!='undefined'){
+    ipa = ""
+    if (ipaObject.error != 'undefined') {
         ipa = ipaObject.text.split(' ')[0]
     }
     axios(config)
@@ -293,16 +301,16 @@ app.post('/', (request, response) => {
             handleDictionaryAPI(word, response, languageCode, ipa)
         });
 
-        const date = new Date();
-        const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-        const filename = `${dateString}.txt`;
-        try {
-            const fileData = fs.readFileSync(filename, 'utf8');
-            count = parseInt(fileData);
-        } catch (err) {}
-        count++; 
+    const date = new Date();
+    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const filename = `${dateString}.txt`;
+    try {
+        const fileData = fs.readFileSync(filename, 'utf8');
+        count = parseInt(fileData);
+    } catch (err) { }
+    count++;
 
-        fs.writeFileSync(filename, count.toString());
+    fs.writeFileSync(filename, count.toString());
 });
 
 app.get("/api/:word", (req, response) => {
@@ -337,7 +345,7 @@ app.get("/api/:word", (req, response) => {
     })
 })
 
-app.get("/logindetails",(req,response) => {
+app.get("/logindetails", (req, response) => {
     // var options = {
     //     'method': 'GET',
     //     'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getLoginDetails',
@@ -351,8 +359,8 @@ app.get("/logindetails",(req,response) => {
     //     response.send({"username" : res.username , "password" : res.password})
     // });
     const userlogin = {
-        username : 'admin',
-        password : 'adminpass'
+        username: 'admin',
+        password: 'adminpass'
     };
     response.json(userlogin)
 })

@@ -32,7 +32,8 @@ export default class InfoCard1 extends Component {
           className={classes.woddbutton}
           onClick={() => this.props.showWord(this.props.word)}
         >
-          <a className={classes.wodd}> {this.props.index + 1} {this.props.word} </a>
+          <a className={classes.wodd}>{this.props.word} </a>
+          <a className={classes.meaning}> {this.props.meaning}</a>
         </button>
       </div>
     )

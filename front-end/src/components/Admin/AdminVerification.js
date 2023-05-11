@@ -102,8 +102,9 @@ const AdminVerification = () => {
         <thead>
           <tr>
             <th>Word</th>
-            <th>Count</th>
+            
             <th>Show Meaning</th>
+            <th>Count</th>
             <th>Final Accept</th>
             <th>Reject</th>
             <th>Add</th>

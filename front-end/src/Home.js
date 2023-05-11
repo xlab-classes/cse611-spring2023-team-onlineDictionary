@@ -7,8 +7,6 @@ import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";
 import AddWord from "./components/Words/AddWord/AddWord";
 import Statistics from "./components/Words/Statistics/Statistics";
-
-// import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function Home() {
@@ -20,15 +18,15 @@ function Home() {
   const [setStatistics] = useState(false);
   const [languageCode, setLanguageCode] = useState("en-US");
 
-  function handleLanguageChange(code) {
-    setLanguageCode(code);
+  async function handleLanguageChange(code) {
+    await wordHandler(wordData.word,code);
   }
 
-  async function wordHandler(word) {
+  async function wordHandler(word,lcode ="en-US") {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word: word, languageCode: languageCode}),
+      body: JSON.stringify({ word: word, languageCode: lcode}),
     };
     await fetch(
       `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/`,
@@ -65,16 +63,10 @@ function Home() {
     setStatistics(false);
   };
 
-  // function getDate() {
-  //   const currentDate = new Date().toLocaleDateString();
-  // }
-
   // const [readMore, setReadMore] = useState(false);
 
   return (
     <Fragment>
-      
-      
       <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
         {showWord===0 && <MainInfoCard showWord={wordHandler}/>}

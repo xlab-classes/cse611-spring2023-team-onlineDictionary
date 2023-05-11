@@ -10,9 +10,9 @@ const WordSummary = (props) => {
     setSelectedValue(props.languageCode);
   }, [props.languageCode]);
 
-  function handleSelectChange(event){
+  async function handleSelectChange(event){
     setSelectedValue(event.target.value);
-    props.onLanguageChange(event.target.value);
+    await props.onLanguageChange(event.target.value);
     }
   const playAudio = () => {
     const timestamp = new Date().getTime();

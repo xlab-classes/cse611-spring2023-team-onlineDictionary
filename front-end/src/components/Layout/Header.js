@@ -33,7 +33,6 @@ const Header = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     props.wordHandle(event.target.elements.word.value);
-    console.log(event.target.elements.word.value);
     setSearchResults([]);
     setActiveIndex(-1);
     setArrowKeyPressed(false);
@@ -133,7 +132,7 @@ return (
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
         <div className={classes.logo} onClick={() => window.location.reload()}>
-          <img src={cseLogo} alt="CSE Logo Image" />
+          <img src={cseLogo} alt="Logo" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
           <h1 href="#" id="online-dictionary" onClick={() => window.location.reload()}>Online Dictionary</h1>

@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import Card from "../UI/Card";
+import React from 'react'
+// import Card from "../UI/Card";
 import classes from './InfoCard.module.css';
-import Modal from '../UI/Modal';
+// import Modal from '../UI/Modal';
   
 const InfoCard = (props) => {
 

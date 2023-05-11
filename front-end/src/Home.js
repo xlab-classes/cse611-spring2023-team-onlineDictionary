@@ -7,6 +7,7 @@ import Word from "./components/Words/Word";
 import WordNotFound from "./components/Words/WordNotFound";
 import AddWord from "./components/Words/AddWord/AddWord";
 import Statistics from "./components/Words/Statistics/Statistics";
+import About from "./About";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function Home() {
@@ -63,6 +64,15 @@ function Home() {
     setStatistics(false);
   };
 
+  const showAbout = () => {
+    setShowWord(5);
+  };
+  
+
+  function getDate() {
+    const currentDate = new Date().toLocaleDateString();
+  }
+
   const [readMore, setReadMore] = useState(false);
 
   return (
@@ -74,6 +84,7 @@ function Home() {
         {showWord==2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
         {showWord==3  && <AddWord onClose={hideWordHandler} />}
         {showWord==4 && <Statistics onClose={hideStatistics} />}
+        {showWord==5 && <About onAbout = {showAbout}/>}
       </main>
     </Fragment>
   );

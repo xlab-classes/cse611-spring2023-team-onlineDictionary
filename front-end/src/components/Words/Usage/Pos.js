@@ -2,8 +2,6 @@ import classes from "./Pos.module.css";
 import speakerLogo from "../../../assets/Icons/speaker.png";
 
 const Pos = (props) => {
-  console.log(props.data["definitions"]);
-
   const defList = props.data["definitions"].map((definition) => (
     <div>
       <li>
@@ -31,7 +29,6 @@ const Pos = (props) => {
   async function playSound() {
     var snd = new Audio(props.data["audio"]["audioLink"]);
     snd.play(snd);
-    console.log(props.data["audio"]);
   }
 
   if (props.data.hasOwnProperty("audio")) {

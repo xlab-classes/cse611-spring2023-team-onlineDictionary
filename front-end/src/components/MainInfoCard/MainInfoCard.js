@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import React from 'react'
 import InfoCard from '../InfoCard/InfoCard'
 import InfoCard1 from '../InfoCard/InfoCard1'
 import classes from './MainInfoCard.module.css';
-import ReactDOM from "react-dom";
-import { useState } from 'react';
+// import ReactDOM from "react-dom";
+// import { useState } from 'react';
 export default class MainInfoCard extends React.Component {
     constructor(props) {
       super(props)
@@ -32,24 +32,19 @@ export default class MainInfoCard extends React.Component {
   }
   
       
-    componentDidMount() {
-        console.log("in MainInfoCard.js");
-            
+    componentDidMount() {          
         fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/wordoftheday`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 this.setState({
                     WOD: result
                 })
             })
             .catch((error) => console.log(error));
-            console.log("completed");
 
         fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/trendingword`)
             .then((response) => response.json())
             .then((result) => {
-                console.log("Check",result)
                 this.setState({
                     TOD: result,
                     trendingWords: Object.keys(result),
@@ -65,7 +60,6 @@ export default class MainInfoCard extends React.Component {
 
 render() {
     const { WOD, TOD ,trendingWords,trendingMeanings} = this.state;
-    console.log("hi",WOD);
     const trendList =
         TOD && 
         trendingWords.slice(0, this.state.wordLimit).map((meaning, index) => (

@@ -1,7 +1,7 @@
 import Card from "../UI/Card";
 import classes from "./AvailableUsage.module.css";
 import Pos from "./Usage/Pos";
-import FormatPos from "./Formatting/FormatPos";
+// import FormatPos from "./Formatting/FormatPos";
 import WordSummary from "./Usage/WordSummary";
 import Definitions from "./Usage/Definitions";
 

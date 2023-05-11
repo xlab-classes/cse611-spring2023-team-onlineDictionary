@@ -50,7 +50,7 @@ const AdminPage = () => {
 
   }
 
-  const [meanings, setMeanings] = useState({});
+  const [meanings, /*setMeanings*/] = useState({});
 
   const [showMeaning, setShowMeaning] = useState(false);
   const [wordToShow, setWordToShow] = useState('');

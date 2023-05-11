@@ -8,7 +8,7 @@ import WordNotFound from "./components/Words/WordNotFound";
 import AddWord from "./components/Words/AddWord/AddWord";
 import Statistics from "./components/Words/Statistics/Statistics";
 
-import InfoCard from "./components/InfoCard/InfoCard";
+// import InfoCard from "./components/InfoCard/InfoCard";
 import MainInfoCard from "./components/MainInfoCard/MainInfoCard";
 
 function Home() {
@@ -16,8 +16,8 @@ function Home() {
   const [wordData, setWordData] = useState({});
   const [searchedWord, setSearchedWord] = useState("");
 
-  const [addWordHandler, setWordHandler] = useState(false);
-  const [statistics, setStatistics] = useState(false);
+  const [setWordHandler] = useState(false);
+  const [setStatistics] = useState(false);
   const [languageCode, setLanguageCode] = useState("en-US");
 
   function handleLanguageChange(code) {
@@ -25,8 +25,6 @@ function Home() {
   }
 
   async function wordHandler(word) {
-    console.log("in Home.js");
-    console.log("language code is : ", languageCode);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,7 +44,6 @@ function Home() {
         setShowWord(2);
         setSearchedWord(word);
       });
-    console.log(wordData);
   }
 
   function disableWord() {
@@ -68,11 +65,11 @@ function Home() {
     setStatistics(false);
   };
 
-  function getDate() {
-    const currentDate = new Date().toLocaleDateString();
-  }
+  // function getDate() {
+  //   const currentDate = new Date().toLocaleDateString();
+  // }
 
-  const [readMore, setReadMore] = useState(false);
+  // const [readMore, setReadMore] = useState(false);
 
   return (
     <Fragment>
@@ -80,11 +77,11 @@ function Home() {
       
       <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
-        {showWord==0 && <MainInfoCard showWord={wordHandler}/>}
-        {showWord==1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}
-        {showWord==2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
-        {showWord==3  && <AddWord onClose={hideWordHandler} />}
-        {showWord==4 && <Statistics onClose={hideStatistics} />}
+        {showWord===0 && <MainInfoCard showWord={wordHandler}/>}
+        {showWord===1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}
+        {showWord===2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
+        {showWord===3  && <AddWord onClose={hideWordHandler} />}
+        {showWord===4 && <Statistics onClose={hideStatistics} />}
       </main>
     </Fragment>
   );

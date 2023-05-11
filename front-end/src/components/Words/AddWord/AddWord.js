@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, {useState } from "react";
 
-import Modal from "../../UI/Modal";
+// import Modal from "../../UI/Modal";
 import classes from "./AddWord.module.css";
 
 const AddWord = (props) => {

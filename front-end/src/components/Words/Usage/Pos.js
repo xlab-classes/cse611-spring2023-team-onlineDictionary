@@ -2,8 +2,8 @@ import classes from "./Pos.module.css";
 import speakerLogo from "../../../assets/Icons/speaker.png";
 
 const Pos = (props) => {
-  const defList = props.data["definitions"].map((definition) => (
-    <div>
+  const defList = props.data["definitions"].map((definition,index) => (
+    <div key={index}>
       <li>
         {definition["meaning"]}
         {definition["usage"] && (

@@ -16,7 +16,7 @@ function Home() {
 
   const [setWordHandler] = useState(false);
   const [setStatistics] = useState(false);
-  const [languageCode, setLanguageCode] = useState("en-US");
+  const [languageCode] = useState("en-US");
 
   async function handleLanguageChange(code) {
     await wordHandler(wordData.word,code);

@@ -10,6 +10,7 @@
   cursor: pointer;
   font-size: 3.5rem;
   text-align: center;
+
 }
 
 .woddbutton{
@@ -51,6 +52,9 @@
   letter-spacing: 3px;
   font-weight: bold;
   color:#2d2b24;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .meaning{
@@ -59,6 +63,7 @@
   font-size:1.1rem;
   text-align: center;
   padding: 0 2rem 0 2rem;
+  justify-self: center;
 }
 
 .pos{
@@ -70,4 +75,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  justify-self: center;
 }

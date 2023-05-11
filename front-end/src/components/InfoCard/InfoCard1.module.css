@@ -7,7 +7,8 @@
 .wodd{
   color: #4a4a4ac6;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  padding-right: 10px;
 }
 
 .woddbutton{
@@ -19,15 +20,29 @@
     transition: transform 0.3s ease;
     width: 100%;
     background-color: #4c98ea22;
-    box-shadow: 0 0 5px #c3c3c3;
+    box-shadow: 0 0 5px #c9c9c9;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgb(144, 143, 143);
   }
 
 .woddbutton:hover{
   transform: scale(1.02);
   transition: transform 0.15s ease;
+  text-overflow: ellipsis;
+  padding-right: 50px;
   }
 
 .woddbutton:active{
   background-color: #4695ea2e;
   color: #dad5d5;
+}
+
+.meaning {
+  color:rgb(144, 143, 143);
+  opacity: 0;
+}
+
+.woddbutton:hover .meaning {
+  opacity: 1;
 }

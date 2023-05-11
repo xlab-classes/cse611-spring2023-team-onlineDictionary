@@ -51,7 +51,11 @@ export default class MainInfoCard extends React.Component {
             .then((result) => {
                 console.log("Check",result)
                 this.setState({
-                    TOD: result.trendingWords
+                    TOD: result,
+                    trendingWords: Object.keys(result),
+                    trendingMeanings: Object.values(result)
+
+
                 })
             })
             .catch((error) => console.log(error));
@@ -60,23 +64,23 @@ export default class MainInfoCard extends React.Component {
     
 
 render() {
-    const { WOD, TOD } = this.state;
+    const { WOD, TOD ,trendingWords,trendingMeanings} = this.state;
     console.log("hi",WOD);
     const trendList =
-        TOD &&
-        TOD.slice(0, this.state.wordLimit).map((meaning, index) => (
+        TOD && 
+        trendingWords.slice(0, this.state.wordLimit).map((meaning, index) => (
             <InfoCard1
                 word={meaning}
                 index={index}
                 showWord={this.props.showWord}
+                meaning = {trendingMeanings[index]}
                 listData={TOD}
                 key={index}
                 className={
                     index >= this.state.wordLimit - 5
                 }
-            />
+            />            
         ));
-
     return (
         <>
             <div className={classes.MainCard}>
@@ -86,7 +90,7 @@ render() {
                             title={"WORD OF THE DAY"}
                             word={WOD.word}
                             meaning={WOD.meaning}
-                            pos ={WOD.pos && WOD.pos.pos}
+                            pos = {(WOD.pos.length && WOD.pos )|| " "}
                             showWord={this.props.showWord}
                             month={this.state.monthh}
                             datee={this.state.date1}
@@ -100,8 +104,8 @@ render() {
                         <div id="trendList" className={classes.trendList}>
                             {trendList}
                         </div>
-                        { TOD && TOD.length > 5 &&
-                        (this.state.wordLimit >= TOD.length ? (
+                        { TOD && trendingWords.length > 5 &&
+                        (this.state.wordLimit >= trendingWords.length ? (
                             <button
                                 className={classes.showmorebutton}
                                 onClick={() => this.setState({ wordLimit: 5 })}

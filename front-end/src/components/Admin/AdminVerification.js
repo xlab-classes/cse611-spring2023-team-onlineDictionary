@@ -30,8 +30,12 @@ const AdminVerification = () => {
         result = result.map((item, index) => {
           return { ...item, id: index + 1 };
         });
+        result = result.sort((a, b) => b.count - a.count);
+        console.log(result);
         setData(result);
+        
       });
+      
       
   }
 
@@ -96,11 +100,13 @@ const AdminVerification = () => {
         <thead>
           <tr>
             <th>Word</th>
-           
+            
             <th>Show Meaning</th>
+            <th>Count</th>
             <th>Final Accept</th>
             <th>Reject</th>
             <th>Add</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -110,6 +116,7 @@ const AdminVerification = () => {
               <td>
                   {item.meaning}
               </td>
+              <td>{item.count}</td>
               <td>
                 <button
                   className="accept"

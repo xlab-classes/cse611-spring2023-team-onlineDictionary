@@ -24,25 +24,17 @@
     white-space: nowrap;
     overflow: hidden;
     color: rgb(144, 143, 143);
+    text-overflow: ellipsis;
+    padding-right: 100px;;
   }
 
 .woddbutton:hover{
   transform: scale(1.02);
   transition: transform 0.15s ease;
   text-overflow: ellipsis;
-  padding-right: 50px;
+  padding-right: 100px;
   }
 
 .woddbutton:active{
   background-color: #4695ea2e;
-  color: #dad5d5;
-}
-
-.meaning {
-  color:rgb(144, 143, 143);
-  opacity: 0;
-}
-
-.woddbutton:hover .meaning {
-  opacity: 1;
 }

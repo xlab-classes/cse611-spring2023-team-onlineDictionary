@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
-import Card from '../UI/Card';
-import classes from './Word.module.css';
+// import Card from '../UI/Card';
+import './Word.module.css';
 import AvailableUsage from './AvailableUsage';
 
 
 const Word = (props) => {
-  function handleLanguageChange(data){
-    props.onLanguageChange(data);
+  async function handleLanguageChange(data){
+    await props.onLanguageChange(data);
   }
   return (
     <Fragment>

@@ -1,6 +1,6 @@
 import classes from "./WordSummary.module.css";
 import speakerLogo from "../../../assets/Icons/speaker.png";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 
 
 const WordSummary = (props) => {
@@ -10,12 +10,10 @@ const WordSummary = (props) => {
     setSelectedValue(props.languageCode);
   }, [props.languageCode]);
 
-  function handleSelectChange(event){
+  async function handleSelectChange(event){
     setSelectedValue(event.target.value);
-    props.onLanguageChange(event.target.value);
+    await props.onLanguageChange(event.target.value);
     }
-    console.log(selectedValue);
-
   const playAudio = () => {
     const timestamp = new Date().getTime();
     const audio = new Audio(

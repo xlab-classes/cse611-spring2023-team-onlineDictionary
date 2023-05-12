@@ -9,6 +9,8 @@ const Header = (props) => {
   const wrapperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [arrowKeyPressed, setArrowKeyPressed] = useState(false);  
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     if (searchResults.length > 0) {
       setActiveIndex(0);
@@ -33,7 +35,6 @@ const Header = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     props.wordHandle(event.target.elements.word.value);
-    console.log(event.target.elements.word.value);
     setSearchResults([]);
     setActiveIndex(-1);
     setArrowKeyPressed(false);
@@ -49,6 +50,7 @@ const Header = (props) => {
   
     if (searchTerm) {
       setIsSearching(true);
+      setSearchTerm(searchTerm);
   
       const results = words
         .filter((result) => 
@@ -69,6 +71,7 @@ const Header = (props) => {
       setSearchResults([]);
       setActiveIndex(-1);
       setArrowKeyPressed(false);
+      setSearchTerm('');
     }
   };
   
@@ -121,6 +124,10 @@ const Header = (props) => {
   {
     props.onStatistics();
   }
+  function showAbout()
+  {
+    props.onAbout();
+  }
   
   
 return (
@@ -129,7 +136,7 @@ return (
         className={`${classes.header} ${isSearching && classes.headerSearching}`}
       >
         <div className={classes.logo} onClick={() => window.location.reload()}>
-          <img src={cseLogo} alt="CSE Logo Image" />
+          <img src={cseLogo} alt="Logo" />
         </div>
         <div className={classes.title} onClick={disableSearch}>
           <h1 href="#" id="online-dictionary" onClick={() => window.location.reload()}>Online Dictionary</h1>
@@ -137,6 +144,7 @@ return (
         <div className={classes.buttonsContainer}>
           <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>
           <button className={classes.button2} onClick={showStatistics}>Statistics</button>
+          <button className={classes.button3} onClick={showAbout}>About</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>
@@ -173,7 +181,7 @@ return (
               </div>
             )}
           </div>
-          <button className={classes.button }> Submit </button>
+          <button className={classes.button } disabled={!searchTerm}> Submit </button>
         </form>
       </header>
     </div>

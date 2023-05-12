@@ -77,7 +77,7 @@ function Home() {
 
   return (
     <Fragment>
-      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
+      <Header onAbout = {showAbout} onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
       <main>
         {showWord===0 && <MainInfoCard showWord={wordHandler}/>}
         {showWord===1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}

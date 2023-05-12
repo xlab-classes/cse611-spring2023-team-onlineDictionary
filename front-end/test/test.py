@@ -64,7 +64,6 @@ class PythonOrgSearch(unittest.TestCase):
 
     def test_clickStats(self):
         driver = webdriver.Chrome()
-        # navigate to the website with the button
         driver.get("https://online-dictionary-frontend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/")
         # wait for the button to become clickable
         button = WebDriverWait(driver, 10).until(
@@ -72,13 +71,11 @@ class PythonOrgSearch(unittest.TestCase):
         )
         # click the button
         button.click()
-        # optionally, you can perform additional actions after clicking the button
-        # close the browser
+       
         driver.quit()
 
     def test_clickAddWords(self):
         driver = webdriver.Chrome()
-        # navigate to the website with the button
         driver.get("https://online-dictionary-frontend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/")
         # wait for the button to become clickable
         button = WebDriverWait(driver, 10).until(
@@ -86,41 +83,32 @@ class PythonOrgSearch(unittest.TestCase):
         )
         #click the button
         button.click()
-        #optionally, you can perform additional actions after clicking the button
-        #close the browser
+       
         driver.quit()
 
     def test_clickWOD(self):
         driver = webdriver.Chrome()
-        # navigate to the website with the button
         driver.get("https://online-dictionary-frontend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/")
-        # wait for the button to become clickable
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/header/div[3]/button[1]"))
         )
-        #click the button
         button.click()
-        #optionally, you can perform additional actions after clicking the button
-        #close the browser
+       
         driver.quit()
 
     def test_checkIfWODisClickable(self):
 
         driver = webdriver.Chrome()
-        # navigate to the website with the button
         driver.get("https://online-dictionary-frontend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/")
         # wait for the button to become clickable
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/main/div/div[1]/div/div[2]/button/a"))
         )
-        # click the button
         button.click()
-        # wait for the new page to open by checking the presence of <h2> tag
         tag_name = "h2"
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.TAG_NAME, tag_name))
         )
-        # perform assertions or additional actions on the new page
         elements = driver.find_elements(By.TAG_NAME, tag_name)
         assert len(elements) > 0
         driver.quit()

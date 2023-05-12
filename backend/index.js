@@ -252,11 +252,13 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                             }
 
                         }
-                        responseToReact.generalExamples = x
+                        if (x.length!=0){
+                            responseToReact.generalExamples = x
+                        }
                     }
                 })
                 .finally(() => {
-                    createGoogleAudio(body, word, languageCode)
+                    createGoogleAudio(responseToReact, word, languageCode)
                     posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
                     logWord(word, true, posMeaning)
                     responseToReact.ipa = ipa

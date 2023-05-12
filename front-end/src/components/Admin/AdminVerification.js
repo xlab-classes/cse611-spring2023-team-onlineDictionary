@@ -8,15 +8,15 @@ const AdminVerification = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  const [acceptedWords, setAcceptedWords] = useState([]);
-  const [rejectedWords, setRejectedWords] = useState([]);
+  // const [acceptedWords, setAcceptedWords] = useState([]);
+  // const [rejectedWords, setRejectedWords] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [meanings, setMeanings] = useState({});
-  const [newWord, setNewWord] = useState({ word: "", meaning: "" });
-  const [showMeaning, setShowMeaning] = useState(false);
-  const [wordToShow, setWordToShow] = useState("");
+  // const [meanings, setMeanings] = useState({});
+  // const [newWord, setNewWord] = useState({ word: "", meaning: "" });
+  // const [showMeaning, setShowMeaning] = useState(false);
+  // const [wordToShow, setWordToShow] = useState("");
 
-  const [showAddMeaning, setShowAddMeaning] = useState(false); // added state variable
+  // const [showAddMeaning, setShowAddMeaning] = useState(false); // added state variable
   useEffect(() => {
     getNewWordList();
   }, []);
@@ -68,11 +68,9 @@ const AdminVerification = () => {
     // added code to show modal for adding new meaning
     
     setShowModal(false);
-    console.log("hi");
   }
 
   const manualAccept = (id, wordGiven) => {
-    console.log(wordGiven);
     setWord(wordGiven);
     setShowModal(true);
   };

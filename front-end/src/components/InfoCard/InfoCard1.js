@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import Card from "../UI/Card";
+// import Card from "../UI/Card";
 import classes from './InfoCard1.module.css';
-import Modal from '../UI/Modal';
+// import Modal from '../UI/Modal';
   
 export default class InfoCard1 extends Component {
 

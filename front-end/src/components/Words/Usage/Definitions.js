@@ -3,7 +3,7 @@ import classes from "./Definitions.module.css";
 
 const Definitions = (props) => {
   const [numExamples, setNumExamples] = useState(5);
-  const defList = props.item.slice(0, numExamples).map((item) => <li>{item.text} <sub className={classes.examplesource}>{item.source}</sub></li>);
+  const defList = props.item.slice(0, numExamples).map((item,index) => <li key={index}>{item.text} <sub className={classes.examplesource}>{item.source}</sub></li>);
 
   const handleShowMore = () => {
     setNumExamples(numExamples + 5);

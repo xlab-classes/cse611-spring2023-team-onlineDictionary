@@ -25,15 +25,20 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
   }
   
+  #statsBar
+  {
+    border: 4px solid black;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+
+  }
   #wrapper {
    
-    border: 1px solid black;
+    
     overflow: hidden; /* add this to contain floated children */
 }
 #Stat1 {
   margin: 10px;
     float:left; /* add this */
-    border: 1px solid red;
 }
 #Stat2 {
   margin: 10px;

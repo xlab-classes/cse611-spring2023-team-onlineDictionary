@@ -123,7 +123,7 @@ const Header = (props) => {
   }
   function showAbout()
   {
-    props.onStatistics();
+    props.onAbout();
   }
   
   
@@ -141,7 +141,7 @@ return (
         <div className={classes.buttonsContainer}>
           <button className={classes.button1} onClick={addWordHandler}>Add New Word</button>
           <button className={classes.button2} onClick={showStatistics}>Statistics</button>
-          <button className={classes.button2} onClick={showAbout}>About</button>
+          <button className={classes.button3} onClick={showAbout}>About</button>
         </div>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.searchBox}>

@@ -5,15 +5,15 @@ import AdminVerification from './AdminVerification';
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
-  const [adminPage,setAdminPage] = useState(0);
+  const [adminPage,setAdminPage] = useState(false);
 
 
   function onInitial() {
-    setAdminPage(0);
+    setAdminPage(false);
   }
 
   function onFinal() {
-    setAdminPage(1);
+    setAdminPage(true);
   }
 
   useEffect(() => {
@@ -28,7 +28,6 @@ const AdminPage = () => {
           return { ...item, id: index + 1 };
         });
         setData(result);
-        console.log(data);
       });
 
       
@@ -51,7 +50,7 @@ const AdminPage = () => {
 
   }
 
-  const [meanings, setMeanings] = useState({});
+  const [meanings, /*setMeanings*/] = useState({});
 
   const [showMeaning, setShowMeaning] = useState(false);
   const [wordToShow, setWordToShow] = useState('');

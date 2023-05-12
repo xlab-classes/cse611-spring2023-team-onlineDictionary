@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import React from 'react'
 import InfoCard from '../InfoCard/InfoCard'
 import InfoCard1 from '../InfoCard/InfoCard1'
 import classes from './MainInfoCard.module.css';
-import ReactDOM from "react-dom";
-import { useState } from 'react';
+// import ReactDOM from "react-dom";
+// import { useState } from 'react';
 export default class MainInfoCard extends React.Component {
     constructor(props) {
       super(props)
@@ -32,26 +32,25 @@ export default class MainInfoCard extends React.Component {
   }
   
       
-    componentDidMount() {
-        console.log("in MainInfoCard.js");
-            
+    componentDidMount() {          
         fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/wordoftheday`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 this.setState({
                     WOD: result
                 })
             })
             .catch((error) => console.log(error));
-            console.log("completed");
 
         fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getword/trendingword`)
             .then((response) => response.json())
             .then((result) => {
-                console.log("Check",result)
                 this.setState({
-                    TOD: result.trendingWords
+                    TOD: result,
+                    trendingWords: Object.keys(result),
+                    trendingMeanings: Object.values(result)
+
+
                 })
             })
             .catch((error) => console.log(error));
@@ -60,22 +59,22 @@ export default class MainInfoCard extends React.Component {
     
 
 render() {
-    const { WOD, TOD } = this.state;
+    const { WOD, TOD ,trendingWords,trendingMeanings} = this.state;
     const trendList =
-        TOD &&
-        TOD.slice(0, this.state.wordLimit).map((meaning, index) => (
+        TOD && 
+        trendingWords.slice(0, this.state.wordLimit).map((meaning, index) => (
             <InfoCard1
                 word={meaning}
                 index={index}
                 showWord={this.props.showWord}
+                meaning = {trendingMeanings[index]}
                 listData={TOD}
                 key={index}
                 className={
                     index >= this.state.wordLimit - 5
                 }
-            />
+            />            
         ));
-
     return (
         <>
             <div className={classes.MainCard}>
@@ -85,7 +84,7 @@ render() {
                             title={"WORD OF THE DAY"}
                             word={WOD.word}
                             meaning={WOD.meaning}
-                            pos ={WOD.pos}
+                            pos = {(WOD.pos.length && WOD.pos )|| " "}
                             showWord={this.props.showWord}
                             month={this.state.monthh}
                             datee={this.state.date1}
@@ -99,7 +98,8 @@ render() {
                         <div id="trendList" className={classes.trendList}>
                             {trendList}
                         </div>
-                        {this.state.wordLimit >= TOD.length ? (
+                        { TOD && trendingWords.length > 5 &&
+                        (this.state.wordLimit >= trendingWords.length ? (
                             <button
                                 className={classes.showmorebutton}
                                 onClick={() => this.setState({ wordLimit: 5 })}
@@ -113,7 +113,8 @@ render() {
                             >
                                 Show More
                             </button>
-                        )}
+                        ))
+                    }
                     </div>
                 )}
             </div>

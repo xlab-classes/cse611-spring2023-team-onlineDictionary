@@ -8,15 +8,15 @@ const AdminVerification = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  const [acceptedWords, setAcceptedWords] = useState([]);
-  const [rejectedWords, setRejectedWords] = useState([]);
+  // const [acceptedWords, setAcceptedWords] = useState([]);
+  // const [rejectedWords, setRejectedWords] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [meanings, setMeanings] = useState({});
-  const [newWord, setNewWord] = useState({ word: "", meaning: "" });
-  const [showMeaning, setShowMeaning] = useState(false);
-  const [wordToShow, setWordToShow] = useState("");
+  // const [meanings, setMeanings] = useState({});
+  // const [newWord, setNewWord] = useState({ word: "", meaning: "" });
+  // const [showMeaning, setShowMeaning] = useState(false);
+  // const [wordToShow, setWordToShow] = useState("");
 
-  const [showAddMeaning, setShowAddMeaning] = useState(false); // added state variable
+  // const [showAddMeaning, setShowAddMeaning] = useState(false); // added state variable
   useEffect(() => {
     getNewWordList();
   }, []);
@@ -30,9 +30,12 @@ const AdminVerification = () => {
         result = result.map((item, index) => {
           return { ...item, id: index + 1 };
         });
-        setData(result);
+        result = result.sort((a, b) => b.count - a.count);
         console.log(result);
+        setData(result);
+        
       });
+      
       
   }
 
@@ -65,11 +68,9 @@ const AdminVerification = () => {
     // added code to show modal for adding new meaning
     
     setShowModal(false);
-    console.log("hi");
   }
 
   const manualAccept = (id, wordGiven) => {
-    console.log(wordGiven);
     setWord(wordGiven);
     setShowModal(true);
   };
@@ -99,11 +100,13 @@ const AdminVerification = () => {
         <thead>
           <tr>
             <th>Word</th>
-           
+            
             <th>Show Meaning</th>
+            <th>Count</th>
             <th>Final Accept</th>
             <th>Reject</th>
             <th>Add</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -113,6 +116,7 @@ const AdminVerification = () => {
               <td>
                   {item.meaning}
               </td>
+              <td>{item.count}</td>
               <td>
                 <button
                   className="accept"
@@ -144,12 +148,12 @@ const AdminVerification = () => {
       </table>
     
       {showModal && (
-        <div className="modal">
+        <div className="modall">
           <div className="modal-content1">
             <span className="close" onClick={handleCloseModal}>
               &times;
             </span>
-            <form className={classes.form} onSubmit={handleAddMeaningSubmit}>
+            <div className={classes.forms} onSubmit={handleAddMeaningSubmit}>
               <label htmlFor="word">Word:</label>
               <input type="text" id="word" name="word" value={modalWord} />
               <label htmlFor="meaning">Meaning:</label>
@@ -157,7 +161,7 @@ const AdminVerification = () => {
               <label htmlFor="example">Example Usage:</label>
               <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
-            </form>
+            </div>
           </div>
         </div>
       )}

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import Card from "../UI/Card";
+// import Card from "../UI/Card";
 import classes from './InfoCard1.module.css';
-import Modal from '../UI/Modal';
+// import Modal from '../UI/Modal';
   
 export default class InfoCard1 extends Component {
 
@@ -25,24 +25,15 @@ export default class InfoCard1 extends Component {
   };
 
 
-  render() {
-    const green = 125 + (this.props.index + 1) * 8;
-    const blue = 200 + (this.props.index + 1) * 1;
-    const opacity = 1 - (this.props.index +1) * 0.03;
-    const buttonColor = `rgba(80, ${green}, ${blue}, ${opacity})`;
-    
+  render() {  
     return (
       <div>
         <button
           className={classes.woddbutton}
-          style={{
-            width: `${100 - this.props.index * 8}%`,
-            minWidth: '200px',
-            backgroundColor: buttonColor
-          }}
           onClick={() => this.props.showWord(this.props.word)}
         >
-          <a className={classes.wodd}> {this.props.index + 1} {this.props.word} </a>
+          <a className={classes.wodd}>{this.props.word} </a>
+          <a className={classes.meaning}> {this.props.meaning}</a>
         </button>
       </div>
     )

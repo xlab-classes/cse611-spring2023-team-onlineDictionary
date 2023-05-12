@@ -1,17 +1,9 @@
 .meal {
   display: flex;
-  justify-content: space-between;
   margin: 1rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid #6b6a6a;
 }
-
-.mealHeader {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
 
 .meal h1 {
   display: inline-block;
@@ -24,6 +16,13 @@
 
 .word {
   margin-right: 10px;
+  padding-right: 0.5rem;
+}
+
+.dropdown{
+  position: absolute;
+  right: 35px;
+  margin-top: 1rem;
 }
 
 .audioPlayer {
@@ -40,7 +39,7 @@
   align-items: center;
   margin-left: 10px; 
   position: relative;
-
+  margin-top: 0.2rem;
 }
 
 .audioPlayer:active{
@@ -49,13 +48,6 @@
 .audioPlayer img {
   width: 27px;
   height: auto;
-}
-
-.dropdown {
-  position: relative;
-  top: 5%;
-  right: 5%;
-  margin-right: -90px;
 }
 
 .languageSelect {
@@ -72,12 +64,17 @@
 }
 
 .source {
-  position: absolute;
+  position:absolute;
   font-size: smaller;
   font-style: italic;
   color: grey;
-  text-align: right;
-  width: 80%;
-  margin-top: 2.6rem;
-  left: 12.5rem;
+  margin-top: 2.8rem;
+  right: 35px;
+}
+
+.ipa{
+  font-size:1.5rem;
+  padding: 0 1.5rem 0 1.5rem;
+  color: rgb(114, 114, 114);
+  margin-top: 0.7rem;
 }

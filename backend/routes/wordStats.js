@@ -3,6 +3,7 @@ var request = require('request');
 const axios = require('axios');
 const fs = require('fs')
 
+
 router.get('/trendingword', (_, response) => {
 
     var options = {
@@ -13,18 +14,28 @@ router.get('/trendingword', (_, response) => {
         'json': true
     };
     request(options, function (error, res) {
-        if (error) throw new Error(error);
-        if (res.body[0]) {
-            response.send({ "trendingWords": res.body.map(a => a.word) })
+        if (error){
+            console.log(error)
+        }
+        
+        if (res.body && res.body[0]) {
+            trendingWords = {}
+            // response.send({ "trendingWords": res.body.map(a => a.word) })
+            for (i of res.body) {
+                trendingWords[i.word] = i.meaning
+            }
+            response.send(trendingWords)
         }
         else {
-            response.send({ "trendingWords": ["online", "dictionary"] })
+            response.send({
+                "online": "available on or performed using the internet or other computer network",
+                "dictionary": "a book or electronic resource that lists the words of a language"
+            })
         }
     });
 });
 
 router.get('/wordoftheday', (_, response) => {
-    // var request = require('request');
     var options = {
         'method': 'GET',
         'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getWordOfDay',
@@ -34,12 +45,11 @@ router.get('/wordoftheday', (_, response) => {
     };
     request(options, function (error, res) {
         if (error) throw new Error(error);
-        console.log(res.body);
         if (res.body) {
-            response.send({ "wordoftheDay": res.body })
+            response.send(res.body)
         }
         else {
-            response.send({ "wordoftheDay": "dictionary" })
+            response.send({ "word": "dictionary", "meaning": "a book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage", "pos": {} })
         }
     });
 })
@@ -83,13 +93,13 @@ router.get('/getstatistics', (_, response) => {
             const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
             const filename = `${dateString}.txt`;
             try {
-            const requestsToday = fs.readFileSync(filename, "utf-8").trim();
-            if(!requestsToday){
-                requestsToday = 0
-            } 
-            res.data[0]["meanings searched today"] = requestsToday
-            console.log(JSON.stringify(res.data));
-            }catch (err) {}
+                const requestsToday = fs.readFileSync(filename, "utf-8").trim();
+                if (!requestsToday) {
+                    requestsToday = 0
+                }
+                res.data[0]["meanings searched today"] = requestsToday
+                console.log(JSON.stringify(res.data));
+            } catch (err) { }
             response.send(res.data[0])
         })
         .catch((error) => {
@@ -103,10 +113,9 @@ router.get('/getNewWords', (req, response) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState='+req.query.requestedState,
+        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getNewWords?requestedState=' + req.query.requestedState,
         headers: {}
     };
-    console.log(config)
     axios.request(config)
         .then((res) => {
             response.send(res.data)
@@ -123,7 +132,7 @@ router.post('/adminWord', (request, response) => {
         state: request.body.state
     }
 
-    if (request.body.state == "accept") {
+    if (request.body.state == "add") {
         wordData = {
             word: word,
             usage: [{
@@ -137,11 +146,12 @@ router.post('/adminWord', (request, response) => {
                 }],
                 etymology_text: "",
                 etymology_number: 0,
-                audio:[]
+                audio: []
             }]
 
         }
         data.wordData = wordData
+        data.manualAccept = request.body.manualAccept
     }
     let config = {
         method: 'post',

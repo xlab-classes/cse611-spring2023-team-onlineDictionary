@@ -8,7 +8,6 @@
   z-index: 1;
 }
 
-
 .title h1 {
   display: flex;
   font-size: 3.6rem;
@@ -86,7 +85,7 @@ button {
 
 .buttonsContainer {
   position: absolute;
-  top: 190px;
+  top: 177px;
   right: 0;
   margin-right: 15px;
 }
@@ -97,10 +96,17 @@ button {
   border-top-right-radius: 0rem;
   border-bottom-right-radius: 0rem;
   background-color: #474741;
-  ;
 }
 
 .button2{
+  border-bottom-left-radius: 0rem;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+  background-color: #474741;
+}
+
+.button3{
   border-bottom-left-radius: 0rem;
   border-top-left-radius: 0rem;
   border-top-right-radius: 1rem;
@@ -109,14 +115,16 @@ button {
 }
 
 .button1:active,
-.button2:active, .button:active {
+.button2:active,
+.button3:active .button:active {
   background-color: #353530;
   color: #dad5d5;
 }
 
 .button1:hover,
-.button2:hover {
-  background-color: #343430;
+.button2:hover,
+.button3:hover {
+  background-color: #42423c;
   color: #dad5d5;
 }
 

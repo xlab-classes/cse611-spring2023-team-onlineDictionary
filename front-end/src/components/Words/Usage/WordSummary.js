@@ -1,6 +1,6 @@
 import classes from "./WordSummary.module.css";
 import speakerLogo from "../../../assets/Icons/speaker.png";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 
 
 const WordSummary = (props) => {
@@ -10,12 +10,10 @@ const WordSummary = (props) => {
     setSelectedValue(props.languageCode);
   }, [props.languageCode]);
 
-  function handleSelectChange(event){
+  async function handleSelectChange(event){
     setSelectedValue(event.target.value);
-    props.onLanguageChange(event.target.value);
+    await props.onLanguageChange(event.target.value);
     }
-    console.log(selectedValue);
-
   const playAudio = () => {
     const timestamp = new Date().getTime();
     const audio = new Audio(
@@ -25,13 +23,13 @@ const WordSummary = (props) => {
   };
 
   return (
-    <li className={classes.meal}>
-      <div className={classes.mealHeader}>
+    <div className={classes.meal}>
         <h1 className={classes.word}>{props.word}</h1>
         <button onClick={playAudio} className={classes.audioPlayer}>
           <img src={speakerLogo} alt="Speaker Logo" />
         </button>
-        <div style={{ position: 'absolute', top: '15px', right: '10px' }} className={classes.dropdown}>
+        {props.ipa && <div className={classes.ipa}>[ {props.ipa} ]</div>}
+        <div className={classes.dropdown}>
         <select value={selectedValue} onChange={handleSelectChange} className={classes.languageSelect}>
             <option value="en-US">en-US</option>
             <option value="en-GB">en-GB</option>
@@ -40,10 +38,9 @@ const WordSummary = (props) => {
             <option value="ja-JP">ja-JP</option>
             <option value="da-DK">da-DK</option>
           </select>
-        </div>
-        </div>
+          </div>
         <div className={classes.source}>Source: Google Audio</div>
-    </li>
+        </div>
   );
 };
 

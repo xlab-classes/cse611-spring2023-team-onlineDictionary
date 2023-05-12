@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment, FunctionComponent } from "react";
 import classes from "./Statistics.module.css"
-import Modal from "../../UI/Modal";
-import Card from "../../UI/Card";
+// import Modal from "../../UI/Modal";
+// import Card from "../../UI/Card";
 import Plot from 'react-plotly.js';
 import "./styles.css";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
@@ -161,7 +161,7 @@ function Statistics(props) {
   var statList = [];
 
   for (var key in statis) {
-    if (key == "_id") {
+    if (key === "_id") {
       continue;
     }
     statList.push(

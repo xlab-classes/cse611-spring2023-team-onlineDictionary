@@ -1,41 +1,52 @@
-import React, { Fragment, useState } from "react";
-
-import Modal from "../../UI/Modal";
+import React, { useState } from "react";
 import classes from "./AddWord.module.css";
+import wordList from "../../../assets/wordList";
 
 const AddWord = (props) => {
-  const [addWord, setAddWord] = useState(true);
+  const [addWord, setAddWord] = useState(0);
+
 
   async function addWordHandler(event) {
     event.preventDefault();
+
+    const word = event.target.elements.word.value;
+
+    if (wordList.includes(word)) {
+      setAddWord(2);
+      return;
+    }
 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        word: event.target.elements.word.value,
+        word: word,
         languageCode: "en-US",
       }),
     };
 
-    fetch(`https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getWord/addNewWord`,
-      requestOptions)
-     
-    setAddWord(!addWord);
+    fetch(
+      `https://online-dictionary-backend-1.10xw8i3rxjwe.us-east.codeengine.appdomain.cloud/getWord/addNewWord`,
+      requestOptions
+    );
+
+    setAddWord(1);
   }
- const clickHandler = () =>{
-  setAddWord(!addWord);
- } 
+
+  const clickHandler = () => {
+    setAddWord(0);
+    
+  };
 
   const addWordForm = (
     <div>
-      <h1 className={classes.h1}>Help Us In Increasing Our Vocabulary</h1>
+      <h1 className={classes.h1}>Help us to increase our vocabulary</h1>
       <form className={classes.form} onSubmit={addWordHandler}>
         <input
           className={classes.input}
           type="text"
           name="word"
-          placeholder={"Add a New Word"}
+          placeholder={"Add a new word"}
         />
         <button className={classes.button}>Submit</button>
       </form>
@@ -43,16 +54,28 @@ const AddWord = (props) => {
   );
 
   const wordAddedForm = (
-    <div className = {classes.addedWord}>
-      <h1>Your word has been sent for review.</h1> 
-      <button className = {classes.addWordButton} onClick={clickHandler}>Add another word</button>
+    <div className={classes.addedWord}>
+      <h1>Your word has been sent for review.</h1>
+      <button className={classes.addWordButton} onClick={clickHandler}>
+        Add another word
+      </button>
+    </div>
+  );
+
+  const wordExistsMessage = (
+    <div className={classes.addedWord}>
+      <h1>The word already exists in the dictionary.</h1>
+      <button className={classes.addWordButton} onClick={clickHandler}>
+        Add another word
+      </button>
     </div>
   );
 
   return (
     <div className={classes.card}>
-      {addWord && addWordForm}
-      {!addWord && wordAddedForm}
+      {addWord === 0 && addWordForm}
+      {addWord ===1  && wordAddedForm}
+      {addWord === 2  && wordExistsMessage}
     </div>
   );
 };

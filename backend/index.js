@@ -123,6 +123,9 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                 documentMap = new Map();
                 for (record of solrResponse.data.response.docs) {
                     if (!documentMap.has(record.text[0])) {
+                        if (record.text[0].toLowerCase().includes("published by")) {
+                            continue
+                        }
                         documentMap.set(record.text[0], record.source[0])
                     }
                 }
@@ -137,13 +140,16 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                     randomIndices.add(Math.floor(Math.random() * numDocs));
                 }
                 const randomDocs = [...randomIndices].map(index => docs[index]);
-                generalExamples = randomDocs.filter(i => i.length > 15);
+                generalExamples = randomDocs.filter(i => i.replace(/ *\([^)]*\) */g, "").length > 40);
                 x = []
                 for (i of generalExamples) {
-                    x.push({
-                        "text": i,
-                        "source": documentMap.get(i)
-                    })
+                    if (i.replace(/ *\([^)]*\) */g, "").includes(word)) {
+                        x.push({
+                            "text": i.replace(/ *\([^)]*\) */g, "").replace(/['!"#$%&\\'()\*+,\-:;<=>”“?@\[\\\]\^_`{|}~']/g, ""),
+                            "source": documentMap.get(i)
+                        })
+                    }
+
                 }
                 responseToReact.generalExamples = x
             }
@@ -218,6 +224,9 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                         documentMap = new Map();
                         for (record of solrResponse.data.response.docs) {
                             if (!documentMap.has(record.text[0])) {
+                                if (record.text[0].toLowerCase().includes("published by")) {
+                                    continue
+                                }
                                 documentMap.set(record.text[0], record.source[0])
                             }
                         }
@@ -232,21 +241,25 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                             randomIndices.add(Math.floor(Math.random() * numDocs));
                         }
                         const randomDocs = [...randomIndices].map(index => docs[index]);
-                        generalExamples = randomDocs.filter(i => i.length > 15);
+                        generalExamples = randomDocs.filter(i => i.replace(/ *\([^)]*\) */g, "").length > 40);
                         x = []
                         for (i of generalExamples) {
-                            x.push({
-                                "text": i,
-                                "source": documentMap.get(i)
-                            })
+                            if (i.replace(/ *\([^)]*\) */g, "").includes(word)) {
+                                x.push({
+                                    "text": i.replace(/ *\([^)]*\) */g, "").replace(/['!"#$%&\\'()\*+,\-:;<=>”“?@\[\\\]\^_`{|}~']/g, ""),
+                                    "source": documentMap.get(i)
+                                })
+                            }
+
                         }
                         responseToReact.generalExamples = x
                     }
                 })
                 .finally(() => {
-                    createGoogleAudio(responseToReact, word)
+                    createGoogleAudio(body, word, languageCode)
                     posMeaning = [responseToReact.meanings[0].pos, responseToReact.meanings[0].definitions[0].meaning];
                     logWord(word, true, posMeaning)
+                    responseToReact.ipa = ipa
                     response.send(responseToReact)
                 })
         })

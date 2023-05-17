@@ -19,19 +19,71 @@ const client = new textToSpeech.TextToSpeechClient()
 let count = 0;
 
 function logWord(word, wordFound, meaning = [null, null]) {
-    var options = {
-        method: 'POST',
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/addWordLog',
+    let data = JSON.stringify({
+        "selector": {
+            "word": word,
+            "type": "word_logs"
+        }
+    });
+
+    let selectConfig = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
         },
-        // TODO : populate response
-        data: { "word": word, "wordFound": wordFound, "response": "", "pos": meaning[0], "meaning": meaning[1] }
-    }
-    axios(options)
-        .catch(error => {
-            console.log('error is', error)
+        data: data
+    };
+
+    currentDate = new Date().setHours(0, 0, 0, 0)
+    let insertConfig = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+        },
+        data: {
+            "word": word,
+            "type": "word_logs",
+            "wordFound": wordFound,
+            "date": currentDate,
+            "pos": meaning[0],
+            "meaning": meaning[1],
+            "count": 1,
+            "trendingWord": true
+        }
+    };
+
+
+    console.log('word logs function')
+    axios.request(selectConfig)
+        .then((response) => {
+            let count = 1
+            if (response.data.docs[0]) {
+                insertConfig.data['_id'] = response.data.docs[0]._id
+                insertConfig.data['_rev'] = response.data.docs[0]._rev
+                if (response.data.docs[0].date == currentDate)
+                    insertConfig.data.count = response.data.docs[0].count + 1
+            }
+
+            axios.request(insertConfig)
+                .then((response) => {
+                    console.log((response.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
         })
+        .catch((error) => {
+            console.log(error);
+        });
+
+
 };
 
 
@@ -252,7 +304,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                             }
 
                         }
-                        if (x.length!=0){
+                        if (x.length != 0) {
                             responseToReact.generalExamples = x
                         }
                     }
@@ -279,27 +331,42 @@ function handleDictionaryError(error, response, word) {
 
 app.post('/', (request, response) => {
     console.log("post method hit")
-    const ipAddress = request.body.userIP
-    console.log('ip addres is ' + ipAddress)
     const word = request.body.word;
     const languageCode = request.body.languageCode;
     console.log(word, languageCode);
-    const config = {
-        method: 'get',
-        url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
-        headers: {
-            'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
-        },
-        params: {
-            word: word,
-            languageCode: languageCode
-        }
-    };
+    // let config = {
+    //     method: 'get',
+    //     url: 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getData',
+    //     headers: {
+    //         'apiKey': 'uIb0LAUBMoAaPQT0vrvtZd7CCgGWw7W821WzrycbiwVrv3UuK3p6vY1pssCh3jb6'
+    //     },
+    //     params: {
+    //         word: word,
+    //         languageCode: languageCode
+    //     }
+    // };
     ipaObject = TextToIPA.lookup(word)
     ipa = ""
     if (ipaObject.error != 'undefined') {
         ipa = ipaObject.text.split(' ')[0]
     }
+    let data = JSON.stringify({
+        "selector": {
+            "word": word,
+            "type": "word_data"
+        }
+    });
+
+    config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+        },
+        data: data
+    };
     axios(config)
         .then(mongoResponse => {
             if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
@@ -307,8 +374,10 @@ app.post('/', (request, response) => {
                 handleDictionaryAPI(word, response, languageCode, ipa)
             }
             else {
-                console.log('found in mongoDB')
-                handleDictionaryData(word, response, mongoResponse.data, languageCode, ipa);
+                // console.log('found in mongoDB')
+                console.log('found in cloudant db')
+                // console.log(mongoResponse.data.docs[0])
+                handleDictionaryData(word, response, mongoResponse.data.docs[0], languageCode, ipa);
             }
         })
         .catch(error => {

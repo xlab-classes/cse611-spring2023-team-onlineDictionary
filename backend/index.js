@@ -376,7 +376,6 @@ app.post('/', (request, response) => {
             else {
                 // console.log('found in mongoDB')
                 console.log('found in cloudant db')
-                // console.log((mongoResponse.data.docs[0]))
                 // console.log(mongoResponse.data.docs[0])
                 handleDictionaryData(word, response, mongoResponse.data.docs[0], languageCode, ipa);
             }

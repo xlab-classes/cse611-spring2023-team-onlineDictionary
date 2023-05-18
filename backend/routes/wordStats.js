@@ -615,8 +615,9 @@ async function getFirstDefinition(word) {
     //     method: 'get',
     //     url: urli
     // }
+
     try {
-        const result = await axios.get(urli);
+        result = await axios.get(urli);
     }
     catch {
         return ""

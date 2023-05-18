@@ -207,7 +207,6 @@ router.post('/addNewWord', (request, response) => {
     selectConfig = {
         method: 'post',
         maxBodyLength: Infinity,
-
         url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
         headers: {
             'Content-Type': 'application/json',
@@ -352,7 +351,6 @@ router.post('/adminWord', (request, response) => {
         "selector": {
             'type': 'review_words',
             'word': word
-
         }
     });
 

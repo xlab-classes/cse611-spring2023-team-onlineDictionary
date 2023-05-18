@@ -369,7 +369,7 @@ app.post('/', (request, response) => {
     };
     axios(config)
         .then(mongoResponse => {
-            if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
+            if (!mongoResponse.data.docs[0]) {
                 console.log('not found in database. fallback to API')
                 handleDictionaryAPI(word, response, languageCode, ipa)
             }

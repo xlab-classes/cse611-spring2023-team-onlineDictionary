@@ -17,7 +17,10 @@ const Pos = (props) => {
         {definition["meaning"]}
         {definition["usage"] && (
             // <ol > {replaceWord(definition["usage"])} </ol>
-            <ol dangerouslySetInnerHTML={{ __html: replaceWord(definition["usage"]) }}></ol>
+            <ol>
+            <span> Eg: </span>
+            <span dangerouslySetInnerHTML={{ __html: replaceWord(definition["usage"]) }}></span>
+            </ol>
         )}
       </li>
     </div>

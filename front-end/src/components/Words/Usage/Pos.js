@@ -2,12 +2,22 @@ import classes from "./Pos.module.css";
 import speakerLogo from "../../../assets/Icons/speaker.png";
 
 const Pos = (props) => {
-  const defList = props.data["definitions"].map((definition,index) => (
-    <div key={index}>
+
+
+  function replaceWord(sentence) {
+    const regex = new RegExp(`\\b${props.word}\\b`, 'gi');
+    var replacement = sentence.replace(regex, `<b style="color: black;font-style: italic;">${props.word}</b>`);
+    console.log(replacement);
+    return replacement;
+  }
+
+  const defList = props.data["definitions"].map((definition) => (
+    <div>
       <li>
         {definition["meaning"]}
         {definition["usage"] && (
-            <ol> {definition["usage"]} </ol>
+            // <ol > {replaceWord(definition["usage"])} </ol>
+            <ol dangerouslySetInnerHTML={{ __html: replaceWord(definition["usage"]) }}></ol>
         )}
       </li>
     </div>
@@ -29,6 +39,7 @@ const Pos = (props) => {
   async function playSound() {
     var snd = new Audio(props.data["audio"]["audioLink"]);
     snd.play(snd);
+    console.log(props.data["audio"]);
   }
 
   if (props.data.hasOwnProperty("audio")) {

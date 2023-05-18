@@ -15,8 +15,10 @@ const Definitions = (props) => {
   const defList = props.item.slice(0, numExamples).map((item) => (
     
     <li className={classes.li}>
-      <ol className={classes.ol} dangerouslySetInnerHTML={{ __html: replaceWord(item.text) }}></ol>
+      <ol>
+      <span className={classes.ol} dangerouslySetInnerHTML={{ __html: replaceWord(item.text) }}></span>
       <sub className={classes.examplesource} >{item.source}</sub>
+      </ol>
     </li>
    
   ));

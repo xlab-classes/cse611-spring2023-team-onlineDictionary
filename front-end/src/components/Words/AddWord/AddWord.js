@@ -12,7 +12,7 @@ const AddWord = (props) => {
     const word = event.target.elements.word.value;
     const present = await props.onCheck(word,true);
     if (present) {
-      setAddWord(2);
+      setAddWord(1);
       return;
     }
 

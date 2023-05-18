@@ -154,13 +154,15 @@ const AdminVerification = () => {
               &times;
             </span>
             <form className={classes.forms} onSubmit={handleAddMeaningSubmit}>
+              <div>
               <label htmlFor="word">Word:</label>
-              <input type="text" id="word" name="word"/>
+              <input type="text" id="word" name="word" value={modalWord}/>
               <label htmlFor="meaning">Meaning:</label>
               <input type="text" id="meaning" name="meaning" />
               <label htmlFor="example">Example Usage:</label>
               <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
+              </div>
             </form>
           </div>
         </div>

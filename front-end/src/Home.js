@@ -40,8 +40,8 @@ function Home() {
         setSearchedWord(word);
       })
       .catch((error) => {
-        setShowWord(2);
         if(wordPresentCheck){ return true;}
+        setShowWord(2);
         setSearchedWord(word);
       });
   }

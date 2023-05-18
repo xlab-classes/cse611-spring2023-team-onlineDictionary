@@ -37,7 +37,9 @@ function logWord(word, wordFound, meaning = [null, null]) {
         data: data
     };
 
-    currentDate = new Date().setHours(0, 0, 0, 0)
+    var d = new Date(); 
+	var currentDate = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate();
+	
     let insertConfig = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -54,7 +56,7 @@ function logWord(word, wordFound, meaning = [null, null]) {
             "pos": meaning[0],
             "meaning": meaning[1],
             "count": 1,
-            "trendingWord": true
+            "trendingWord": false,
         }
     };
 

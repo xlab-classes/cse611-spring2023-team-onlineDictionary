@@ -196,17 +196,18 @@ router.post('/addNewWord', (request, response) => {
     //         console.log(error);
     //     });
     word = request.body.word
-
-    let data = JSON.stringify({
-        'type': 'review_words',
-        "word": word,
-        "state": "New"
+    console.log('requested word is ', word)
+    data = JSON.stringify({
+        "selector": {
+            "word": word,
+            "type": "review_words"
+        }
     });
 
-    let config = {
+    selectConfig = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
@@ -214,14 +215,47 @@ router.post('/addNewWord', (request, response) => {
         data: data
     };
 
-    axios.request(config)
-        .then((DBResponse) => {
-            console.log(DBResponse.data)
-            response.status(200).send('ok')
+    axios.request(selectConfig)
+        .then(result => {
+            let data = {
+                'type': 'review_words',
+                "word": word,
+                "state": "New",
+                "count": 1
+            }
+            console.log(result.data.docs)
+            if (result.data.docs[0]) {
+                data.count = result.data.docs[0].count + 1
+                data.state = result.data.docs[0].state
+                data._id = result.data.docs[0]._id
+                data._rev = result.data.docs[0]._rev
+
+                if (data.state == 'Rejected') {
+                    console.log('word will not be added as it is rejected once')
+                }
+            }
+
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+                },
+                data: data
+            };
+
+            axios.request(config)
+                .then((DBResponse) => {
+                    console.log('added word to review_words with config ', JSON.stringify(config))
+                    // console.log(DBResponse.data)
+                    response.status(200).send('ok')
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         })
-        .catch((error) => {
-            console.log(error);
-        });
 })
 
 
@@ -292,13 +326,14 @@ router.get('/getNewWords', (req, response) => {
 
     axios.request(config)
         .then((DBResponse) => {
-            console.log(DBResponse)
-            array = DBResponse.data.docs.map(doc => doc.word)
+            // console.log(DBResponse)
+            // array = DBResponse.data.docs.map(doc => doc.word)
+
             res = []
-            for (i of array) {
-                res.push({ "word": i, "meaning": doc.meaning || "", "count":1})
+            for (i of DBResponse.data.docs) {
+                res.push({ "word": i.word, "meaning": i.meaning || "", "count": i.count })
             }
-            console.log(res)
+            // console.log(res)
             response.send(res)
 
         })
@@ -311,78 +346,6 @@ router.post('/adminWord', (request, response) => {
     console.log('word', request.body.word)
     console.log('state ', request.body.state)
     word = request.body.word
-    if (request.body.state == 'reject') {
-        state = "Rejected"
-    }
-    else if (request.body.state == 'accept') {
-        state = "Accepted"
-
-        getFirstDefinition(word)
-            .then(definition => {
-                console.log(definition);
-                data = JSON.stringify({
-                    "selector": {
-                        'type': 'review_words',
-                        'word': word
-                    }
-                });
-
-                config = {
-                    method: 'post',
-                    maxBodyLength: Infinity,
-                    url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-                    },
-                    data: data
-                };
-
-                axios.request(config)
-                    .then((DBResponse) => {
-                        data = JSON.stringify({
-                            "_id": DBResponse.data.docs[0]._id,
-                            "_rev": DBResponse.data.docs[0]._rev,
-                            "meaning": definition,
-                            "word": word,
-                            "type": "review_words",
-                            "state": state
-                        });
-
-                        let config = {
-                            method: 'post',
-                            maxBodyLength: Infinity,
-                            url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-                            },
-                            data: data
-                        }
-
-                        axios.request(config)
-                            .then((response) => {
-                                console.log((response.data));
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-        // return;
-    }
-    else {
-        state = "Added"
-    }
-
-    // if (state == 'Accepted' || state == "Rejected") {
 
     data = JSON.stringify({
         "selector": {
@@ -404,120 +367,60 @@ router.post('/adminWord', (request, response) => {
 
     axios.request(config)
         .then((DBResponse) => {
-            data = JSON.stringify({
-                "_id": DBResponse.data.docs[0]._id,
-                "_rev": DBResponse.data.docs[0]._rev,
-                "word": word,
-                "type": "review_words",
-                "state": state
-            });
+            data = DBResponse.data.docs[0]
 
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-                },
-                data: data
+            if (request.body.state == 'reject') {
+                data.state = "Rejected"
+                // data.count = data.count + 1
+                // review_words update the word to rejected
+                // 
             }
-            if (state != "Accepted") {
-                axios.request(config)
-                    .then((response) => {
-                        console.log((response.data));
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
-
-    // }
-
-    if (request.body.state == "add") {
-        // data.wordData = wordData
-        // data.manualAccept = request.body.manualAccept
-
-        // let insertConfig = {
-        //     method: 'post',
-        //     maxBodyLength: Infinity,
-        //     url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-        //     },
-
-        // data = {
-        //     word: word,
-        //     type: "word_data",
-        //     usage: [{
-        //         pos: "general",
-        //         definitions: [{
-        //             definition: {
-        //                 gloss: request.body.meaning,
-        //                 source: "Online Dictionary"
-        //             },
-        //             examples: []
-        //         }],
-        //         etymology_text: "",
-        //         etymology_number: 0,
-        //         audio: []
-        //     }],
-        //     manualAccept: request.body.manualAccept,
-        // }
-        if (request.body.hasOwnProperty(manualAccept) && request.body.manualAccept) {
-            data.wordData = wordData
-            data.manualAccept = request.body.manualAccept
-
-            let insertConfig = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-                },
-
-                data : {
-                    word: word,
-                    type: "word_data",
-                    usage: [{
-                        pos: "general",
-                        definitions: [{
-                            definition: {
-                                gloss: request.body.meaning,
-                                source: "Online Dictionary"
+            else if (request.body.state == 'accept') {
+                data.state = "Accepted"
+                // data.count = data.count + 1
+                promise = getFirstDefinition(word)
+                promise
+                    .then(res => {
+                        console.log(res)
+                        data.meaning = res
+                        let config = {
+                            method: 'post',
+                            maxBodyLength: Infinity,
+                            url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
                             },
-                            examples: []
-                        }],
-                        etymology_text: "",
-                        etymology_number: 0,
-                        audio: []
-                    }],
-                    manualAccept: request.body.manualAccept,
-                }
+                            data: data
+                        }
+
+                        axios.request(config)
+                            .then((response) => {
+                                console.log('review_words is modified with config ', JSON.stringify(config))
+                                console.log((response.data));
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    })
+                    .catch(err => { console.log(err) })
+                // .then(result => {
+                //     console.log(result)
+                //     data.meaning = result
+
+                // })
+                // .catch(error=>{
+                //     data.meaning = ""
+                //     console.log(error)
+                // })
             }
+            else {
+                data.state = "Added"
+                // data.count = data.count + 1
+                if (request.body.hasOwnProperty('manualAccept') && request.body.manualAccept == 'true') {
+                    data.manualAccept = request.body.manualAccept
 
-            console.log(JSON.stringify(config))
-            axios.request(insertConfig)
-                .then((response) => {
-                    console.log(JSON.stringify(response.data));
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-
-        }
-        else {
-            getWordData(word)
-                .then(data => {
-                    console.log(data);
-                    config = {
+                    let insertConfig = {
                         method: 'post',
                         maxBodyLength: Infinity,
                         url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
@@ -525,27 +428,97 @@ router.post('/adminWord', (request, response) => {
                             'Content-Type': 'application/json',
                             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
                         },
-                        data: data
-                    };
+
+                        data: {
+                            word: word,
+                            type: "word_data",
+                            usage: [{
+                                pos: "general",
+                                definitions: [{
+                                    definition: {
+                                        gloss: request.body.meaning,
+                                        source: "Online Dictionary"
+                                    },
+                                    examples: [request.body.example]
+                                }],
+                                etymology_text: "",
+                                etymology_number: 0,
+                                audio: []
+                            }],
+                            manualAccept: request.body.manualAccept,
+                        }
+                    }
 
                     console.log(JSON.stringify(config))
-                    axios.request(config)
+                    axios.request(insertConfig)
                         .then((response) => {
                             console.log(JSON.stringify(response.data));
                         })
                         .catch((error) => {
                             console.log(error);
                         });
-                })
-        }
-    }
+                }
+                else {
+                    getWordData(word)
+                        .then(result => {
+                            result.type = 'word_data'
+                            let config = {
+                                method: 'post',
+                                maxBodyLength: Infinity,
+                                url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+                                },
+                                data: result
+                            }
 
+                            axios.request(config)
+                                .then(result => {
+                                    console.log(result)
+                                })
+                                .catch(error => {
+                                    console.log('error while posting added word data to dictionary', error)
+                                })
+                        })
+                        .catch(err => {
+                            console.log("error in fetching meaning from getworddata function", err)
+                        })
+                }
+            }
+
+
+            // modify review_words state
+            if (data.state != "Accepted") {
+                let config = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+                    },
+                    data: data
+                }
+
+                axios.request(config)
+                    .then((response) => {
+                        console.log('review_words is modified with config ', JSON.stringify(config))
+                        console.log((response.data));
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        })
+
+        .catch((error) => {
+            console.log(error);
+        });
 
 })
 
 async function getWordData(word) {
-
-
     function cleanString(str) {
         str = str.replace(/(<([^>]+)>)/gi, "");
 
@@ -642,8 +615,12 @@ async function getFirstDefinition(word) {
     //     method: 'get',
     //     url: urli
     // }
-
-    const result = await axios.get(urli);
+    try {
+        const result = await axios.get(urli);
+    }
+    catch {
+        return ""
+    }
     // axios(config).then(result => {
     let final = "";
 

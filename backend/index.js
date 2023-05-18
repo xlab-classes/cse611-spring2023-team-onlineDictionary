@@ -369,13 +369,14 @@ app.post('/', (request, response) => {
     };
     axios(config)
         .then(mongoResponse => {
-            if (mongoResponse.status !== 200 || mongoResponse.data == null || mongoResponse.data == "null") {
+            if (!mongoResponse.data.docs[0]) {
                 console.log('not found in database. fallback to API')
                 handleDictionaryAPI(word, response, languageCode, ipa)
             }
             else {
                 // console.log('found in mongoDB')
                 console.log('found in cloudant db')
+                // console.log((mongoResponse.data.docs[0]))
                 // console.log(mongoResponse.data.docs[0])
                 handleDictionaryData(word, response, mongoResponse.data.docs[0], languageCode, ipa);
             }

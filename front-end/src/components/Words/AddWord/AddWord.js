@@ -10,8 +10,8 @@ const AddWord = (props) => {
     event.preventDefault();
 
     const word = event.target.elements.word.value;
-
-    if (wordList.includes(word)) {
+    const present = await props.onCheck(word,true);
+    if (present) {
       setAddWord(2);
       return;
     }

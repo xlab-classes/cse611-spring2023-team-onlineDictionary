@@ -14,6 +14,7 @@ const AvailableUsage = (props) => {
     <Pos
       key={props.wordData["meanings"].indexOf(meaning)}
       data={meaning}
+      word={props.wordData["word"]}
     />
   ));
 
@@ -22,7 +23,7 @@ const AvailableUsage = (props) => {
       <Card>
         <WordSummary word={props.wordData["word"]} ipa = {props.wordData["ipa"]} languageCode={props.languageCode} onLanguageChange = {handleLanguageChange} />
         <ul>{posList}</ul>
-        {"generalExamples" in props.wordData &&  <Definitions item={props.wordData.generalExamples} name="Example Usage"/>}
+        {"generalExamples" in props.wordData &&  <Definitions word={props.wordData["word"]} item={props.wordData.generalExamples} name="Example Usage"/>}
       </Card>
     </section>
   );

@@ -75,100 +75,43 @@ router.get('/trendingword', (_, response) => {
 });
 
 router.get('/wordoftheday', (_, response) => {
-    // var options = {
-    //     'method': 'GET',
-    //     'url': 'https://us-east-1.aws.data.mongodb-api.com/app/dictionary-eokle/endpoint/getWordOfDay',
-    //     'headers': {
-    //     },
-    //     'json': true
-    // };
-    // request(options, function (error, res) {
-    //     if (error) throw new Error(error);
-    //     if (res.body) {
-    //         response.send(res.body)
-    //     }
-    //     else {
-    //         response.send({ "word": "dictionary", "meaning": "a book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage", "pos": {} })
-    //     }
-    // });
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return year + month + day;
-    }
 
-    // Create the file name
-    const currentDate = new Date();
-    const fileName = `wordoftheday-${formatDate(currentDate)}.txt`;
-    const fs = require('fs');
-
-    const filePath = fileName;
-
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (err) {
-            console.log('word of the day File does not exist');
-            let data = JSON.stringify({
-                "selector": {
-                    'type': 'word_logs',
-                    "wordFound": true
-                }
-            });
-
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
-                },
-                data: data
-            };
-
-            axios.request(config)
-                .then((DBResponse) => {
-                    const randomIndex = Math.floor(Math.random() * DBResponse.data.docs.length);
-                    // console.log(randomIndex)
-                    const randomDoc = DBResponse.data.docs[randomIndex];
-                    response.send({
-                        "word": randomDoc.word,
-                        "meaning": randomDoc.meaning,
-                        "pos": randomDoc.pos
-                    })
-
-                    const jsonData = JSON.stringify({
-                        "word": randomDoc.word,
-                        "meaning": randomDoc.meaning,
-                        "pos": randomDoc.pos
-                    }, null, 2);
-
-                    fs.writeFile(filePath, jsonData, 'utf8', (err) => {
-                        if (err) {
-                            console.error('Error writing to file:', err);
-                        } else {
-                            console.log('word of the day file created');
-                        }
-                    });
-                })
-                .catch((error) => {
-                    response.send({ "word": "dictionary", "meaning": "a book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage", "pos": "noun" })
-                    console.log(error)
-                });
-        } else {
-            console.log('File exists');
-            fs.readFile(filePath, 'utf8', (err, data) => {
-                if (err) {
-                    console.log('Error reading the file:', err);
-                } else {
-                    console.log('File contents:', data);
-                    const jsonData = JSON.parse(data);
-                    response.send(jsonData)
-                }
-            });
-
+    var d = new Date();
+    var currentDate = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+    let data = JSON.stringify({
+        "selector": {
+            'type': 'word_logs',
+            "wordFound": true,
+            "date": currentDate,
+            "trendingWord": true
         }
     });
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
+        },
+        data: data
+    };
+
+    axios.request(config)
+        .then((DBResponse) => {
+            response.send({
+                "word": DBResponse.data.docs[0].word,
+                "meaning": DBResponse.data.docs[0].meaning,
+                "pos": DBResponse.data.docs[0].pos
+            })
+        })
+        .catch((error) => {
+            response.send({ "word": "dictionary", "meaning": "a book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage", "pos": "noun" })
+            console.log(error)
+        });
+
+
 
 })
 

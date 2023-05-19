@@ -38,10 +38,11 @@ function Home() {
         setWordData(result);
         setShowWord(1);
         setSearchedWord(word);
+        return 1;
       })
       .catch((error) => {
-        setShowWord(2);
         if(wordPresentCheck){ return true;}
+        setShowWord(2);
         setSearchedWord(word);
       });
   }

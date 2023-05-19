@@ -21,8 +21,7 @@ let count = 0;
 function logWord(word, wordFound, meaning = [null, null]) {
     let data = JSON.stringify({
         "selector": {
-            "word": word,
-            "type": "word_logs"
+            "_id": `word_logs:${word} `
         }
     });
 
@@ -49,6 +48,7 @@ function logWord(word, wordFound, meaning = [null, null]) {
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
         },
         data: {
+            "_id":`word_logs:${word} `,
             "word": word,
             "type": "word_logs",
             "wordFound": wordFound,
@@ -56,7 +56,6 @@ function logWord(word, wordFound, meaning = [null, null]) {
             "pos": meaning[0],
             "meaning": meaning[1],
             "count": 1,
-            "trendingWord": false,
         }
     };
 
@@ -354,8 +353,7 @@ app.post('/', (request, response) => {
     }
     let data = JSON.stringify({
         "selector": {
-            "word": word,
-            "type": "word_data"
+            "_id": `word_data:${word}`
         }
     });
 

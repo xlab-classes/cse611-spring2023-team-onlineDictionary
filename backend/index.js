@@ -55,7 +55,7 @@ function logWord(word, wordFound, meaning = [null, null]) {
             "date": currentDate,
             "pos": meaning[0],
             "meaning": meaning[1],
-            "trendingWord":true,
+            "trendingWord":false,
             "count": 1,
         }
     };

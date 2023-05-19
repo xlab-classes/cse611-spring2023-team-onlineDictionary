@@ -21,7 +21,7 @@ let count = 0;
 function logWord(word, wordFound, meaning = [null, null]) {
     let data = JSON.stringify({
         "selector": {
-            "_id": `word_logs:${word} `
+            "_id": `word_logs:${word}`
         }
     });
 
@@ -55,6 +55,7 @@ function logWord(word, wordFound, meaning = [null, null]) {
             "date": currentDate,
             "pos": meaning[0],
             "meaning": meaning[1],
+            "trendingWord":true,
             "count": 1,
         }
     };

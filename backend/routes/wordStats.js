@@ -36,7 +36,6 @@ router.get('/trendingword', (_, response) => {
 
     let data = JSON.stringify({
         "selector": {
-            'type': 'word_logs',
             "wordFound": true
         }
     });
@@ -44,7 +43,7 @@ router.get('/trendingword', (_, response) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_partition/word_logs/_find',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
@@ -90,7 +89,7 @@ router.get('/wordoftheday', (_, response) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_partition/word_logs/_find',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
@@ -142,6 +141,7 @@ router.post('/addNewWord', (request, response) => {
     console.log('requested word is ', word)
     data = JSON.stringify({
         "selector": {
+            "_id":`review_words:${word}`,
             "word": word,
             "type": "review_words"
         }
@@ -161,6 +161,7 @@ router.post('/addNewWord', (request, response) => {
     axios.request(selectConfig)
         .then(result => {
             let data = {
+                "_id":`review_words:${word}`,
                 'type': 'review_words',
                 "word": word,
                 "state": "New",
@@ -251,7 +252,6 @@ router.get('/getNewWords', (req, response) => {
 
     let data = JSON.stringify({
         "selector": {
-            'type': 'review_words',
             "state": req.query.requestedState
         }
     });
@@ -259,7 +259,7 @@ router.get('/getNewWords', (req, response) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_find',
+        url: 'https://apikey-v2-1n8q2t2364bw148ftwzc0j6a0n65l047vmdasejkgczn:0768e70486e28d354c46b345c0cdb5f3@dec4d4f2-acae-428a-be32-ddb04da38212-bluemix.cloudantnosqldb.appdomain.cloud/onlinedictionary/_partition/review_words/_find',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
@@ -292,6 +292,7 @@ router.post('/adminWord', (request, response) => {
 
     data = JSON.stringify({
         "selector": {
+            "_id":`review_words:${word}`,
             'type': 'review_words',
             'word': word
         }
@@ -373,6 +374,7 @@ router.post('/adminWord', (request, response) => {
                         },
 
                         data: {
+                            _id :`review_words:${word}`,
                             word: word,
                             type: "word_data",
                             usage: [{

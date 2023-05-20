@@ -7,12 +7,12 @@ const Pos = (props) => {
   function replaceWord(sentence) {
     const regex = new RegExp(`\\b${props.word}\\b`, 'gi');
     var replacement = sentence.replace(regex, `<b style="color: black;font-style: italic;">${props.word}</b>`);
-    console.log(replacement);
+    
     return replacement;
   }
 
-  const defList = props.data["definitions"].map((definition) => (
-    <div>
+  const defList = props.data["definitions"].map((definition,index) => (
+    <div key={index}>
       <li>
         {definition["meaning"]}
         {definition["usage"] && (

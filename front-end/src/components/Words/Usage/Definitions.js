@@ -7,14 +7,14 @@ const Definitions = (props) => {
   function replaceWord(sentence) {
     const regex = new RegExp(`\\b${props.word}\\b`, 'gi');
     var replacement = sentence.replace(regex, `<b style="color: black;font-style: italic;">${props.word}</b>`);
-    console.log(replacement);
+   
     return replacement;
   }
 
   
-  const defList = props.item.slice(0, numExamples).map((item) => (
+  const defList = props.item.slice(0, numExamples).map((item,index) => (
     
-    <li className={classes.li}>
+    <li className={classes.li} key={index}>
       <ol>
       <span className={classes.ol} dangerouslySetInnerHTML={{ __html: replaceWord(item.text) }}></span>
       <sub className={classes.examplesource} >{item.source}</sub>

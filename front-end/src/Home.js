@@ -20,10 +20,11 @@ function Home() {
   const [languageCode, setLanguageCode] = useState("en-US");
 
   async function handleLanguageChange(code) {
-    await wordHandler(wordData.word,code);
+    await wordHandler(wordData.word,false,code);
   }
 
-  async function wordHandler(word,wordPresentCheck=false,lcode ="en-US") {
+  async function wordHandler(word,wordPresentCheck=false,lcode="en-US") {
+    
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

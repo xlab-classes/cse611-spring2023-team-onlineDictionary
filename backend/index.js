@@ -97,7 +97,6 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     var languageCode = languageCode;
     var ssmlVoice = 'MALE';
 
-    // const filePath = path.resolve('google_audios', `${text}.mp3`);
     const filePath = path.resolve('google_audios', `${text}_${languageCode}.mp3`);
 
     console.log(filePath);
@@ -142,7 +141,6 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
         });
 
     }
-    // }
 }
 
 function handleDictionaryData(word, response, body, languageCode, ipa) {

@@ -36,9 +36,9 @@ function logWord(word, wordFound, meaning = [null, null]) {
         data: data
     };
 
-    var d = new Date(); 
-	var currentDate = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate();
-	
+    var d = new Date();
+    var currentDate = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+
     let insertConfig = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -48,14 +48,14 @@ function logWord(word, wordFound, meaning = [null, null]) {
             'Authorization': 'Basic YXBpa2V5LXYyLTFuOHEydDIzNjRidzE0OGZ0d3pjMGo2YTBuNjVsMDQ3dm1kYXNlamtnY3puOjA3NjhlNzA0ODZlMjhkMzU0YzQ2YjM0NWMwY2RiNWYz'
         },
         data: {
-            "_id":`word_logs:${word} `,
+            "_id": `word_logs:${word}`,
             "word": word,
             "type": "word_logs",
             "wordFound": wordFound,
             "date": currentDate,
             "pos": meaning[0],
             "meaning": meaning[1],
-            "trendingWord":false,
+            "trendingWord": false,
             "count": 1,
         }
     };
@@ -74,6 +74,7 @@ function logWord(word, wordFound, meaning = [null, null]) {
 
             axios.request(insertConfig)
                 .then((response) => {
+                    console.log('inserted word log ', JSON.stringify(insertConfig))
                     console.log((response.data));
                 })
                 .catch((error) => {
@@ -177,7 +178,13 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                 documentMap = new Map();
                 for (record of solrResponse.data.response.docs) {
                     if (!documentMap.has(record.text[0])) {
-                        if (record.text[0].toLowerCase().includes("published by")) {
+                        const pattern = /\b[A-Z]{3,}\b|\d{1,2}\/\d{1,2}\/\d{1,2}/; 
+                        if (record.text[0].toLowerCase().includes("published by") ||
+                            record.text[0].toLowerCase().includes("www") ||
+                            record.text[0].toLowerCase().includes("com")||
+                            record.text[0].toLowerCase().includes("201")||
+                            record.text[0].toLowerCase().includes("photo") ||
+                            pattern.test(record.text[0])) {
                             continue
                         }
                         documentMap.set(record.text[0], record.source[0])
@@ -199,7 +206,7 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
                 for (i of generalExamples) {
                     if (i.replace(/ *\([^)]*\) */g, "").includes(word)) {
                         x.push({
-                            "text": i.replace(/ *\([^)]*\) */g, "").replace(/['!"#$%&\\'()\*+,\-:;<=>”“?@\[\\\]\^_`{|}~']/g, ""),
+                            "text": i.replace(/ *\([^)]*\) */g, "").replace(/['!"#$%&\\'()\*+;<=>”“@\[\\\]\^_`{|}~']/g, ""),
                             "source": documentMap.get(i)
                         })
                     }
@@ -229,7 +236,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                 console.log('Erroneous status code' + APIResponse.status)
                 console.log('Entire API response:')
                 console.log(APIResponse)
-                logWord(word, false)
+                // logWord(word, false)
                 return handleDictionaryError("Word meaning not found", response, word)
             }
 
@@ -320,7 +327,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                 })
         })
         .catch(error => {
-            logWord(word, false)
+            // logWord(word, false)
             handleDictionaryError(error, response, word);
         });
 }
@@ -328,7 +335,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
 function handleDictionaryError(error, response, word) {
     console.error(error);
     response.status(500).send('Word meaning not found');
-    logWord(word, false)
+    // logWord(word, false)
 }
 
 app.post('/', (request, response) => {

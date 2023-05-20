@@ -97,6 +97,23 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
     var text = word
     var languageCode = languageCode;
     var ssmlVoice = 'MALE';
+
+    // const filePath = path.resolve('google_audios', `${text}.mp3`);
+    const filePath = path.resolve('google_audios', `${text}_${languageCode}.mp3`);
+
+    console.log(filePath);
+
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.log("creating a new audio file");
+            convertTextToMp3(text, languageCode, ssmlVoice)
+
+        } else {
+            console.log("the audio file already exists");
+        }
+      });
+
+
     async function convertTextToMp3(word, languageCode, ssmlVoice) {
         const text = word
         const googlerequest = {
@@ -106,7 +123,7 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
         }
         const [response] = await client.synthesizeSpeech(googlerequest)
         const writeFile = util.promisify(fs.writeFile)
-        await writeFile('google_Audios/' + text + ".mp3", response.audioContent, 'binary')
+        await writeFile('google_Audios/' + text + '_' + languageCode+ ".mp3", response.audioContent, 'binary')
         var path = require('path')
         var options = {
             'method': 'POST',
@@ -126,7 +143,6 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
         });
 
     }
-    convertTextToMp3(text, languageCode, ssmlVoice)
     // }
 }
 

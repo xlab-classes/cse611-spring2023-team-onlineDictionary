@@ -122,6 +122,7 @@ function createGoogleAudio(responseToReact, word, languageCode = 'en-US') {
         const [response] = await client.synthesizeSpeech(googlerequest)
         const writeFile = util.promisify(fs.writeFile)
         await writeFile('google_Audios/' + text + '_' + languageCode+ ".mp3", response.audioContent, 'binary')
+        await writeFile('google_Audios/' + text + '_' + languageCode+ ".mp3", response.audioContent, 'binary')
         var path = require('path')
         var options = {
             'method': 'POST',

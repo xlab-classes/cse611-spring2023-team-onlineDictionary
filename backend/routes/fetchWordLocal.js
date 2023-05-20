@@ -72,10 +72,14 @@ async function uploadFileToGridFS(filePath,word) {
 // })
 router.get('/audio/:word',(req,res)=>{
   var text = req.params.word
+  var languageCode = req.query.lang;
+  console.log("langauge code is : ",languageCode)
   console.log(req.params.word)
   console.log("inside audio request")
+  console.log()
   var path = require('path')
-  var fullpath = path.resolve('google_Audios/'+text+'.mp3')
+  var fullpath = path.resolve('google_Audios/'+text+'_'+languageCode+'.mp3')
+  console.log(fullpath);
   if(fullpath){
     res.sendFile(fullpath)
   }

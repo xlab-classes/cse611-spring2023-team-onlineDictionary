@@ -17,14 +17,14 @@ const colors = '#1F77B4';
 //     pv: 2400,
 //     amt: 2400
 //   },
-  
+ 
 //   {
 //     name: "Definitions",
 //     uv: 3000,
 //     pv: 1398,
 //     amt: 2210
 //   },
-  
+ 
 //   {
 //     name: "Audios",
 //     uv: 2000,
@@ -38,7 +38,7 @@ const colors = '#1F77B4';
 //     pv: 3908,
 //     amt: 2000
 //   },
-  
+ 
 //   {
 //     name: "All Audios",
 //     uv: 1890,
@@ -52,7 +52,7 @@ const colors = '#1F77B4';
 //     pv: 3800,
 //     amt: 2500
 //   },
-  
+ 
 //   {
 //     name: "All Examples ",
 //     uv: 3490,
@@ -83,57 +83,57 @@ const TriangleBar =  (props) => {
 function Statistics(props) {
   const [statis, setStatistics] = useState(false);
   const [statisDaily,setStatisticsDaily] = useState(false);
-  const data = [
-  {
-    name: "Words",
-    uv: statis.Words,
-    pv: 2400,
-    amt: 2400
-  },
-  
-  {
-    name: "Definitions",
-    uv: statis.WordsWithDefintions,
-    pv: 1398,
-    amt: 2210
-  },
-  
-  {
-    name: "Audios",
-    uv: statis.WordsWithAudios,
-    pv: 9800,
-    amt: 2290
-  },
+//   const data = [
+//   {
+//     name: "Words",
+//     uv: statis.Words,
+//     pv: 2400,
+//     amt: 2400
+//   },
  
-  {
-    name: "Examples",
-    uv: statis.WordsWithExamples,
-    pv: 3908,
-    amt: 2000
-  },
-  
-  {
-    name: "All Audios",
-    uv: statis.TotalAudios,
-    pv: 4800,
-    amt: 2181
-  },
+//   {
+//     name: "Definitions",
+//     uv: statis.WordsWithDefintions,
+//     pv: 1398,
+//     amt: 2210
+//   },
  
-  {
-    name: "All Definitions",
-    uv: statis.TotalDefinitions,
-    pv: 3800,
-    amt: 2500
-  },
-  
-  {
-    name: "All Examples ",
-    uv: statis.TotalExamples,
-    pv: 4300,
-    amt: 2100
-  }
-];
-  
+//   {
+//     name: "Audios",
+//     uv: statis.WordsWithAudios,
+//     pv: 9800,
+//     amt: 2290
+//   },
+ 
+//   {
+//     name: "Examples",
+//     uv: statis.WordsWithExamples,
+//     pv: 3908,
+//     amt: 2000
+//   },
+ 
+//   {
+//     name: "All Audios",
+//     uv: statis.TotalAudios,
+//     pv: 4800,
+//     amt: 2181
+//   },
+ 
+//   {
+//     name: "All Definitions",
+//     uv: statis.TotalDefinitions,
+//     pv: 3800,
+//     amt: 2500
+//   },
+ 
+//   {
+//     name: "All Examples ",
+//     uv: statis.TotalExamples,
+//     pv: 4300,
+//     amt: 2100
+//   }
+// ];
+ 
   useEffect(() => {
     test();
   }, []);
@@ -174,18 +174,8 @@ function Statistics(props) {
 
   return (
 
-   <div id = "wrapper"  /*className={classes.card}*/ style={{backgroundColor: '#E2E2E2', marginTop:"50px", marginLeft:"130px"}}>
-    {/* <div id = "Stat1" style={{margin: 10,backgroundColor: '#E5ECF6',paddingLeft:'10px',paddingRight:'10px',borderRadius:'10px'}}>
-      <h2 style={{ }}>Word Statistics</h2>
-      <p style={{color: 'black'}}>The below graph contains our corpus data. It shows the number of words we have available, number of Audios and example sentences. The list is bound to be expanded since we are learning and adding new words everyday!</p>
-    <Plot
-        data={[
-          {type: 'bar', x: ['Words', "Words with Defns", "Words with Audio","Words with Example","Total Audios","Total Defns","Total Examples"], y: [statis.Words, statis.WordsWithDefintions, statis.WordsWithAudios,statis.WordsWithExamples,statis.TotalAudios,statis.TotalExamples,statis.TotalDefinitions]},
-        ]}
-        layout={ { width: 550 ,height: 500, plot_bgcolor: 'white', borderRadius:'20px', color: '#E5ECF6'} }
-        
-      />
-    </div> */}
+   <div id = "wrapper"  /*className={classes.card}*/ style={{backgroundColor: '#E2E2E2', marginTop:"20px", marginLeft:"130px", }}>
+ 
     <div id= "#statsBar" style={{marginLeft:'400px', marginRight:'50px', backgroundColor: 'white ' , paddingLeft:'0px',paddingRight:'10px',paddingTop:'10px',paddingBottom:'10px',borderRadius:'10px', width:'500px', boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}>
         <p style={{fontFamily: "Calibri", paddingLeft: '125px',color: 'black'}}> Total Number of queries today:<b id = '#querycounter'> {statis.TotalQueries}</b></p>
         <p style={{fontFamily: "Calibri", paddingLeft: '125px',color: 'black'}}> Total Meanings Searched today:<b id = '#querycounter1'> {statis["meanings searched today"]}</b></p>
@@ -194,7 +184,22 @@ function Statistics(props) {
         <br></br>
         The list is bound to be expanded since we are learning and adding new words everyday!</p> */}
     </div>
-   <BarChart
+    <div id = "Stat1" style={{margin: 10,backgroundColor: '#E2E2E2',paddingLeft:'10px',paddingRight:'10px',borderRadius:'10px', boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)"}}>
+      <h2 style={{paddingLeft:'15px', paddingTop:'20px' }}>Word Statistics</h2>
+    <Plot
+        data={[
+          {type: 'bar', x: ['Words', "Words with Defns", "Words with Audio","Words with Example","Total Audios","Total Defns","Total Examples"], y: [statis.Words, statis.WordsWithDefintions, statis.WordsWithAudios,statis.WordsWithExamples,statis.TotalAudios,statis.TotalExamples,statis.TotalDefinitions]},
+        ]}
+        layout={ { width: 1300 ,height: 500, plot_bgcolor: '#E2E2E2',borderRadius:'20px', color: '#E2E2E2',paper_bgcolor:'#E2E2E2'} }
+       
+      />
+
+       <div style={{width:'1000px', marginLeft:'150px', marginRight:'50px', backgroundColor: '#E2E2E2 ' , paddingLeft:'0px',paddingRight:'10px',paddingBottom:'10px',borderRadius:'10px', boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}>
+        <p style={{fontFamily: "Calibri", paddingTop:'20px', paddingLeft: '75px',color: 'black'}}>The above graph contains our corpus data. It shows the number of words we have available, number of Audios and example sentences. <br></br>The list is bound to be expanded since we are learning and adding new words everyday!</p>
+      </div>
+
+    </div>
+   {/* <BarChart
       width={1200}
       height={400}
       data={data}
@@ -213,22 +218,15 @@ function Statistics(props) {
         fill="#1F77B4"
         shape={<TriangleBar />}
         label={{ position: "top" }}
-        
+       
 
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors} />
         ))}
       </Bar>
-      
-    </BarChart>
-
-    <div style={{width:'1000px', marginLeft:'150px', marginRight:'50px', backgroundColor: '#E2E2E2 ' , paddingLeft:'0px',paddingRight:'10px',paddingTop:'10px',paddingBottom:'10px',borderRadius:'10px', boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}>
-        <p style={{fontFamily: "Calibri", paddingLeft: '75px',color: 'black'}}>The above graph contains our corpus data. It shows the number of words we have available, number of Audios and example sentences. <br></br>The list is bound to be expanded since we are learning and adding new words everyday!</p>
-      </div>
-
-
-
+     
+    </BarChart> */}
 
     {/* <div id = "Stat2" style={{margin: 10,backgroundColor: '#E5ECF6',paddingLeft:'10px',paddingRight:'10px',borderRadius:'10px'}}>
     <h2 style={{  }}>Statistics of the day</h2>
@@ -237,7 +235,7 @@ function Statistics(props) {
       </br>
       <br>
       </br>
-      
+     
     <Plot
        
         data={[
@@ -245,7 +243,7 @@ function Statistics(props) {
         ]}
         layout={ {
           width: 550, height: 500,plot_bgcolor: 'white',borderRadius:'20px'}}
-      />
+      />
     </div> */}
     </div>
   );

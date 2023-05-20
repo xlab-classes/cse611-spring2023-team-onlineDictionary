@@ -96,9 +96,10 @@ router.get('/wordoftheday', (_, response) => {
         },
         data: data
     };
-
+    console.log(JSON.stringify(config))
     axios.request(config)
         .then((DBResponse) => {
+            console.log(DBResponse.data)
             response.send({
                 "word": DBResponse.data.docs[0].word,
                 "meaning": DBResponse.data.docs[0].meaning,
@@ -407,6 +408,7 @@ router.post('/adminWord', (request, response) => {
                     getWordData(word)
                         .then(result => {
                             result.type = 'word_data'
+                            result._id = `word_data:${word}`
                             let config = {
                                 method: 'post',
                                 maxBodyLength: Infinity,

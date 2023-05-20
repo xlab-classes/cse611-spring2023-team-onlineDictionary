@@ -7,7 +7,9 @@ import Definitions from "./Usage/Definitions";
 const AvailableUsage = (props) => {
 
   async function handleLanguageChange(data){
+    
     await props.onLanguageChange(data);
+    
   }
 
   const posList = props.wordData["meanings"].map((meaning) => (

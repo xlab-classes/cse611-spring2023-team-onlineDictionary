@@ -12,6 +12,7 @@ const WordSummary = (props) => {
 
   async function handleSelectChange(event){
     setSelectedValue(event.target.value);
+   
     await props.onLanguageChange(event.target.value);
     }
   const playAudio = () => {

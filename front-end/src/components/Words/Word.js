@@ -6,6 +6,7 @@ import AvailableUsage from './AvailableUsage';
 
 const Word = (props) => {
   async function handleLanguageChange(data){
+   
     await props.onLanguageChange(data);
   }
   return (

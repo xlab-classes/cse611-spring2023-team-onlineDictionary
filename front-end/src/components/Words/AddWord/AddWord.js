@@ -9,10 +9,14 @@ const AddWord = (props) => {
   async function addWordHandler(event) {
     event.preventDefault();
 
+   
     const word = event.target.elements.word.value;
-
-    if (wordList.includes(word)) {
-      setAddWord(2);
+    const present = await props.onCheck(word,true);
+    if (!present) {
+      setAddWord(1);
+      return;
+    }
+    else if (present == 1){
       return;
     }
 

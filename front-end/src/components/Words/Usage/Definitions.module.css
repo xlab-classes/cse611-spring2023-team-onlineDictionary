@@ -25,11 +25,11 @@
   margin: 0;
   padding: 0;
   counter-reset: my-counter;
+  padding: 0.5rem;
 }
 
 .meal ul li {
   margin-bottom: 8px;
-  padding-left: 20px;
   position: relative;
   line-height: 1.4;
   counter-increment: my-counter;
@@ -65,4 +65,5 @@
 .examplesource{
   color: grey;
   font-style: italic;
+  padding: 0.5rem;
 }

@@ -47,7 +47,7 @@ const AdminVerification = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         word: event.target.elements.word.value,
-        pos: event.target.elements.pos.value,
+        // pos: event.target.elements.pos.value,
         meaning: event.target.elements.meaning.value,
         example: event.target.elements.example.value,
         state: "add",
@@ -153,15 +153,17 @@ const AdminVerification = () => {
             <span className="close" onClick={handleCloseModal}>
               &times;
             </span>
-            <div className={classes.forms} onSubmit={handleAddMeaningSubmit}>
+            <form className={classes.forms} onSubmit={handleAddMeaningSubmit}>
+              <div>
               <label htmlFor="word">Word:</label>
-              <input type="text" id="word" name="word" value={modalWord} />
+              <input type="text" id="word" name="word" value={modalWord}/>
               <label htmlFor="meaning">Meaning:</label>
               <input type="text" id="meaning" name="meaning" />
               <label htmlFor="example">Example Usage:</label>
               <input type="text" id="example" name="example" />
               <button type="submit">Add Meaning</button>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       )}

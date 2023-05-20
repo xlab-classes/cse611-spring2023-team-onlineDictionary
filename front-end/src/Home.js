@@ -15,15 +15,16 @@ function Home() {
   const [wordData, setWordData] = useState({});
   const [searchedWord, setSearchedWord] = useState("");
 
-  const [setWordHandler] = useState(false);
-  const [setStatistics] = useState(false);
-  const [languageCode] = useState("en-US");
+  const [addWordHandler, setWordHandler] = useState(false);
+  const [statistics, setStatistics] = useState(false);
+  const [languageCode, setLanguageCode] = useState("en-US");
 
   async function handleLanguageChange(code) {
-    await wordHandler(wordData.word,code);
+    await wordHandler(wordData.word,false,code);
   }
 
-  async function wordHandler(word,lcode ="en-US") {
+  async function wordHandler(word,wordPresentCheck=false,lcode="en-US") {
+    
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,8 +39,10 @@ function Home() {
         setWordData(result);
         setShowWord(1);
         setSearchedWord(word);
+        return 1;
       })
       .catch((error) => {
+        if(wordPresentCheck){ return true;}
         setShowWord(2);
         setSearchedWord(word);
       });
@@ -69,22 +72,22 @@ function Home() {
   };
   
 
-  // function getDate() {
-  //   const currentDate = new Date().toLocaleDateString();
-  // }
+  function getDate() {
+    const currentDate = new Date().toLocaleDateString();
+  }
 
-  // const [readMore, setReadMore] = useState(false);
+  const [readMore, setReadMore] = useState(false);
 
   return (
     <Fragment>
-      <Header onAbout = {showAbout} onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} />
+      <Header onStatistics={showStatistics} onAddWord={showWordHandler} wordHandle={wordHandler} wordDisable={disableWord} onAbout={showAbout} />
       <main>
-        {showWord===0 && <MainInfoCard showWord={wordHandler}/>}
-        {showWord===1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}
-        {showWord===2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
-        {showWord===3  && <AddWord onClose={hideWordHandler} />}
-        {showWord===4 && <Statistics onClose={hideStatistics} />}
-        {showWord===5 && <About onAbout = {showAbout}/>}
+        {showWord==0 && <MainInfoCard showWord={wordHandler} />}
+        {showWord==1 && <Word wordData={wordData} languageCode={languageCode} onLanguageChange={handleLanguageChange}/>}
+        {showWord==2 && <WordNotFound onAddWord={showWordHandler} wordSearched={searchedWord}/>}
+        {showWord==3  && <AddWord onClose={hideWordHandler} onCheck={wordHandler}/>}
+        {showWord==4 && <Statistics onClose={hideStatistics} />}
+        {showWord==5 && <About onAbout = {showAbout}/>}
       </main>
     </Fragment>
   );

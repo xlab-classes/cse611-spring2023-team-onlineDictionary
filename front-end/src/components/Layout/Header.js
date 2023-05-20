@@ -9,6 +9,8 @@ const Header = (props) => {
   const wrapperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [arrowKeyPressed, setArrowKeyPressed] = useState(false);  
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     if (searchResults.length > 0) {
       setActiveIndex(0);
@@ -48,6 +50,7 @@ const Header = (props) => {
   
     if (searchTerm) {
       setIsSearching(true);
+      setSearchTerm(searchTerm);
   
       const results = words
         .filter((result) => 
@@ -68,6 +71,7 @@ const Header = (props) => {
       setSearchResults([]);
       setActiveIndex(-1);
       setArrowKeyPressed(false);
+      setSearchTerm('');
     }
   };
   
@@ -177,7 +181,7 @@ return (
               </div>
             )}
           </div>
-          <button className={classes.button }> Submit </button>
+          <button className={classes.button } disabled={!searchTerm}> Submit </button>
         </form>
       </header>
     </div>

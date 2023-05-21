@@ -42,7 +42,7 @@ function Home() {
         return 1;
       })
       .catch((error) => {
-        if(wordPresentCheck){ return true;}
+        if(wordPresentCheck){ return 2;}
         setShowWord(2);
         setSearchedWord(word);
       });

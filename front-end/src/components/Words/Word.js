@@ -9,7 +9,9 @@ const Word = (props) => {
    
     await props.onLanguageChange(data);
   }
+  console.log(props.wordData)
   return (
+   
     <Fragment>
      <AvailableUsage wordData={props.wordData} languageCode={props.languageCode} onLanguageChange = {handleLanguageChange}/>
      

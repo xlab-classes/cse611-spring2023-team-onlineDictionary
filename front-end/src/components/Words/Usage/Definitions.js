@@ -5,12 +5,11 @@ const Definitions = (props) => {
   const [numExamples, setNumExamples] = useState(5);
    
   function replaceWord(sentence) {
-    const regex = new RegExp(`\\b${props.word}\\b`, 'gi');
-    var replacement = sentence.replace(regex, `<b style="color: black;font-style: italic;">${props.word}</b>`);
-   
+    const regex = new RegExp(`\\b${props.word}\\b|\\w*${props.word}\\w*`, 'gi');
+    var replacement = sentence.replace(regex, `<b style="color: black;font-style: italic;">$&</b>`);
+    
     return replacement;
   }
-
   
   const defList = props.item.slice(0, numExamples).map((item,index) => (
     

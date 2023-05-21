@@ -184,6 +184,7 @@ function handleDictionaryData(word, response, body, languageCode, ipa) {
     }
     axios(config)
         .then(solrResponse => {
+            responseToReact.generalExamples = []
             if (solrResponse.data.response.numFound > 0) {
                 // To return first few examples fetched from solr:
                 // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
@@ -291,6 +292,7 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
 
             axios(config)
                 .then(solrResponse => {
+                    responseToReact.generalExamples = []
                     if (solrResponse.data.response.numFound > 0) {
                         // To return first few examples fetched from solr:
                         // responseToReact.generalExamples = solrResponse.data.response.docs.slice(0, 5).map(({ text }) => text[0])
@@ -325,7 +327,6 @@ function handleDictionaryAPI(word, response, languageCode, ipa) {
                                     "source": documentMap.get(i)
                                 })
                             }
-
                         }
                         if (x.length != 0) {
                             responseToReact.generalExamples = x

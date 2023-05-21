@@ -14,7 +14,7 @@ const AddWord = (props) => {
     const present = await props.onCheck(word,true);
     if (!present) {
       setAddWord(1);
-      return;
+      
     }
     else if (present == 1){
       return;

@@ -24,6 +24,7 @@ function Home() {
   }
 
   async function wordHandler(word,wordPresentCheck=false,lcode="en-US") {
+    var execFlag = true;
     
     const requestOptions = {
       method: "POST",
@@ -39,13 +40,21 @@ function Home() {
         setWordData(result);
         setShowWord(1);
         setSearchedWord(word);
-        return 1;
+        
       })
       .catch((error) => {
-        if(wordPresentCheck){ return 2;}
-        setShowWord(2);
-        setSearchedWord(word);
+        if(!wordPresentCheck){ 
+          setShowWord(2);
+          setSearchedWord(word);
+          }
+          execFlag=false;
+      
       });
+
+      if (!execFlag){
+        return 2;
+      }
+      return 1;
   }
 
   function disableWord() {

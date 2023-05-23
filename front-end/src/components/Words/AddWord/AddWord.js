@@ -6,15 +6,17 @@ const AddWord = (props) => {
   const [addWord, setAddWord] = useState(0);
 
 
+
   async function addWordHandler(event) {
     event.preventDefault();
-
+    
    
     const word = event.target.elements.word.value;
-    const present = await props.onCheck(word,true);
+    const present =await  props.onCheck(word,true);
+
+
     if (present == 2) {
       setAddWord(1);
-      
     }
     else if (present == 1){
       return;
